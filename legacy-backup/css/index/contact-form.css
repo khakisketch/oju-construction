@@ -1,0 +1,395 @@
+/* contact-form.css - 문의 폼 스타일 (수정) */
+
+.contact-section {
+    background-color: var(--kia-white);
+    padding: 5rem 0;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+}
+
+.contact-info {
+    grid-column: span 5;
+}
+
+.contact-info-card {
+    background-color: var(--kia-silver);
+    border-radius: 8px;
+    padding: 2.5rem;
+    height: 100%;
+    transition: var(--transition-normal);
+}
+
+.contact-info-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--kia-black);
+    margin-bottom: 1.5rem;
+}
+
+.contact-info-desc {
+    font-size: 1rem;
+    color: var(--kia-gray);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.contact-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.contact-info-icon {
+    width: 45px;
+    height: 45px;
+    background-color: var(--kia-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--kia-red);
+    margin-right: 1rem;
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    transition: var(--transition-normal);
+}
+
+.contact-info-content h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--kia-black);
+    margin-bottom: 0.25rem;
+}
+
+.contact-info-content p {
+    font-size: 0.9375rem;
+    color: var(--kia-gray);
+    line-height: 1.6;
+}
+
+.contact-info-item:hover .contact-info-icon {
+    background-color: var(--kia-red);
+    color: var(--kia-white);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(187, 22, 43, 0.2);
+}
+
+.map-container {
+    margin-top: 2rem;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 250px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form {
+    grid-column: span 7;
+}
+
+.contact-form-card {
+    background-color: var(--kia-white);
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    height: 100%;
+}
+
+.contact-form-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--kia-black);
+    margin-bottom: 0.5rem;
+}
+
+.contact-form-subtitle {
+    font-size: 1rem;
+    color: var(--kia-gray);
+    margin-bottom: 1.5rem; /* 줄임: 2rem -> 1.5rem */
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem; /* 줄임: 1.5rem -> 1rem */
+}
+
+.form-group {
+    margin-bottom: 1rem; /* 줄임: 1.5rem -> 1rem */
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+/* 내용 입력 필드를 위한 특별 마진 조정 */
+.form-group.message-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: inline-block;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--kia-black);
+    margin-bottom: 0.375rem; /* 줄임: 0.5rem -> 0.375rem */
+}
+
+.form-required {
+    color: var(--kia-red);
+    margin-left: 0.25rem;
+}
+
+.form-optional {
+    font-size: 0.8125rem;
+    color: var(--kia-gray);
+    font-weight: 400;
+    margin-left: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    height: 3rem; /* 줄임: 3.25rem -> 3rem */
+    padding: 0 1.25rem;
+    background-color: #f5f5f5;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--kia-black);
+    font-size: 0.9375rem;
+    transition: var(--transition-normal);
+}
+
+.form-control:focus {
+    background-color: var(--kia-white);
+    border-color: var(--kia-red);
+    box-shadow: 0 0 0 3px rgba(187, 22, 43, 0.1);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: #aaa;
+}
+
+.form-textarea {
+    height: auto;
+    min-height: 160px; /* 증가: 120px -> 160px */
+    padding: 1.25rem;
+    resize: vertical;
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+    background-size: 1.25rem;
+    padding-right: 3rem;
+}
+
+.form-check {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.25rem; /* 줄임: 1.5rem -> 1.25rem */
+}
+
+.form-check-input {
+    margin-right: 0.75rem;
+    margin-top: 0.25rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+}
+
+.form-check-label {
+    font-size: 0.875rem;
+    color: var(--kia-gray);
+    line-height: 1.5;
+}
+
+.privacy-link {
+    display: inline-block;
+    color: var(--kia-red);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 0.25rem;
+    transition: var(--transition-normal);
+}
+
+.privacy-link:hover {
+    color: var(--kia-red-hover);
+}
+
+.form-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 3.5rem;
+    background-color: var(--kia-red);
+    color: var(--kia-white);
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    margin-top: 0.75rem; /* 줄임: 1rem -> 0.75rem */
+}
+
+.form-submit-btn:hover {
+    background-color: var(--kia-red-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(187, 22, 43, 0.2);
+}
+
+.form-submit-icon {
+    margin-left: 0.75rem;
+    font-size: 1.125rem;
+    transition: var(--transition-normal);
+}
+
+.form-submit-btn:hover .form-submit-icon {
+    transform: translateX(5px);
+}
+
+.error-message {
+    color: var(--kia-red);
+    font-size: 0.8125rem;
+    margin-top: 0.5rem;
+}
+
+.form-control.is-invalid {
+    border-color: var(--kia-red);
+    background-color: rgba(187, 22, 43, 0.05);
+}
+
+/* 모달 스타일 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-normal);
+}
+
+.modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--kia-white);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    transition: var(--transition-normal);
+}
+
+.modal.open .modal-content {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--kia-light-gray);
+}
+
+.modal-title {
+    font-size: var(--font-xl);
+    font-weight: 600;
+    color: var(--kia-black);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--kia-gray);
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.modal-close:hover {
+    color: var(--kia-red);
+}
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    max-height: calc(90vh - 80px);
+}
+
+.privacy-content h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--kia-black);
+}
+
+.privacy-content p {
+    margin-bottom: 1rem;
+    color: var(--kia-gray);
+    line-height: 1.6;
+}
+
+.privacy-content ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.privacy-content ul li {
+    margin-bottom: 0.5rem;
+    color: var(--kia-gray);
+}
+
+/* Media Queries */
+@media (max-width: 991px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-info,
+    .contact-form {
+        grid-column: 1 / -1;
+    }
+
+    .contact-info {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-info-card,
+    .contact-form-card {
+        padding: 1.5rem;
+    }
+}

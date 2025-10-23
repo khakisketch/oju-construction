@@ -1,0 +1,366 @@
+/* responsive.css - 반응형 디자인 관련 스타일 */
+
+/* 대형 데스크탑 (1440px 이상) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    .hero-content {
+        max-width: 650px;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+    }
+}
+
+/* 중형 데스크탑 (1200px 이상) */
+@media (max-width: 1439px) {
+    .container {
+        max-width: 1140px;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+    }
+}
+
+/* 소형 데스크탑 (992px 이상) */
+@media (max-width: 1199px) {
+    .container {
+        max-width: 960px;
+    }
+
+    .hero-content {
+        max-width: 550px;
+        left: 5%;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-description {
+        font-size: 1.125rem;
+    }
+
+    .section-title {
+        font-size: 2.25rem;
+    }
+
+    .nav-list {
+        gap: 1rem;
+    }
+
+    .nav-link {
+        font-size: 0.8125rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .feature-title {
+        font-size: 1.125rem;
+    }
+
+    .counter-number {
+        font-size: 3rem;
+    }
+
+    .counter-title {
+        font-size: 1.125rem;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* 태블릿 (768px 이상) */
+@media (max-width: 991px) {
+    .container {
+        max-width: 720px;
+    }
+
+    .header-container {
+        height: 70px;
+    }
+
+    .hero-content {
+        max-width: 500px;
+    }
+
+    .hero-title {
+        font-size: 2.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-btn {
+        padding: 0.75rem 1.5rem;
+    }
+
+    .hero-navigation {
+        bottom: 5%;
+        right: 5%;
+    }
+
+    .swiper-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .section {
+        padding: 4rem 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-title-wrapper {
+        margin-bottom: 2rem;
+    }
+
+    .about-grid,
+    .ceo-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-content,
+    .about-image,
+    .ceo-image,
+    .ceo-content,
+    .contact-info,
+    .contact-form {
+        grid-column: span 1;
+    }
+
+    .about-image,
+    .ceo-image {
+        margin-bottom: 2rem;
+    }
+
+    .ceo-content {
+        padding-left: 0;
+    }
+
+    .ceo-title,
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    .counter-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .timeline::after {
+        left: 20px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+        width: 100%;
+        padding: 0 0 3rem 60px;
+    }
+
+    .timeline-item::before,
+    .timeline-item:nth-child(even)::before {
+        left: 10px;
+    }
+
+    .timeline-year,
+    .timeline-item:nth-child(even) .timeline-year {
+        left: 60px;
+        top: -30px;
+        right: auto;
+    }
+
+    .timeline-content {
+        padding: 1.25rem;
+    }
+
+    .timeline-content::after {
+        display: none;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 대형 모바일 (576px 이상) */
+@media (max-width: 767px) {
+    .container {
+        max-width: 540px;
+    }
+
+    .header-container {
+        height: 60px;
+    }
+
+    .logo img {
+        height: 2rem;
+    }
+
+    .hero-content {
+        left: 1rem;
+        right: 1rem;
+        max-width: calc(100% - 2rem);
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-slider .swiper-pagination {
+        left: 50% !important;
+        transform: translateX(-50%);
+    }
+
+    .hero-navigation {
+        display: none;
+    }
+
+    .section {
+        padding: 3rem 0;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .section-divider {
+        margin-bottom: 1rem;
+    }
+
+    .about-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .counter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .counter-item {
+        padding: 1.5rem 0;
+    }
+
+    .counter-number {
+        font-size: 2.5rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-info-card,
+    .contact-form-card {
+        padding: 1.5rem;
+    }
+
+    .contact-info-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-info {
+        text-align: center;
+    }
+
+    .scroll-top {
+        width: 40px;
+        height: 40px;
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+}
+
+/* 소형 모바일 (576px 미만) */
+@media (max-width: 575px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .header-container {
+        height: 60px;
+    }
+
+    .hero-section {
+        min-height: 500px;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+    }
+
+    .hero-description {
+        font-size: 0.9375rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.75rem;
+    }
+
+    .section-description {
+        font-size: 0.9375rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-item {
+        margin-bottom: 1rem;
+    }
+
+    .form-group.inline {
+        flex-direction: column;
+    }
+
+    .form-group.inline .form-control {
+        margin-bottom: 1rem;
+    }
+}

@@ -1,0 +1,678 @@
+/* sections.css - 섹션별 스타일 */
+
+/* 섹션 공통 스타일 */
+.section {
+    padding: 5rem 0;
+}
+
+.section-title-wrapper {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-subtitle {
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: var(--font-sm);
+    font-weight: 600;
+    color: var(--kia-red);
+    letter-spacing: 2px;
+    margin-bottom: 0.75rem;
+}
+
+.section-title {
+    font-size: var(--font-4xl);
+    font-weight: 700;
+    color: var(--kia-black);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.section-divider {
+    width: 60px;
+    height: 3px;
+    background-color: var(--kia-red);
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+}
+
+.section-description {
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--kia-gray);
+    font-size: var(--font-md);
+}
+
+/* 히어로 섹션 */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    max-height: 900px;
+    overflow: hidden;
+}
+
+.hero-slide {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    max-width: 600px;
+    color: var(--kia-white);
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: var(--font-5xl);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.hero-title span {
+    color: var(--kia-red);
+}
+
+.hero-description {
+    font-size: var(--font-lg);
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.hero-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--kia-red);
+    color: var(--kia-white);
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: var(--font-base);
+    transition: var(--transition-normal);
+}
+
+.hero-btn:hover {
+    background-color: var(--kia-red-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-btn i {
+    margin-left: 0.75rem;
+    transition: var(--transition-normal);
+}
+
+.hero-btn:hover i {
+    transform: translateX(5px);
+}
+
+.hero-navigation {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    display: flex;
+    gap: 1rem;
+    z-index: 2;
+}
+
+.swiper-button {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--kia-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-normal);
+    cursor: pointer;
+}
+
+.swiper-button:hover {
+    background-color: var(--kia-red);
+}
+
+.swiper-pagination-custom {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.swiper-pagination-bullet {
+    width: 50px;
+    height: 2px;
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+    transition: var(--transition-normal);
+    cursor: pointer;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: var(--kia-red);
+    width: 70px;
+}
+
+.hero-scroll-indicator {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--kia-white);
+    font-size: var(--font-sm);
+    z-index: 2;
+    opacity: 0.7;
+    transition: var(--transition-normal);
+}
+
+.hero-scroll-indicator:hover {
+    opacity: 1;
+}
+
+.hero-scroll-text {
+    margin-bottom: 0.75rem;
+}
+
+.hero-scroll-icon {
+    width: 30px;
+    height: 50px;
+    border: 2px solid var(--kia-white);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    padding-top: 0.75rem;
+}
+
+.hero-scroll-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--kia-white);
+    border-radius: 50%;
+    animation: scrollAnimation 2s infinite;
+}
+
+@keyframes scrollAnimation {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+}
+
+/* 회사 소개 섹션 */
+.about-section {
+    background-color: var(--kia-white);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+}
+
+.about-content {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.about-title {
+    font-size: var(--font-3xl);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--kia-black);
+}
+
+.about-divider {
+    width: 60px;
+    height: 3px;
+    background-color: var(--kia-red);
+    margin-bottom: 1.5rem;
+}
+
+.about-text {
+    color: var(--kia-gray);
+    margin-bottom: 2rem;
+}
+
+.about-stats {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.about-stat-item {
+    text-align: center;
+}
+
+.about-stat-number {
+    font-size: var(--font-3xl);
+    font-weight: 700;
+    color: var(--kia-red);
+    margin-bottom: 0.5rem;
+}
+
+.about-stat-label {
+    color: var(--kia-gray);
+    font-size: var(--font-sm);
+}
+
+.about-image {
+    grid-column: span 6;
+    position: relative;
+}
+
+.about-img-wrapper {
+    position: relative;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+}
+
+.about-experience {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background-color: var(--kia-red);
+    color: var(--kia-white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(187, 22, 43, 0.3);
+}
+
+.about-experience-number {
+    font-size: var(--font-3xl);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.about-experience-text {
+    font-size: var(--font-sm);
+    font-weight: 500;
+}
+
+/* 사업분야 섹션 */
+.services-section {
+    background-color: var(--kia-silver);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* CEO 인사말 섹션 */
+.ceo-section {
+    background-color: var(--kia-white);
+}
+
+.ceo-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+    align-items: center;
+}
+
+.ceo-image {
+    grid-column: span 5;
+}
+
+.ceo-img-wrapper {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.ceo-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.ceo-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+}
+
+.ceo-content {
+    grid-column: span 7;
+    padding-left: 2rem;
+}
+
+.ceo-title {
+    font-size: var(--font-3xl);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--kia-black);
+    line-height: 1.2;
+}
+
+.ceo-title span {
+    color: var(--kia-red);
+}
+
+.ceo-divider {
+    width: 60px;
+    height: 3px;
+    background-color: var(--kia-red);
+    margin-bottom: 1.5rem;
+}
+
+.ceo-subtitle {
+    font-size: var(--font-xl);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--kia-black);
+}
+
+.ceo-text {
+    color: var(--kia-gray);
+    margin-bottom: 1.5rem;
+}
+
+.ceo-signature {
+    text-align: right;
+    margin-top: 2rem;
+}
+
+.ceo-signature-title {
+    font-size: var(--font-sm);
+    color: var(--kia-gray);
+    margin-bottom: 0.5rem;
+}
+
+.ceo-signature-name {
+    font-size: var(--font-xl);
+    font-weight: 700;
+    color: var(--kia-black);
+}
+
+/* 카운터 섹션 */
+.counter-section {
+    background-color: var(--kia-black);
+    color: var(--kia-white);
+    padding: 4rem 0;
+    position: relative;
+}
+
+.counter-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/pattern.png');
+    opacity: 0.05;
+}
+
+.counter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.counter-item {
+    text-align: center;
+    transition: var(--transition-normal);
+}
+
+.counter-icon {
+    font-size: 2.5rem;
+    color: var(--kia-red);
+    margin-bottom: 1rem;
+}
+
+.counter-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--kia-white);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}
+
+.counter-title {
+    font-size: var(--font-lg);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+/* 시공실적 섹션 */
+.portfolio-section {
+    background-color: var(--kia-white);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.portfolio-btn-wrapper {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+/* 갤러리 아이템 */
+.gallery-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: var(--transition-slow);
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.gallery-item:hover .gallery-image {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition-normal);
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-info {
+    text-align: center;
+    color: var(--kia-white);
+    transform: translateY(20px);
+    transition: var(--transition-slow);
+    opacity: 0;
+    padding: 1rem;
+    width: 100%;
+}
+
+.gallery-item:hover .gallery-info {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.gallery-info h3 {
+    font-size: var(--font-lg);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.gallery-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background-color: var(--kia-white);
+    color: var(--kia-black);
+    border-radius: 50%;
+    margin-top: 1rem;
+    transition: var(--transition-normal);
+}
+
+.gallery-btn:hover {
+    background-color: var(--kia-red);
+    color: var(--kia-white);
+}
+
+/* 미디어 쿼리 */
+@media (max-width: 1200px) {
+    .hero-title {
+        font-size: var(--font-4xl);
+    }
+
+    .hero-content {
+        left: 5%;
+    }
+
+    .section-title {
+        font-size: var(--font-3xl);
+    }
+}
+
+@media (max-width: 991px) {
+    .about-grid,
+    .ceo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-content,
+    .about-image,
+    .ceo-image,
+    .ceo-content {
+        grid-column: span 1;
+    }
+
+    .about-image,
+    .ceo-image {
+        margin-bottom: 2rem;
+    }
+
+    .ceo-content {
+        padding-left: 0;
+    }
+
+    .ceo-title,
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    .counter-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: var(--font-3xl);
+    }
+
+    .hero-description {
+        font-size: var(--font-base);
+    }
+
+    .hero-btn {
+        padding: 0.875rem 1.5rem;
+    }
+
+    .hero-navigation {
+        bottom: 5%;
+        right: 5%;
+    }
+
+    .section-title {
+        font-size: var(--font-2xl);
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-content {
+        left: 1rem;
+        right: 1rem;
+        text-align: center;
+    }
+
+    .counter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-scroll-indicator {
+        display: none;
+    }
+
+    .hero-navigation {
+        bottom: 1rem;
+        right: 1rem;
+    }
+}

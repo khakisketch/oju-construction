@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오주건설 | 미래를 여는 건설</title>
+    <meta name="description" content="오주건설은 전문건설 면허를 보유하고 있으며, 토목공사 및 시설물 유지보수를 전문으로 하는 종합건설회사입니다.">
+    <meta name="keywords" content="오주건설, 토목공사, 시설물 유지보수, 건설회사, 조경, 소프트웨어">
+
+    <!-- 파비콘 -->
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+    <!-- 메인 CSS -->
+    <link rel="stylesheet" href="../../css/index/main.css">
+
+    <!-- 추가 CSS -->
+    <link rel="stylesheet" href="../../css/index/timeline-animation.css">
+    <link rel="stylesheet" href="../../css/index/improved-contact-form.css">
+    <link rel="stylesheet" href="../../css/index/improved-footer.css">
+</head>
+<body>
+<!-- 페이지 로더 -->
+<div id="pageLoader" class="fixed inset-0 bg-white flex items-center justify-center z-50">
+    <div class="loading-spinner"></div>
+</div>
+
+<!-- 헤더 -->
+<header id="header" class="fixed top-0 left-0 w-full z-50">
+    <div class="container header-container">
+        <!-- 로고 -->
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/ojuconstruction-logo.png" alt="오주건설 로고">
+            </a>
+        </div>
+
+        <!-- 햄버거 버튼 (모바일) -->
+        <button id="hamburgerBtn" class="hamburger-btn" aria-label="메뉴 열기">
+            <div class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+
+        <!-- 메인 네비게이션 -->
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">
+                        회사소개
+                        <span class="nav-indicator"></span>
+                    </a>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a href="#services" class="nav-link">
+                        사업분야
+                        <span class="nav-indicator"></span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="construction.html" class="submenu-link">토목</a></li>
+                        <li><a href="software.html" class="submenu-link">소프트웨어</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="certificates.html" class="nav-link">
+                        사업면허
+                        <span class="nav-indicator"></span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="achievements.html" class="nav-link">
+                        시공실적
+                        <span class="nav-indicator"></span>
+                    </a>
+                </li>
+                <li class="nav-item nav-cta">
+                    <a href="#contact" class="contact-btn">
+                        <i class="fas fa-envelope"></i>문의하기
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- 메인 컨텐츠 -->
+<main>
+    <!-- 히어로 섹션 -->
+    <section class="hero-section">
+        <div class="swiper hero-slider">
+            <div class="swiper-wrapper">
+                <!-- 슬라이드 1 -->
+                <div class="swiper-slide">
+                    <img src="images/hero-slide1.jpg" alt="오주건설 메인 이미지" class="hero-bg">
+                    <div class="hero-content">
+                        <h1 class="hero-title animate-element">
+                            미래를 여는 건설<br>
+                            <span>오주건설</span>
+                        </h1>
+                        <p class="hero-description animate-element">
+                            기술로 세우고, 신뢰로 완성합니다
+                        </p>
+                        <a href="#about" class="hero-btn animate-element">
+                            회사소개 보기
+                            <i class="fas fa-arrow-right btn-icon"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 슬라이드 2 -->
+                <div class="swiper-slide">
+                    <img src="images/hero-slide2.jpg" alt="오주건설 기술력" class="hero-bg">
+                    <div class="hero-content">
+                        <h1 class="hero-title animate-element">
+                            기술의 정교함<br>
+                            <span>신뢰의 견고함</span>
+                        </h1>
+                        <p class="hero-description animate-element">
+                            우리의 기술로 세운 건물은 오래도록 당신의 미래를 지킵니다
+                        </p>
+                        <a href="#services" class="hero-btn animate-element">
+                            사업분야 보기
+                            <i class="fas fa-arrow-right btn-icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 페이지네이션 -->
+            <div class="swiper-pagination hero-pagination"></div>
+
+            <!-- 네비게이션 버튼 -->
+            <div class="hero-navigation">
+                <button class="swiper-button hero-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="swiper-button hero-next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- 스크롤 인디케이터 -->
+            <div class="hero-scroll-indicator">
+                <span class="hero-scroll-text">스크롤</span>
+                <div class="hero-scroll-icon">
+                    <span class="hero-scroll-dot"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 회사 소개 섹션 -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle">About Us</span>
+                <h2 class="section-title">오주건설 소개</h2>
+                <div class="section-divider"></div>
+                <p class="section-description">
+                    2004년 설립 이후 22년간 다양한 시설물의 토목공사 및 유지보수를 진행한 풍부한 경험을 보유하고 있습니다.
+                </p>
+            </div>
+
+            <div class="about-grid">
+                <!-- 왼쪽: 이미지 -->
+                <div class="about-image" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="about-img-wrapper">
+                        <img src="images/about-company.jpg" alt="오주건설 사옥" class="about-img">
+                        <div class="about-img-overlay"></div>
+                    </div>
+                    <div class="about-experience">
+                        <div class="about-experience-number">22</div>
+                        <div class="about-experience-text">년의 경험</div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 내용 -->
+                <div class="about-content" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <h3 class="about-title">오주건설은 신뢰를 기반으로 한 건설 전문 기업입니다</h3>
+                    <div class="about-divider"></div>
+                    <p class="about-text">
+                        저희 오주건설(주)는 전문건설 면허를 보유하고 있으며, 토목공사 및 시설물 유지보수를 전문으로 하는 종합건설회사입니다.
+                    </p>
+                    <p class="about-text">
+                        2004년 법인설립 이후 다수의 관공서, 산업단지, 군부대 등 다양한 시설물의 토목공사 및 유지보수공사를 진행하며, 축적된 노하우와 우수한 인재들의 경험을 바탕으로 업계의 리더로 자리매김하고자 끊임없이 노력하고 있습니다.
+                    </p>
+
+                    <!-- 통계 -->
+                    <div class="about-stats">
+                        <div class="about-stat-item">
+                            <div class="about-stat-number">15+</div>
+                            <div class="about-stat-label">보유 면허/자격증</div>
+                        </div>
+                        <div class="about-stat-item">
+                            <div class="about-stat-number">200+</div>
+                            <div class="about-stat-label">완료 프로젝트</div>
+                        </div>
+                    </div>
+
+                    <a href="#ceo" class="btn btn-primary">
+                        대표 인사말
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 특징 섹션 -->
+    <section class="section bg-gray-50">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle">Our Strengths</span>
+                <h2 class="section-title">오주건설의 특징</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="services-grid">
+                <!-- 특징 1 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="feature-title">건설 전문성</h3>
+                    <p class="feature-desc">
+                        다양한 전문 건설 면허를 보유하고 있으며, 토목공사부터 유지보수까지 종합적인 서비스를 제공합니다.
+                    </p>
+                </div>
+
+                <!-- 특징 2 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="feature-title">풍부한 경험</h3>
+                    <p class="feature-desc">
+                        2004년 설립 이후 22년간 관공서, 산업단지, 군부대 등 다양한 시설물의 토목공사 및 유지보수를 진행한 풍부한 경험을 보유하고 있습니다.
+                    </p>
+                </div>
+
+                <!-- 특징 3 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="feature-title">기술 혁신</h3>
+                    <p class="feature-desc">
+                        지속적인 기술 개발과 소프트웨어 사업 확장을 통해 건설 산업의 새로운 표준을 만들어가는 중심 기업입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 사업분야 섹션 -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle">Our Services</span>
+                <h2 class="section-title">사업분야</h2>
+                <div class="section-divider"></div>
+                <p class="section-description">
+                    오주건설은 다양한 건설 분야에서 전문성을 바탕으로 최고의 서비스를 제공합니다.
+                </p>
+            </div>
+
+            <!-- 사업분야 슬라이더 -->
+            <div class="swiper business-slider" data-aos="fade-up">
+                <div class="swiper-wrapper">
+                    <!-- 슬라이드 1: 토목 -->
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/civil-engineering.jpg" alt="토목">
+                                <div class="card-overlay">
+                                    <a href="construction.html" class="card-btn">
+                                        자세히 보기
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">토목</h3>
+                                <p class="card-text">
+                                    도로, 항만, 교량 등 토목 인프라 구축과 유지보수
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 슬라이드 2: 지반조성포장ㆍ토공 -->
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/ground-construction.jpg" alt="지반조성포장ㆍ토공">
+                                <div class="card-overlay">
+                                    <a href="construction.html" class="card-btn">
+                                        자세히 보기
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">지반조성포장ㆍ토공</h3>
+                                <p class="card-text">
+                                    지반 안정화 및 포장공사, 토공사업
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 슬라이드 3: 조경 식재ㆍ시설물 -->
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/landscape.jpg" alt="조경 식재ㆍ시설물">
+                                <div class="card-overlay">
+                                    <a href="construction.html" class="card-btn">
+                                        자세히 보기
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">조경 식재ㆍ시설물</h3>
+                                <p class="card-text">
+                                    조경 디자인 및 시설물 설치, 식재 관리
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 슬라이드 4: 습식 방수ㆍ도장 -->
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/waterproofing.png" alt="습식 방수ㆍ도장">
+                                <div class="card-overlay">
+                                    <a href="construction.html" class="card-btn">
+                                        자세히 보기
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">습식 방수ㆍ도장</h3>
+                                <p class="card-text">
+                                    건축물의 방수 및 도장 공사
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 슬라이드 5: 소프트웨어 -->
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="images/software.jpg" alt="소프트웨어">
+                                <div class="card-overlay">
+                                    <a href="software.html" class="card-btn">
+                                        자세히 보기
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">소프트웨어</h3>
+                                <p class="card-text">
+                                    디지털 기술을 활용한 건설 산업의 혁신
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 사업분야 슬라이더 컨트롤 -->
+            <div class="business-navigation">
+                <button class="swiper-button-prev business-prev"></button>
+                <div class="swiper-pagination business-pagination"></div>
+                <button class="swiper-button-next business-next"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 카운터 섹션 -->
+    <section class="counter-section">
+        <div class="container">
+            <div class="counter-grid">
+                <!-- 카운터 1: 설립 연차 -->
+                <div class="counter-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="counter-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="counter-number" data-count="22">0</div>
+                    <p class="counter-title">설립 연차</p>
+                </div>
+
+                <!-- 카운터 2: 보유 자격증 -->
+                <div class="counter-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="counter-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="counter-number" data-count="15">0</div>
+                    <p class="counter-title">보유 면허/자격증</p>
+                </div>
+
+                <!-- 카운터 3: 완료 프로젝트 -->
+                <div class="counter-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="counter-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="counter-number" data-count="200">0</div>
+                    <p class="counter-title">완료 프로젝트</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CEO 인사말 섹션 -->
+    <section id="ceo" class="section ceo-section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle">CEO Message</span>
+                <h2 class="section-title">대표 인사말</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="ceo-grid">
+                <!-- 왼쪽: 이미지 -->
+                <div class="ceo-image" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="ceo-img-wrapper">
+                        <img src="images/ceo.jpg" alt="CEO 이자영" class="ceo-img">
+                        <div class="ceo-img-overlay"></div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 내용 -->
+                <div class="ceo-content" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <h3 class="ceo-title">
+                        종합건설사<br>
+                        <span>오주건설(주) 대표 이자영</span>입니다.
+                    </h3>
+                    <div class="ceo-divider"></div>
+                    <h4 class="ceo-subtitle">
+                        토목공사 및 소프트웨어 개발 전문기업
+                    </h4>
+                    <div class="ceo-text">
+                        <p>
+                            안녕하세요! 저희 오주건설(주)는 전문건설 면허를 보유하고 있으며,
+                            토목공사 및 시설물 유지보수를 전문으로 하는 종합건설회사입니다.
+                        </p>
+                        <p>
+                            2004년 법인설립 이후 다수의 관공서, 산업단지, 군부대 등 다양한 시설물의 토목공사 및
+                            유지보수공사를 진행하며, 축적된 노하우와 우수한 인재들의 경험을 바탕으로 업계의 리더로
+                            자리매김하고자 끊임없이 노력하고 있습니다.
+                        </p>
+                        <p>
+                            앞으로도 지속적인 기술 개발과 고객 만족을 최우선으로, 신개념 건축문화를 창조하는
+                            동종업계의 중심 기업으로 도약하겠습니다. 감사합니다.
+                        </p>
+                    </div>
+                    <div class="ceo-signature">
+                        <p class="ceo-signature-title">대표이사</p>
+                        <span class="ceo-signature-name">이자영</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 연혁 섹션 (개선된 애니메이션 적용) -->
+    <section class="section bg-gray-50">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle">Our History</span>
+                <h2 class="section-title">회사 연혁</h2>
+                <div class="section-divider"></div>
+                <p class="section-description">
+                    오주건설은 2004년 설립 이후 꾸준한 성장을 이어오고 있습니다.
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">
+                        <span>2022</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">01월</h3>
+                        <p class="timeline-text">오주건설(주) 토목공사업 등록</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">
+                        <span>2020</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">12월</h3>
+                        <p class="timeline-text">오주건설(주) 도장공사업 등록</p>
+                        <h3 class="timeline-title">03월</h3>
+                        <p class="timeline-text">오주건설(주) 건물위생관리업 등록</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">
+                        <span>2018</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">02월</h3>
+                        <p class="timeline-text">오주건설(주) 시설물유지보수업 추가 설립</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">
+                        <span>2004</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">04월</h3>
+                        <p class="timeline-text">오주건설(주) 포장공사업 법인설립</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 시공실적 섹션 -->
+    <section id="portfolio" class="section portfolio-section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle">Our Works</span>
+                <h2 class="section-title">주요 시공실적</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- 갤러리 아이템 1 -->
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="images/portfolio1.jpg" alt="시공 사진 1" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>청주 도로 확장공사</h3>
+                            <p>2023년 완공</p>
+                            <a href="achievements.html" class="gallery-btn">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 갤러리 아이템 2 -->
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="images/portfolio2.jpg" alt="시공 사진 2" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>대전 공공기관 신축공사</h3>
+                            <p>2022년 완공</p>
+                            <a href="achievements.html" class="gallery-btn">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 갤러리 아이템 3 -->
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="images/portfolio3.jpg" alt="시공 사진 3" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>천안 교량 보수공사</h3>
+                            <p>2023년 완공</p>
+                            <a href="achievements.html" class="gallery-btn">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 갤러리 아이템 4 -->
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400">
+                    <img src="images/portfolio4.jpg" alt="시공 사진 4" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>세종 산업단지 진입로 공사</h3>
+                            <p>2022년 완공</p>
+                            <a href="achievements.html" class="gallery-btn">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-btn-wrapper" data-aos="fade-up">
+                <a href="achievements.html" class="btn btn-secondary">
+                    더 많은 시공실적 보기
+                    <i class="fas fa-arrow-right btn-icon"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 개선된 문의하기 섹션 -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle">Contact Us</span>
+                <h2 class="section-title">문의하기</h2>
+                <div class="section-divider"></div>
+                <p class="section-description">
+                    오주건설에 관심을 가져주셔서 감사합니다. 문의사항이 있으시면 아래 양식을 통해 연락주세요.
+                </p>
+            </div>
+
+            <div class="contact-container">
+                <!-- 왼쪽: 연락처 정보 -->
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-info-card">
+                        <h3 class="contact-info-title">연락처 정보</h3>
+                        <p class="contact-info-desc">
+                            문의사항이나 상담이 필요하시면 아래 연락처로 연락 주시거나 문의 양식을 통해 메시지를 보내주세요. 빠른 시일 내에 답변 드리겠습니다.
+                        </p>
+                        <ul class="contact-info-list">
+                            <li class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h4>주소</h4>
+                                    <p>충청북도 청주시 상당구 용암북로160번길 20, 2층 201호</p>
+                                </div>
+                            </li>
+                            <li class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h4>전화번호</h4>
+                                    <p>070-4260-7307</p>
+                                </div>
+                            </li>
+                            <li class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-fax"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h4>팩스</h4>
+                                    <p>000-0000-0000</p>
+                                </div>
+                            </li>
+                            <li class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h4>영업시간</h4>
+                                    <p>평일 09:00 ~ 18:00</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- 지도 -->
+                        <div class="map-container">
+                            <iframe
+                                    class="w-full h-full"
+                                    style="border:0; width: 100%; height: 100%;"
+                                    loading="lazy"
+                                    allowfullscreen
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.456789012345!2d127.5123456!3d36.6267890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xXXXXXXX%3A0xXXXXXXX!2z7JWE7J207YSw7IScIOyVhOuMgOydtOuMgOychOyngOyLnOychA!5e0!3m2!1sko!2skr!4v1680000000000!5m2!1sko!2skr"
+                            ></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 개선된 문의 양식 -->
+                <div class="contact-form" data-aos="fade-left">
+                    <div class="contact-form-card">
+                        <h3 class="contact-form-title">문의하기</h3>
+                        <p class="contact-form-subtitle">아래 양식을 작성하여 문의사항을 보내주세요.</p>
+
+                        <form id="contactForm">
+                            <div class="form-grid">
+                                <!-- 이름 -->
+                                <div class="form-group">
+                                    <label for="name" class="form-label">
+                                        이름<span class="form-required">*</span>
+                                    </label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="이름을 입력하세요" required>
+                                </div>
+
+                                <!-- 소속 -->
+                                <div class="form-group">
+                                    <label for="company" class="form-label">
+                                        소속<span class="form-required">*</span>
+                                    </label>
+                                    <input type="text" id="company" name="company" class="form-control" placeholder="회사/기관명을 입력하세요" required>
+                                </div>
+
+                                <!-- 연락처 -->
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">
+                                        연락처<span class="form-required">*</span>
+                                    </label>
+                                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="전화번호를 입력하세요" required>
+                                </div>
+
+                                <!-- 이메일 -->
+                                <div class="form-group">
+                                    <label for="email" class="form-label">
+                                        이메일<span class="form-optional">(선택)</span>
+                                    </label>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력하세요">
+                                </div>
+
+                                <!-- 문의 분야 -->
+                                <div class="form-group full-width">
+                                    <label for="category" class="form-label">
+                                        문의 분야<span class="form-required">*</span>
+                                    </label>
+                                    <select id="category" name="category" class="form-control form-select" required>
+                                        <option value="" disabled selected>문의 분야를 선택하세요</option>
+                                        <option value="토목">토목</option>
+                                        <option value="소프트웨어">소프트웨어</option>
+                                        <option value="기타">기타</option>
+                                    </select>
+                                </div>
+
+                                <!-- 제목 -->
+                                <div class="form-group full-width">
+                                    <label for="subject" class="form-label">
+                                        제목<span class="form-required">*</span>
+                                    </label>
+                                    <input type="text" id="subject" name="subject" class="form-control" placeholder="제목을 입력하세요" required>
+                                </div>
+
+                                <!-- 내용 -->
+                                <div class="form-group full-width">
+                                    <label for="message" class="form-label">
+                                        내용<span class="form-required">*</span>
+                                    </label>
+                                    <textarea id="message" name="message" class="form-control form-textarea" placeholder="문의 내용을 입력하세요" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="checkbox" id="consent" name="consent" class="form-check-input" required>
+                                <label for="consent" class="form-check-label">
+                                    개인정보 수집 및 이용에 동의합니다.
+                                    <span id="privacyBtn" class="privacy-link">개인정보처리방침 보기</span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="form-submit-btn">
+                                <span>문의 제출</span>
+                                <i class="fas fa-paper-plane form-submit-icon"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- 개선된 푸터 -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <!-- 회사 정보 -->
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="images/ojuconstruction-logo.png" alt="오주건설 로고">
+                </div>
+                <p class="footer-text">
+                    오주건설은 건설 분야의 전문성과 기술력을 바탕으로 고객 여러분께 최고의 서비스를 제공합니다. 2004년 설립 이후 다양한 분야에서 신뢰와 기술로 성장해 왔습니다.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 빠른 링크 -->
+            <div class="footer-nav">
+                <h3 class="footer-heading">바로가기</h3>
+                <ul class="footer-links">
+                    <li><a href="#about">회사소개</a></li>
+                    <li><a href="#services">사업분야</a></li>
+                    <li><a href="#portfolio">시공실적</a></li>
+                    <li><a href="#contact">문의하기</a></li>
+                </ul>
+            </div>
+
+            <!-- 사업분야 -->
+            <div class="footer-services">
+                <h3 class="footer-heading">사업분야</h3>
+                <ul class="footer-links">
+                    <li><a href="construction.html">토목</a></li>
+                    <li><a href="construction.html">지반조성포장ㆍ토공</a></li>
+                    <li><a href="construction.html">조경 식재ㆍ시설물</a></li>
+                    <li><a href="construction.html">습식 방수ㆍ도장</a></li>
+                    <li><a href="software.html">소프트웨어</a></li>
+                </ul>
+            </div>
+
+            <!-- 연락처 -->
+            <div class="footer-contact">
+                <h3 class="footer-heading">연락처</h3>
+                <ul class="footer-contact-list">
+                    <li class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt footer-contact-icon"></i>
+                        <span class="footer-contact-text">충청북도 청주시 상당구 용암북로160번길 20, 2층 201호</span>
+                    </li>
+                    <li class="footer-contact-item">
+                        <i class="fas fa-phone-alt footer-contact-icon"></i>
+                        <span class="footer-contact-text">070-4260-7307</span>
+                    </li>
+                    <li class="footer-contact-item">
+                        <i class="fas fa-fax footer-contact-icon"></i>
+                        <span class="footer-contact-text">000-0000-0000</span>
+                    </li>
+                    <li class="footer-contact-item">
+                        <i class="fas fa-envelope footer-contact-icon"></i>
+                        <span class="footer-contact-text">info@ojuconstruction.com</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <span>&copy; 2025 오주건설.</span>
+                    <span>All Rights Reserved.</span>
+                </div>
+                <div class="footer-legal">
+                    <a href="#" class="footer-legal-link">개인정보처리방침</a>
+                    <a href="#" class="footer-legal-link">이용약관</a>
+                    <a href="#" class="footer-legal-link">사업자 정보</a>
+                    <a href="#" class="footer-legal-link">사이트맵</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- 맨 위로 스크롤 버튼 -->
+<button id="scrollTopBtn" class="scroll-top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- 개인정보처리방침 모달 -->
+<div id="privacyModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">개인정보처리방침</h2>
+            <button id="closeModal" class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="privacy-content">
+                <h3>1. 개인정보의 처리 목적</h3>
+                <p>회사는 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 사용되지 않으며, 이용 목적이 변경되는 경우에는 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.</p>
+                <ul>
+                    <li>고객 문의에 대한 응대 및 서비스 제공</li>
+                    <li>계약의 체결 및 이행</li>
+                    <li>마케팅 및 광고에의 활용 (홍보 이메일 발송 등)</li>
+                </ul>
+
+                <h3>2. 개인정보의 처리 및 보유기간</h3>
+                <p>회사는 법령에 따른 개인정보 보유·이용 기간 또는 정보주체로부터 개인정보를 수집 시에 동의 받은 개인정보 보유·이용 기간 내에서 개인정보를 처리·보유합니다.</p>
+
+                <h3>3. 정보주체의 권리·의무 및 행사방법</h3>
+                <p>정보주체(고객)는 회사에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.</p>
+
+                <h3>4. 처리하는 개인정보 항목</h3>
+                <p>회사는 다음의 개인정보 항목을 처리하고 있습니다.</p>
+                <ul>
+                    <li>필수항목: 이름, 소속, 연락처</li>
+                    <li>선택항목: 이메일, 문의내용</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- AOS JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<!-- 메인 JS -->
+<script type="module" src="../../js/index/main.js"></script>
+
+<!-- 추가 JS -->
+<script src="../../js/index/timeline-animation.js"></script>
+<script src="../../js/index/contact-form.js"></script>
+</body>
+</html>

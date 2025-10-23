@@ -1,0 +1,231 @@
+/* timeline-animation.css - 회사 연혁 애니메이션 */
+
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: var(--kia-light-gray);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 0 3rem 3rem 0;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-item.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.timeline-item:nth-child(even) {
+    margin-left: auto;
+    padding: 0 0 3rem 3rem;
+    transform: translateX(50px);
+}
+
+.timeline-item:nth-child(even).animate {
+    transform: translateX(0);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--kia-white);
+    border: 4px solid var(--kia-red);
+    border-radius: 50%;
+    z-index: 1;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0);
+}
+
+.timeline-item.animate::before {
+    transform: scale(1);
+}
+
+.timeline-item:nth-child(odd)::before {
+    right: -10px;
+}
+
+.timeline-item:nth-child(even)::before {
+    left: -10px;
+}
+
+.timeline-content {
+    background-color: var(--kia-white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(20px);
+    opacity: 0;
+}
+
+.timeline-item.animate .timeline-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.timeline-item:nth-child(odd) .timeline-content::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--kia-white);
+    transform: rotate(45deg);
+}
+
+.timeline-item:nth-child(even) .timeline-content::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--kia-white);
+    transform: rotate(45deg);
+}
+
+.timeline-year {
+    position: absolute;
+    top: 0;
+    background-color: var(--kia-red);
+    color: var(--kia-white);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(-20px) scale(0.8);
+    opacity: 0;
+}
+
+.timeline-item.animate .timeline-year {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.timeline-item:nth-child(odd) .timeline-year {
+    right: -100px;
+}
+
+.timeline-item:nth-child(even) .timeline-year {
+    left: -100px;
+}
+
+.timeline-title {
+    font-size: var(--font-md);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--kia-black);
+}
+
+.timeline-text {
+    color: var(--kia-gray);
+}
+
+/* Timeline Animation Delays */
+.timeline-item:nth-child(1) {
+    transition-delay: 0.2s;
+}
+
+.timeline-item:nth-child(2) {
+    transition-delay: 0.4s;
+}
+
+.timeline-item:nth-child(3) {
+    transition-delay: 0.6s;
+}
+
+.timeline-item:nth-child(4) {
+    transition-delay: 0.8s;
+}
+
+.timeline-item:nth-child(1) .timeline-content,
+.timeline-item:nth-child(1) .timeline-year {
+    transition-delay: 0.3s;
+}
+
+.timeline-item:nth-child(2) .timeline-content,
+.timeline-item:nth-child(2) .timeline-year {
+    transition-delay: 0.5s;
+}
+
+.timeline-item:nth-child(3) .timeline-content,
+.timeline-item:nth-child(3) .timeline-year {
+    transition-delay: 0.7s;
+}
+
+.timeline-item:nth-child(4) .timeline-content,
+.timeline-item:nth-child(4) .timeline-year {
+    transition-delay: 0.9s;
+}
+
+/* Media Queries */
+@media (max-width: 991px) {
+    .timeline::after {
+        left: 20px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+        width: 100%;
+        padding: 0 0 3rem 60px;
+        transform: translateX(0) translateY(50px);
+        opacity: 0;
+    }
+
+    .timeline-item.animate,
+    .timeline-item:nth-child(even).animate {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+
+    .timeline-item::before,
+    .timeline-item:nth-child(even)::before {
+        left: 10px;
+        right: auto;
+    }
+
+    .timeline-year,
+    .timeline-item:nth-child(even) .timeline-year {
+        left: 60px;
+        right: auto;
+        top: -40px;
+    }
+
+    .timeline-content::after {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+        padding-left: 50px;
+    }
+
+    .timeline-year,
+    .timeline-item:nth-child(even) .timeline-year {
+        left: 50px;
+    }
+}

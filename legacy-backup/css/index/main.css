@@ -1,0 +1,87 @@
+/* main.css - 모든 CSS 파일 임포트 */
+
+/* 기본 스타일 */
+@import url('base.css');
+
+/* 레이아웃 */
+@import url('layout.css');
+
+/* 컴포넌트 */
+@import url('components.css');
+
+/* 섹션 */
+@import url('sections.css');
+
+/* 슬라이더 */
+@import url('slider.css');
+
+/* 애니메이션 */
+@import url('animations.css');
+
+/* 반응형 */
+@import url('responsive.css');
+
+/* 타임라인 애니메이션 */
+@import url('timeline-animation.css');
+
+/* 문의 폼 */
+@import url('contact-form.css');
+
+/* 푸터 */
+@import url('footer.css');
+
+/* 폰트 설정 */
+@font-face {
+    font-family: 'Kia';
+    src: url('../fonts/KiaSignature-Light.woff2') format('woff2'),
+    url('../fonts/KiaSignature-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Kia';
+    src: url('../fonts/KiaSignature-Regular.woff2') format('woff2'),
+    url('../fonts/KiaSignature-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Kia';
+    src: url('../fonts/KiaSignature-Bold.woff2') format('woff2'),
+    url('../fonts/KiaSignature-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Hyundai Sans Text 폰트도 Kia 스타일과 비슷하므로 대체 폰트로 추가 */
+@font-face {
+    font-family: 'Hyundai Sans Text';
+    src: url('../fonts/HyundaiSansTextKRRegular.woff2') format('woff2'),
+    url('../fonts/HyundaiSansTextKRRegular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Hyundai Sans Text';
+    src: url('../fonts/HyundaiSansTextKRMedium.woff2') format('woff2'),
+    url('../fonts/HyundaiSansTextKRMedium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Hyundai Sans Text';
+    src: url('../fonts/HyundaiSansTextKRBold.woff2') format('woff2'),
+    url('../fonts/HyundaiSansTextKRBold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}

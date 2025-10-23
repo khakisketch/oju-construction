@@ -1,0 +1,99 @@
+/* base.css - 기본 스타일 및 변수 */
+
+:root {
+    /* Kia 스타일 색상 */
+    --kia-black: #05141f;
+    --kia-dark: #222;
+    --kia-gray: #767676;
+    --kia-light-gray: #e5e5e5;
+    --kia-white: #ffffff;
+    --kia-red: #bb162b;
+    --kia-red-hover: #a21325;
+    --kia-silver: #f6f3f2;
+
+    /* 트랜지션 */
+    --transition-normal: all 0.3s ease;
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* 폰트 사이즈 */
+    --font-xs: 0.75rem;    /* 12px */
+    --font-sm: 0.875rem;   /* 14px */
+    --font-base: 1rem;     /* 16px */
+    --font-md: 1.125rem;   /* 18px */
+    --font-lg: 1.25rem;    /* 20px */
+    --font-xl: 1.5rem;     /* 24px */
+    --font-2xl: 1.75rem;   /* 28px */
+    --font-3xl: 2rem;      /* 32px */
+    --font-4xl: 2.5rem;    /* 40px */
+    --font-5xl: 3rem;      /* 48px */
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Kia', 'Hyundai Sans Text', 'Noto Sans KR', sans-serif;
+    line-height: 1.5;
+    color: var(--kia-black);
+    overflow-x: hidden;
+    background-color: var(--kia-white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-normal);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+/* 공통 컨테이너 스타일 */
+.container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* 공통 섹션 스타일 */
+.section {
+    padding: 5rem 0;
+}

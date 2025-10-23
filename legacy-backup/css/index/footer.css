@@ -1,0 +1,225 @@
+/* footer.css - 푸터 스타일 */
+
+.footer {
+    background-color: var(--kia-black);
+    color: #79838b;
+    padding: 4rem 0 2rem;
+    font-size: 0.875rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+}
+
+.footer-brand {
+    grid-column: span 3;
+}
+
+.footer-logo {
+    margin-bottom: 1.5rem;
+}
+
+.footer-logo img {
+    height: 2.25rem;
+}
+
+.footer-text {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: #79838b;
+    border-radius: 50%;
+    transition: var(--transition-normal);
+}
+
+.social-link:hover {
+    color: var(--kia-white);
+}
+
+.footer-nav {
+    grid-column: span 3;
+}
+
+.footer-heading {
+    color: var(--kia-white);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: #79838b;
+    transition: var(--transition-normal);
+    position: relative;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: var(--kia-white);
+}
+
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--kia-white);
+    transition: var(--transition-normal);
+}
+
+.footer-links a:hover::after {
+    width: 100%;
+}
+
+.footer-services {
+    grid-column: span 3;
+}
+
+.footer-contact {
+    grid-column: span 3;
+}
+
+.footer-contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.footer-contact-icon {
+    margin-right: 0.75rem;
+    margin-top: 0.25rem;
+    color: #79838b;
+}
+
+.footer-contact-text {
+    line-height: 1.5;
+}
+
+.footer-divider {
+    grid-column: 1 / -1;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 2rem 0;
+}
+
+.footer-bottom {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-copyright {
+    font-size: 0.75rem;
+}
+
+.footer-copyright span {
+    margin-right: 0.5rem;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.75rem;
+}
+
+.footer-legal-link {
+    color: #79838b;
+    transition: var(--transition-normal);
+}
+
+.footer-legal-link:hover {
+    color: var(--kia-white);
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    .footer-brand {
+        grid-column: span 4;
+    }
+
+    .footer-nav,
+    .footer-services,
+    .footer-contact {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 991px) {
+    .footer-brand {
+        grid-column: span 12;
+        margin-bottom: 2rem;
+    }
+
+    .footer-nav,
+    .footer-services,
+    .footer-contact {
+        grid-column: span 4;
+    }
+
+    .footer-logo {
+        text-align: center;
+    }
+
+    .footer-text {
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 767px) {
+    .footer-nav,
+    .footer-services,
+    .footer-contact {
+        grid-column: span 12;
+        margin-bottom: 2rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-legal {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
