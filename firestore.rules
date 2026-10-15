@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. 관리자(Admin) 여부 확인 함수 (추후 Custom Claims 등으로 고도화 가능)
+    // 현재는 단순히 "로그인한 사용자"를 관리자로 간주합니다.
+    // (Firebase Console에서 이메일/비밀번호 인증을 켜고, 관리자 계정만 생성해야 함)
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // 2. 'contacts' 컬렉션 (문의하기)
+    // - 누구나 생성(create) 가능 (문의 남기기)
+    // - 관리자만 읽기(read), 수정(update), 삭제(delete) 가능
+    match /contacts/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // 3. 'settings' 컬렉션 (설정)
+    // - 일반 설정(general)은 누구나 읽기 가능 (Footer 정보 등)
+    // - notifications 문서는 관리자만 읽기/쓰기 가능 (알림 이메일 목록)
+    match /settings/{document} {
+      allow read: if document != "notifications" || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // 4. 그 외 모든 문서는 기본적으로 차단 (보안 강화)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

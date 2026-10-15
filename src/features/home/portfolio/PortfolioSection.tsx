@@ -2,94 +2,149 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import { db } from "@/shared/lib/firebase/firestore";
+import { PortfolioSkeleton } from "@/shared/components/ui/Skeleton";
+import {
+  X,
+  Building2,
+  Calendar,
+  Users,
+  Ruler,
+  Clock,
+} from "lucide-react";
 
-const categories = ["전체", "건설", "소프트웨어", "측량&촬영"];
+interface PortfolioItem {
+  id: string;
+  title: string;
+  category: "construction";
+  client: string;
+  year: string;
+  duration: string;
+  scale: string;
+  description?: string;
+  image: string;
+}
 
-const projects = [
+// 카테고리 매핑
+const categoryMap: Record<string, string> = {
+  construction: "건설",
+};
+
+const categoryInfo = {
+  construction: {
+    label: "건설",
+    icon: Building2,
+    bgColor: "bg-brand-50",
+    textColor: "text-brand-700",
+  },
+};
+
+// 폴백 정적 데이터
+const fallbackProjects: PortfolioItem[] = [
   {
-    id: 1,
+    id: "1",
     title: "청주 도로 확장공사",
-    category: "건설",
+    category: "construction",
     client: "청주시청",
     year: "2023",
     duration: "8개월",
     scale: "총 연장 2.5km",
-    image: "https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=1200&q=80",
+    image: "/images/portfolio/project1.webp",
   },
   {
-    id: 2,
+    id: "2",
     title: "대전 공공기관 신축공사",
-    category: "건설",
+    category: "construction",
     client: "대전광역시",
     year: "2022",
     duration: "12개월",
     scale: "연면적 5,000㎡",
-    image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80",
+    image: "/images/portfolio/project2.webp",
   },
   {
-    id: 3,
-    title: "천안 교량 보수공사",
-    category: "건설",
-    client: "한국도로공사",
-    year: "2023",
-    duration: "6개월",
-    scale: "교량 길이 450m",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80",
+    id: "3",
+    title: "청주 아파트 외벽 방수공사",
+    category: "construction",
+    client: "청주시 아파트 관리단",
+    year: "2024",
+    duration: "4개월",
+    scale: "아파트 3개동 외벽 전체",
+    image: "/images/portfolio/project3.webp",
   },
   {
-    id: 4,
+    id: "4",
     title: "세종 산업단지 진입로 공사",
-    category: "건설",
+    category: "construction",
     client: "세종시 개발공사",
     year: "2022",
     duration: "10개월",
     scale: "총 연장 3.2km",
-    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80",
+    image: "/images/portfolio/project4.webp",
   },
   {
-    id: 5,
-    title: "건설현장 관리 시스템",
-    category: "소프트웨어",
-    client: "오주건설(주)",
-    year: "2023",
-    duration: "4개월",
-    scale: "Web & Mobile",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
+    id: "5",
+    title: "충북 아파트 단지 도장공사",
+    category: "construction",
+    client: "충북혁신도시 관리사무소",
+    year: "2024",
+    duration: "3개월",
+    scale: "5개동 외부도장",
+    image: "/images/portfolio/project1.webp",
   },
   {
-    id: 6,
-    title: "드론 측량 및 3D 모델링",
-    category: "측량&촬영",
-    client: "충청남도",
-    year: "2023",
-    duration: "2개월",
-    scale: "면적 50만㎡",
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1200&q=80",
+    id: "6",
+    title: "충북 관공서 방수·도장공사",
+    category: "construction",
+    client: "충청북도",
+    year: "2024",
+    duration: "3개월",
+    scale: "연면적 6,500㎡",
+    image: "/images/portfolio/project2.webp",
   },
 ];
 
 export default function PortfolioSection() {
-  const [activeCategory, setActiveCategory] = useState("전체");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [projects, setProjects] = useState<PortfolioItem[]>(fallbackProjects);
+  const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
 
-  const filteredProjects = activeCategory === "전체"
-    ? projects
-    : projects.filter(p => p.category === activeCategory);
+  useEffect(() => {
+    const fetchPortfolio = async () => {
+      try {
+        if (!db) throw new Error("Firestore not initialized");
+        const q = query(collection(db, "portfolio"), orderBy("createdAt", "desc"), limit(12));
+        const querySnapshot = await getDocs(q);
 
-  const currentProject = filteredProjects[currentIndex];
+        if (!querySnapshot.empty) {
+          const portfolioData: PortfolioItem[] = [];
+          querySnapshot.forEach((doc) => {
+            portfolioData.push({
+              id: doc.id,
+              ...doc.data(),
+            } as PortfolioItem);
+          });
+          setProjects(portfolioData);
+        }
+      } catch {
+        // Firestore 미활성화 또는 네트워크 에러 시 fallback 데이터 유지
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? filteredProjects.length - 1 : prev - 1));
+    fetchPortfolio();
+  }, []);
+
+  const handleProjectClick = (project: PortfolioItem) => {
+    setSelectedProject(project);
+    document.body.style.overflow = "hidden";
   };
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev === filteredProjects.length - 1 ? 0 : prev + 1));
-  };
-
-  const handleCategoryChange = (category: string) => {
-    setActiveCategory(category);
-    setCurrentIndex(0);
+  const handleCloseModal = () => {
+    setSelectedProject(null);
+    document.body.style.overflow = "unset";
   };
 
   return (
@@ -128,152 +183,227 @@ export default function PortfolioSection() {
             transition={{ delay: 0.3 }}
             className="text-gray-600 max-w-2xl mx-auto"
           >
-            대표 프로젝트를 소개합니다.
+            토목, 조경, 방수, 도장 등 다양한 건설 분야의 대표 프로젝트를 소개합니다.
           </motion.p>
         </div>
 
-        {/* Category Filter */}
+        {/* Grid Gallery */}
+        <motion.div
+          layout
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {projects.map((project, idx) => (
+            <motion.div
+              key={project.id}
+              layout
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              onClick={() => handleProjectClick(project)}
+              className="group relative overflow-hidden rounded-xl shadow-lg cursor-pointer bg-white"
+            >
+              {/* Image Container */}
+              <div className="relative h-64 md:h-72 overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+
+                {/* Category Badge */}
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-brand-700 text-xs font-semibold rounded-full">
+                    {categoryMap[project.category] || project.category}
+                  </span>
+                </div>
+
+                {/* Year Badge */}
+                <div className="absolute top-4 right-4 z-10">
+                  <span className="px-3 py-1 bg-brand-700/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
+                    {project.year}
+                  </span>
+                </div>
+
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
+
+                {/* Content */}
+                <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                  <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-brand-200 transition-colors">
+                    {project.title}
+                  </h3>
+
+                  {/* Details - Always visible on mobile, hover on desktop */}
+                  <div className="grid grid-cols-2 gap-2 max-h-24 md:max-h-0 md:group-hover:max-h-24 overflow-hidden transition-all duration-500">
+                    <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                      <div className="text-xs text-gray-300">발주처</div>
+                      <div className="text-sm font-medium">{project.client}</div>
+                    </div>
+                    <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-150">
+                      <div className="text-xs text-gray-300">공사규모</div>
+                      <div className="text-sm font-medium">{project.scale}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* View All Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="flex justify-center mb-8 md:mb-12"
+          transition={{ delay: 0.5 }}
+          className="text-center mt-10"
         >
-          <div className="inline-flex flex-wrap gap-2 md:gap-3 p-2 bg-gray-50 rounded-full">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => handleCategoryChange(category)}
-                className={`
-                  px-4 md:px-6 py-2 md:py-2.5 rounded-full font-medium text-sm md:text-base
-                  transition-all duration-300
-                  ${activeCategory === category
-                    ? 'bg-brand-700 text-white shadow-md'
-                    : 'text-gray-600 hover:text-brand-700 hover:bg-white'
-                  }
-                `}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          <a
+            href="/portfolio"
+            className="inline-flex items-center gap-2 px-6 py-3 border-2 border-brand-700 text-brand-700 font-semibold rounded-full hover:bg-brand-700 hover:text-white transition-all duration-300"
+          >
+            전체 프로젝트 보기
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
         </motion.div>
+      </div>
 
-        {/* Carousel Container */}
-        <div className="relative max-w-6xl mx-auto">
-          {/* Single Project Display with Animation */}
-          <div className="overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`${activeCategory}-${currentIndex}`}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.5 }}
+      {/* Detail Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={handleCloseModal}
+              className="fixed inset-0 bg-black/70 z-50"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 50 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 50 }}
+              className="fixed inset-4 md:inset-8 lg:inset-12 bg-white rounded-2xl z-50 overflow-hidden flex flex-col"
+            >
+              {/* Close Button */}
+              <button
+                onClick={handleCloseModal}
+                className="absolute top-4 right-4 z-10 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-colors"
               >
-                <div className="group relative overflow-hidden rounded-2xl shadow-2xl cursor-pointer bg-white">
-                  <div className="relative h-[420px] md:h-[480px] overflow-hidden">
-                    <Image
-                      src={currentProject.image}
-                      alt={currentProject.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
+                <X className="w-6 h-6 text-gray-700" />
+              </button>
 
-                    {/* Base Gradient - Always Visible for Title */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+              <div className="flex-1 overflow-y-auto">
+                {/* Hero Image */}
+                <div className="relative h-64 md:h-80 lg:h-96 bg-gray-100">
+                  <Image
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                    {/* Hover Gradient - Enhanced Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Category Badge */}
+                  <div className="absolute top-6 left-6">
+                    <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 ${categoryInfo.construction.textColor}`}>
+                      {(() => {
+                        const Icon = categoryInfo.construction.icon;
+                        return <Icon className="w-4 h-4" />;
+                      })()}
+                      {categoryInfo.construction.label}
+                    </span>
+                  </div>
 
-                    {/* Project Title - Always Visible */}
-                    <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 text-white">
-                      <div className="max-w-4xl">
-                        <motion.h3
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.2 }}
-                          className="text-2xl md:text-4xl font-bold mb-2 drop-shadow-lg transition-all duration-300 group-hover:mb-4 group-hover:md:mb-6"
-                        >
-                          {currentProject.title}
-                        </motion.h3>
+                  {/* Year Badge */}
+                  <div className="absolute top-6 right-16">
+                    <span className="px-4 py-2 bg-brand-700/90 text-white rounded-full font-semibold">
+                      {selectedProject.year}
+                    </span>
+                  </div>
 
-                        {/* Project Info - Only on Hover with Staggered Animation */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-h-0 group-hover:max-h-40 overflow-hidden transition-all duration-500 ease-out">
-                          <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75">
-                            <div className="text-xs md:text-sm text-gray-200 mb-1">발주처</div>
-                            <div className="text-sm md:text-lg font-semibold">{currentProject.client}</div>
-                          </div>
-                          <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-150">
-                            <div className="text-xs md:text-sm text-gray-200 mb-1">완공연도</div>
-                            <div className="text-sm md:text-lg font-semibold">{currentProject.year}년</div>
-                          </div>
-                          <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-[225ms]">
-                            <div className="text-xs md:text-sm text-gray-200 mb-1">공사기간</div>
-                            <div className="text-sm md:text-lg font-semibold">{currentProject.duration}</div>
-                          </div>
-                          <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-300">
-                            <div className="text-xs md:text-sm text-gray-200 mb-1">공사규모</div>
-                            <div className="text-sm md:text-lg font-semibold">{currentProject.scale}</div>
-                          </div>
-                        </div>
+                  {/* Title Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
+                      {selectedProject.title}
+                    </h2>
+                    <p className="text-lg text-white/80">{selectedProject.client}</p>
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="p-6 md:p-8 lg:p-12">
+                  {/* Info Cards */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div className={`p-4 rounded-xl ${categoryInfo.construction.bgColor}`}>
+                      <div className="flex items-center gap-2 text-gray-500 mb-1">
+                        <Users className="w-4 h-4" />
+                        <span className="text-sm">발주처</span>
                       </div>
+                      <p className="font-bold text-gray-900">{selectedProject.client}</p>
+                    </div>
+                    <div className={`p-4 rounded-xl ${categoryInfo.construction.bgColor}`}>
+                      <div className="flex items-center gap-2 text-gray-500 mb-1">
+                        <Calendar className="w-4 h-4" />
+                        <span className="text-sm">연도</span>
+                      </div>
+                      <p className="font-bold text-gray-900">{selectedProject.year}</p>
+                    </div>
+                    <div className={`p-4 rounded-xl ${categoryInfo.construction.bgColor}`}>
+                      <div className="flex items-center gap-2 text-gray-500 mb-1">
+                        <Clock className="w-4 h-4" />
+                        <span className="text-sm">공사기간</span>
+                      </div>
+                      <p className="font-bold text-gray-900">{selectedProject.duration || "-"}</p>
+                    </div>
+                    <div className={`p-4 rounded-xl ${categoryInfo.construction.bgColor}`}>
+                      <div className="flex items-center gap-2 text-gray-500 mb-1">
+                        <Ruler className="w-4 h-4" />
+                        <span className="text-sm">규모</span>
+                      </div>
+                      <p className="font-bold text-gray-900">{selectedProject.scale || "-"}</p>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  {selectedProject.description && (
+                    <div className="border-t border-gray-100 pt-8">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4">프로젝트 개요</h3>
+                      <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">
+                        {selectedProject.description}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* CTA */}
+                  <div className="border-t border-gray-100 pt-8 mt-8">
+                    <div className="bg-brand-50 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                      <div>
+                        <h3 className="font-bold text-gray-900 mb-1">
+                          비슷한 프로젝트가 필요하신가요?
+                        </h3>
+                        <p className="text-gray-600 text-sm">
+                          오주건설이 고객의 요구에 맞는 최적의 솔루션을 제공합니다.
+                        </p>
+                      </div>
+                      <a
+                        href="/contact"
+                        className="whitespace-nowrap px-6 py-3 bg-brand-700 text-white font-semibold rounded-lg hover:bg-brand-800 transition-colors"
+                      >
+                        문의하기
+                      </a>
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Navigation Controls - Bottom Centered */}
-          <div className="flex items-center justify-center gap-6 mt-8 md:mt-10">
-            {/* Previous Button */}
-            <button
-              onClick={handlePrevious}
-              className="group flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-brand-700 border-2 border-gray-200 hover:border-brand-700 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-              aria-label="이전"
-            >
-              <svg className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-              </svg>
-              <span className="text-sm font-medium text-gray-600 group-hover:text-white transition-colors hidden md:inline">이전</span>
-            </button>
-
-            {/* Pagination Dots */}
-            <div className="flex items-center gap-2">
-              {filteredProjects.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`
-                    h-2 rounded-full transition-all duration-300
-                    ${currentIndex === index ? 'bg-brand-700 w-8' : 'bg-gray-300 w-2 hover:bg-gray-400'}
-                  `}
-                  aria-label={`프로젝트 ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Next Button */}
-            <button
-              onClick={handleNext}
-              className="group flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-brand-700 border-2 border-gray-200 hover:border-brand-700 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-              aria-label="다음"
-            >
-              <span className="text-sm font-medium text-gray-600 group-hover:text-white transition-colors hidden md:inline">다음</span>
-              <svg className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Counter */}
-          <div className="text-center mt-4 text-sm text-gray-500 font-medium">
-            {currentIndex + 1} / {filteredProjects.length}
-          </div>
-        </div>
-      </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

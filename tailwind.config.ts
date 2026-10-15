@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -20,17 +19,17 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          50: "#eff6ff",
-          100: "#dbeafe",
-          200: "#bfdbfe",
-          300: "#93c5fd",
-          400: "#60a5fa",
-          500: "#2563eb",
-          600: "#1d4ed8",
-          700: "#1e40af",
-          800: "#1e3a8a",
-          900: "#172554",
-          950: "#0f172a",
+          50: "#f0f4f9",
+          100: "#dae4f2",
+          200: "#b8cce6",
+          300: "#8aaad4",
+          400: "#5a85c0",
+          500: "#3a66a8",
+          600: "#1f4a8a",
+          700: "#0e2f64",  // 메인 브랜드 컬러
+          800: "#0b2550",
+          900: "#081c3d",
+          950: "#05112a",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -93,6 +92,9 @@ const config: Config = {
             lineHeight: "1.75",
           },
         },
+      },
+      transitionDelay: {
+        "225": "225ms",
       },
       fontSize: {
         "display-lg": ["4.5rem", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "800" }],

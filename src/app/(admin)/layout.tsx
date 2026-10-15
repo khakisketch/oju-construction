@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AdminAuthGuard from "@/features/admin/components/AdminAuthGuard";
 
 export const metadata: Metadata = {
   title: "관리자 페이지 | 오주건설(주)",
@@ -11,5 +12,5 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <AdminAuthGuard>{children}</AdminAuthGuard>;
 }

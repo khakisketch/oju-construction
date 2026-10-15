@@ -1,0 +1,37 @@
+{
+  "name": "오주건설(주) - 미래를 여는 건설",
+  "short_name": "오주건설",
+  "description": "오주건설(주)은 6개 전문건설 면허를 보유한 종합건설회사입니다. 토목공사, 지반조성포장, 조경공사, 방수공사, 도장공사, 시설물 유지보수 서비스를 제공합니다.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0e2f64",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/images/ojuconstruction-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "construction"],
+  "shortcuts": [
+    {
+      "name": "문의하기",
+      "short_name": "문의",
+      "description": "오주건설에 문의하기",
+      "url": "/contact",
+      "icons": [{ "src": "/images/ojuconstruction-logo.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "포트폴리오",
+      "short_name": "포트폴리오",
+      "description": "시공 실적 보기",
+      "url": "/portfolio",
+      "icons": [{ "src": "/images/ojuconstruction-logo.png", "sizes": "192x192" }]
+    }
+  ]
+}

@@ -46,7 +46,7 @@ export default function CEOMessage() {
             >
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80"
+                  src="/images/about/ceo.webp"
                   alt="오주건설(주) CEO"
                   fill
                   className="object-cover"
@@ -70,7 +70,7 @@ export default function CEOMessage() {
               </div>
 
               <h3 className="text-2xl md:text-3xl font-bold mb-6 leading-relaxed text-gray-900">
-                토목공사 및 소프트웨어 개발 전문기업,<br />
+                토목 종합건설 전문기업,<br />
                 <span className="text-brand-700">오주건설(주)</span>입니다
               </h3>
 

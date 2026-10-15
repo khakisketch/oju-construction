@@ -9,36 +9,43 @@ const businessAreas = [
     title: "토목",
     subtitle: "전문적인 토목 시공으로",
     description: "완벽하게 구현합니다",
-    image: "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=80",
+    image: "/images/construction/civil.webp",
     category: "토목공사"
   },
   {
     title: "지반조성포장",
     subtitle: "견고한 기반을",
     description: "조성합니다",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+    image: "/images/construction/paving.webp",
     category: "토공"
   },
   {
     title: "조경",
     subtitle: "자연과 조화로운",
     description: "공간을 창조합니다",
-    image: "https://images.unsplash.com/photo-1558904541-efa843a96f01?w=800&q=80",
+    image: "/images/construction/landscape.webp",
     category: "식재 · 시설물"
   },
   {
     title: "습식",
-    subtitle: "완벽한 방수로",
+    subtitle: "아파트·건물 완벽 방수로",
     description: "안전을 보장합니다",
-    image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80",
+    image: "/images/construction/waterproofing.webp",
     category: "방수"
   },
   {
     title: "도장",
-    subtitle: "마무리까지 완벽한",
+    subtitle: "아파트 외벽·건물 도장",
     description: "품질을 제공합니다",
     image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80",
     category: "도장"
+  },
+  {
+    title: "유지보수",
+    subtitle: "아파트·시설물 체계적 관리로",
+    description: "자산가치를 높입니다",
+    image: "/images/construction/maintenance.webp",
+    category: "시설관리"
   }
 ];
 
@@ -57,40 +64,44 @@ export default function ConstructionSection() {
     <section id="construction" className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
-        <div className="text-center mb-4">
+        <div className="text-center mb-12">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-brand-700 font-semibold text-sm uppercase tracking-wide"
+          >
+            Our Business
+          </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold mb-4"
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-4xl font-bold mt-2 mb-4"
           >
-            우리가 꿈꾸는 미래를 건설합니다.
+            사업분야
           </motion.h2>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="flex items-center justify-center gap-2 mb-2"
-          >
-            <div className="h-px w-12 bg-brand-600"></div>
-            <span className="text-sm font-semibold text-brand-700 uppercase tracking-wide">OUR BUSINESS</span>
-            <div className="h-px w-12 bg-brand-600"></div>
-          </motion.div>
+            transition={{ delay: 0.15 }}
+            className="w-20 h-1 bg-brand-700 mx-auto mb-6"
+          />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            className="text-gray-600 max-w-2xl mx-auto"
           >
-            4차 산업혁명 시대에 필요한 선진기술 도입, 자체 기술 개발, 그리고 우수 인재를 보유하여 건축, 토목, 주택,<br className="hidden md:block" />
-            플랜트 등 지속적인 사업영역 확장을 통해 고유기업으로 도약하고 있습니다.
+            토목, 조경, 방수, 도장 등 다양한 전문 건설 분야에서 최고의 품질을 제공합니다.
           </motion.p>
         </div>
 
         {/* Mobile Carousel */}
-        <div className="md:hidden mt-12">
+        <div className="md:hidden">
           <div className="relative">
             {/* Carousel Container */}
             <div className="overflow-hidden rounded-lg">
@@ -102,10 +113,14 @@ export default function ConstructionSection() {
                   <div key={idx} className="min-w-full">
                     <div className="group relative h-96 overflow-hidden rounded-lg shadow-lg mx-2">
                       {/* Background Image */}
-                      <div
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{ backgroundImage: `url(${area.image})` }}
-                      />
+                      <div className="absolute inset-0">
+                        <img
+                          src={area.image}
+                          alt={area.title}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
 
                       {/* Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
@@ -169,21 +184,26 @@ export default function ConstructionSection() {
         </div>
 
         {/* Desktop Grid */}
-        <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-4 mt-12">
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {businessAreas.map((area, idx) => (
-            <motion.div
+            <motion.a
               key={idx}
+              href="/construction"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group relative h-80 overflow-hidden rounded-lg shadow-lg"
+              className="group relative h-80 overflow-hidden rounded-lg shadow-lg cursor-pointer"
             >
               {/* Background Image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style={{ backgroundImage: `url(${area.image})` }}
-              />
+              <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                <img
+                  src={area.image}
+                  alt={area.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
 
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
@@ -197,9 +217,29 @@ export default function ConstructionSection() {
                   {area.description}
                 </p>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-12"
+        >
+          <p className="text-gray-500 mb-4 text-sm">6개 전문면허로 하도급 없이 원스톱 시공 — 비용과 공기를 절감합니다</p>
+          <a
+            href="/#contact"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-brand-700 text-white font-semibold rounded-full hover:bg-brand-800 hover:scale-105 transition-all duration-300 shadow-lg"
+          >
+            무료 견적 상담
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </motion.div>
       </div>
     </section>
   );

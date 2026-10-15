@@ -3,12 +3,17 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { env } from "@/shared/config/env";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+
+  const isHomePage = pathname === "/";
+  const isSubPage = !isHomePage;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,15 +23,21 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const getHeaderBackground = () => {
+    if (isScrolled) {
+      return "bg-white/95 backdrop-blur-md shadow-lg";
+    }
+    if (isSubPage) {
+      return "bg-gray-900/70 backdrop-blur-sm";
+    }
+    return "bg-transparent";
+  };
+
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${getHeaderBackground()}`}
     >
       <div className="container mx-auto px-4 md:px-6 py-3 md:py-3.5 flex items-center justify-between">
         {/* Logo */}
@@ -58,7 +69,7 @@ export default function Header() {
           <ul className="flex items-center space-x-1">
             <li>
               <Link
-                href="#about"
+                href="/about"
                 className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
                   isScrolled
                     ? "text-gray-700 hover:text-brand-700"
@@ -73,7 +84,7 @@ export default function Header() {
             </li>
             <li>
               <Link
-                href="#services"
+                href="/construction"
                 className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
                   isScrolled
                     ? "text-gray-700 hover:text-brand-700"
@@ -88,37 +99,7 @@ export default function Header() {
             </li>
             <li>
               <Link
-                href="/software"
-                className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-brand-700"
-                    : "text-white hover:text-brand-300"
-                }`}
-              >
-                소프트웨어
-                <span className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
-                  isScrolled ? "bg-brand-700" : "bg-white"
-                }`}></span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/drone"
-                className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-brand-700"
-                    : "text-white hover:text-brand-300"
-                }`}
-              >
-                드론촬영
-                <span className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
-                  isScrolled ? "bg-brand-700" : "bg-white"
-                }`}></span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#portfolio"
+                href="/portfolio"
                 className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
                   isScrolled
                     ? "text-gray-700 hover:text-brand-700"
@@ -131,9 +112,24 @@ export default function Header() {
                 }`}></span>
               </Link>
             </li>
+            <li>
+              <Link
+                href="/news"
+                className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
+                  isScrolled
+                    ? "text-gray-700 hover:text-brand-700"
+                    : "text-white hover:text-brand-300"
+                }`}
+              >
+                소식
+                <span className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
+                  isScrolled ? "bg-brand-700" : "bg-white"
+                }`}></span>
+              </Link>
+            </li>
             <li className="ml-2">
               <Link
-                href="#contact"
+                href="/#contact"
                 className={`inline-block px-5 py-2 text-[15px] font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200 ${
                   isScrolled
                     ? "text-white bg-brand-700 hover:bg-brand-800"
@@ -189,7 +185,7 @@ export default function Header() {
               <ul className="px-4 py-3 space-y-1">
                 <li>
                   <Link
-                    href="#about"
+                    href="/about"
                     className="block px-4 py-2.5 text-[15px] font-medium text-gray-700 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition-all"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -198,7 +194,7 @@ export default function Header() {
                 </li>
                 <li>
                   <Link
-                    href="#services"
+                    href="/construction"
                     className="block px-4 py-2.5 text-[15px] font-medium text-gray-700 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition-all"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -207,34 +203,25 @@ export default function Header() {
                 </li>
                 <li>
                   <Link
-                    href="/software"
-                    className="block px-4 py-2.5 text-[15px] font-medium text-gray-700 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition-all"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    소프트웨어
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/drone"
-                    className="block px-4 py-2.5 text-[15px] font-medium text-gray-700 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition-all"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    드론촬영
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#portfolio"
+                    href="/portfolio"
                     className="block px-4 py-2.5 text-[15px] font-medium text-gray-700 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition-all"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     시공실적
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/news"
+                    className="block px-4 py-2.5 text-[15px] font-medium text-gray-700 hover:text-brand-700 hover:bg-brand-50 rounded-lg transition-all"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    소식
+                  </Link>
+                </li>
                 <li className="pt-2">
                   <Link
-                    href="#contact"
+                    href="/#contact"
                     className="block text-center px-4 py-2.5 text-[15px] font-semibold text-white bg-brand-700 rounded-lg hover:bg-brand-800 transition-all"
                     onClick={() => setIsMenuOpen(false)}
                   >
