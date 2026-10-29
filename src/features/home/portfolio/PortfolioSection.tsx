@@ -1,409 +1,529 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import Link from "next/link";
+import { useMotionValue, useReducedMotion, type MotionValue } from "framer-motion";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { ArrowRight, Building2, MapPin } from "lucide-react";
 import { db } from "@/shared/lib/firebase/firestore";
-import { PortfolioSkeleton } from "@/shared/components/ui/Skeleton";
+import { isFirebaseConfigured } from "@/shared/config/env";
+import BeforeAfterSlider from "./BeforeAfterSlider";
+import sliderStyles from "./BeforeAfterSlider.module.css";
+import homeStyles from "../HomeSections.module.css";
+import { PortfolioWorkExamples } from "./PortfolioWorkExamples";
 import {
-  X,
-  Building2,
-  Calendar,
-  Users,
-  Ruler,
-  Clock,
-} from "lucide-react";
+  portfolioExample,
+  portfolioExampleHeroImage,
+  type PortfolioItem,
+} from "./portfolioData";
+import {
+  EMPTY_PORTFOLIO_FILTER,
+  filterProjects,
+  getClientTypeOptions,
+  getTradeOptions,
+  isPublishedProject,
+  type PortfolioFilter,
+} from "./portfolioFilters";
 
-interface PortfolioItem {
-  id: string;
-  title: string;
-  category: "construction";
-  client: string;
-  year: string;
-  duration: string;
-  scale: string;
-  description?: string;
-  image: string;
+interface PortfolioSectionProps {
+  view?: "home" | "page";
 }
 
-// 카테고리 매핑
-const categoryMap: Record<string, string> = {
-  construction: "건설",
+function getPortfolioImages(project: PortfolioItem) {
+  const currentImages = Array.isArray(project.images) ? project.images : [];
+  const legacyImage = project.image ? [project.image] : [];
+  return Array.from(new Set([...currentImages, ...legacyImage].filter(Boolean)));
+}
+
+function getTradeLabel(project: PortfolioItem) {
+  if (project.trade?.trim()) return project.trade;
+  if (project.category === "construction") return "건설";
+  return project.category || "";
+}
+
+function getProjectScope(project: PortfolioItem) {
+  return project.scope?.trim() || project.scale?.trim() || "";
+}
+
+const homeExampleSliderProps = {
+  imageBefore: portfolioExample.imageBefore!,
+  imageAfter: portfolioExample.imageAfter!,
+  title: portfolioExample.title,
+  example: true,
+  exampleCaption: "",
+  frameClassName: sliderStyles.homeExampleFrame,
+  imagePositionClassName: "object-[50%_60%]",
+  hideExampleBadge: true,
+  sizes: "(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) calc(100vw - 48px), 1280px",
+  className: "w-full",
 };
 
-const categoryInfo = {
-  construction: {
-    label: "건설",
-    icon: Building2,
-    bgColor: "bg-brand-50",
-    textColor: "text-brand-700",
-  },
-};
+function HomeExampleContent({
+  header,
+  scrollPosition,
+  reducedMotion = false,
+}: {
+  header: ReactNode;
+  scrollPosition?: MotionValue<number>;
+  reducedMotion?: boolean;
+}) {
+  return (
+    <div className={`${sliderStyles.homeExampleContent} w-full`}>
+      {header}
+      <BeforeAfterSlider
+        {...homeExampleSliderProps}
+        scrollPosition={scrollPosition}
+        showStepButtons={false}
+        manualControlEnabled={!reducedMotion}
+      />
+      <div data-home-example-caption className="mt-3 flex flex-col gap-3 min-[380px]:flex-row min-[380px]:items-end min-[380px]:justify-between">
+        <div className="min-w-0">
+          <p className="flex items-center gap-2 text-base font-medium text-gray-600">
+            아파트 주차장
+            <span className="inline-flex shrink-0 rounded bg-gray-100 px-2.5 py-1 text-xs font-semibold text-gray-700">
+              예시
+            </span>
+          </p>
+          <h3 className="mt-0.5 text-2xl font-bold leading-snug text-brand-900 md:text-3xl">
+            포장 보수 사례
+          </h3>
+        </div>
+        <Link
+          href="/portfolio"
+          className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-brand-700 px-3 font-semibold text-white transition-colors hover:bg-brand-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2 sm:px-4"
+        >
+          다른 현장 사례 <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
+      </div>
+    </div>
+  );
+}
 
-// 폴백 정적 데이터
-const fallbackProjects: PortfolioItem[] = [
-  {
-    id: "1",
-    title: "청주 도로 확장공사",
-    category: "construction",
-    client: "청주시청",
-    year: "2023",
-    duration: "8개월",
-    scale: "총 연장 2.5km",
-    image: "/images/portfolio/project1.webp",
-  },
-  {
-    id: "2",
-    title: "대전 공공기관 신축공사",
-    category: "construction",
-    client: "대전광역시",
-    year: "2022",
-    duration: "12개월",
-    scale: "연면적 5,000㎡",
-    image: "/images/portfolio/project2.webp",
-  },
-  {
-    id: "3",
-    title: "청주 아파트 외벽 방수공사",
-    category: "construction",
-    client: "청주시 아파트 관리단",
-    year: "2024",
-    duration: "4개월",
-    scale: "아파트 3개동 외벽 전체",
-    image: "/images/portfolio/project3.webp",
-  },
-  {
-    id: "4",
-    title: "세종 산업단지 진입로 공사",
-    category: "construction",
-    client: "세종시 개발공사",
-    year: "2022",
-    duration: "10개월",
-    scale: "총 연장 3.2km",
-    image: "/images/portfolio/project4.webp",
-  },
-  {
-    id: "5",
-    title: "충북 아파트 단지 도장공사",
-    category: "construction",
-    client: "충북혁신도시 관리사무소",
-    year: "2024",
-    duration: "3개월",
-    scale: "5개동 외부도장",
-    image: "/images/portfolio/project1.webp",
-  },
-  {
-    id: "6",
-    title: "충북 관공서 방수·도장공사",
-    category: "construction",
-    client: "충청북도",
-    year: "2024",
-    duration: "3개월",
-    scale: "연면적 6,500㎡",
-    image: "/images/portfolio/project2.webp",
-  },
-];
-
-export default function PortfolioSection() {
-  const [projects, setProjects] = useState<PortfolioItem[]>(fallbackProjects);
-  const [loading, setLoading] = useState(true);
-  const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
+function ScrollDrivenHomeExampleSlider({ header }: { header: ReactNode }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const pinnedScreenRef = useRef<HTMLDivElement>(null);
+  const comparisonPosition = useMotionValue(85);
 
   useEffect(() => {
-    const fetchPortfolio = async () => {
-      try {
-        if (!db) throw new Error("Firestore not initialized");
-        const q = query(collection(db, "portfolio"), orderBy("createdAt", "desc"), limit(12));
-        const querySnapshot = await getDocs(q);
+    const track = trackRef.current;
+    const pinnedScreen = pinnedScreenRef.current;
+    if (!track || !pinnedScreen) return;
 
-        if (!querySnapshot.empty) {
-          const portfolioData: PortfolioItem[] = [];
-          querySnapshot.forEach((doc) => {
-            portfolioData.push({
-              id: doc.id,
-              ...doc.data(),
-            } as PortfolioItem);
-          });
-          setProjects(portfolioData);
+    let isInView = false;
+    let animationFrame: number | null = null;
+
+    const updatePosition = () => {
+      animationFrame = null;
+      const trackBounds = track.getBoundingClientRect();
+      const trackTop = trackBounds.top + window.scrollY;
+      // Keep fractional aspect-ratio/svh sizes so the divider finishes exactly
+      // when CSS sticky releases, including on narrow mobile viewports.
+      const trackHeight = trackBounds.height;
+      const screenHeight = pinnedScreen.getBoundingClientRect().height;
+      const stickyTop = Number.parseFloat(getComputedStyle(pinnedScreen).top) || 0;
+      const start = trackTop - stickyTop;
+      const end = trackTop + trackHeight - screenHeight - stickyTop;
+      const travelDistance = Math.max(1, end - start);
+      const progress = Math.min(
+        1,
+        Math.max(0, (window.scrollY - start) / travelDistance),
+      );
+
+      comparisonPosition.set(85 - progress * 70);
+    };
+
+    const scheduleUpdate = () => {
+      if (animationFrame !== null) return;
+      animationFrame = window.requestAnimationFrame(updatePosition);
+    };
+
+    const handleScroll = () => {
+      if (isInView) scheduleUpdate();
+    };
+
+    const observer = typeof IntersectionObserver === "undefined"
+      ? null
+      : new IntersectionObserver(([entry]) => {
+          isInView = entry.isIntersecting;
+          scheduleUpdate();
+        });
+
+    const resizeObserver = typeof ResizeObserver === "undefined"
+      ? null
+      : new ResizeObserver(scheduleUpdate);
+
+    if (observer) observer.observe(track);
+    else isInView = true;
+    resizeObserver?.observe(track);
+    resizeObserver?.observe(pinnedScreen);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    window.visualViewport?.addEventListener("resize", scheduleUpdate);
+    scheduleUpdate();
+
+    return () => {
+      observer?.disconnect();
+      resizeObserver?.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", scheduleUpdate);
+      window.visualViewport?.removeEventListener("resize", scheduleUpdate);
+      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
+    };
+  }, [comparisonPosition]);
+
+  return (
+    <div
+      ref={trackRef}
+      className={sliderStyles.scrollPinTrack}
+      data-scroll-pinned="true"
+    >
+      <div
+        ref={pinnedScreenRef}
+        className={sliderStyles.scrollPinPanel}
+        data-scroll-pinned="true"
+      >
+        <HomeExampleContent
+          header={header}
+          scrollPosition={comparisonPosition}
+        />
+      </div>
+    </div>
+  );
+}
+
+function HomeExampleSlider({ header }: { header: ReactNode }) {
+  const prefersReducedMotion = useReducedMotion();
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (hasMounted && prefersReducedMotion) {
+    return (
+      <div className={sliderStyles.scrollPinPanel} data-scroll-pinned="true">
+        <HomeExampleContent header={header} reducedMotion />
+      </div>
+    );
+  }
+
+  return <ScrollDrivenHomeExampleSlider header={header} />;
+}
+
+function ExamplePortfolio({ view, header }: { view: "home" | "page"; header?: ReactNode }) {
+  if (view === "page") {
+    return (
+      <article className="grid max-w-4xl overflow-hidden rounded-xl border border-gray-200 bg-white sm:grid-cols-[15rem_minmax(0,1fr)]">
+        <Link
+          href={`/portfolio/detail?id=${encodeURIComponent(portfolioExample.id)}`}
+          aria-label="전·후 비교 예시 상세 보기"
+          className="group relative block aspect-[3/2] overflow-hidden bg-gray-100 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-700 sm:aspect-auto sm:min-h-64"
+        >
+          <Image
+            src={portfolioExampleHeroImage}
+            alt=""
+            aria-hidden="true"
+            fill
+            sizes="(max-width: 639px) 100vw, 240px"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+          <span className="absolute left-3 top-3 rounded bg-black/75 px-2.5 py-1.5 text-xs font-semibold text-white">
+            예시 이미지
+          </span>
+        </Link>
+        <div className="flex flex-col items-start justify-center p-4 sm:p-5">
+          <p className="text-xs font-semibold text-gray-600">실제 시공실적이 아닌 디자인 목업</p>
+          <h2 className="mt-1.5 text-xl font-bold text-gray-900">{portfolioExample.title}</h2>
+          <p className="mt-1.5 max-w-xl text-base leading-relaxed text-gray-600">
+            시안용 AI 목업 이미지입니다. 실제 오주건설 시공 사진이나 실적이 아니며, 실제 자료가 등록되면 해당 정보가 표시됩니다.
+          </p>
+          <Link
+            href={`/portfolio/detail?id=${encodeURIComponent(portfolioExample.id)}`}
+            className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-lg bg-brand-700 px-4 font-semibold text-white transition-colors hover:bg-brand-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2"
+          >
+            전·후 비교 보기 <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <HomeExampleSlider header={header} />
+  );
+}
+
+export default function PortfolioSection({ view = "page" }: PortfolioSectionProps) {
+  const isHome = view === "home";
+  const [projects, setProjects] = useState<PortfolioItem[]>([]);
+  const [isLoading, setIsLoading] = useState(isFirebaseConfigured);
+  const [loadError, setLoadError] = useState(false);
+  const [loadAttempt, setLoadAttempt] = useState(0);
+  const [filter, setFilter] = useState<PortfolioFilter>(EMPTY_PORTFOLIO_FILTER);
+
+  useEffect(() => {
+    if (!isFirebaseConfigured) {
+      setProjects([]);
+      setIsLoading(false);
+      setLoadError(false);
+      return;
+    }
+
+    let isMounted = true;
+    const fetchPortfolio = async () => {
+      setIsLoading(true);
+      setLoadError(false);
+      try {
+        const portfolioQuery = query(collection(db, "portfolio"), orderBy("createdAt", "desc"), limit(12));
+        const snapshot = await getDocs(portfolioQuery);
+        if (isMounted) {
+          setProjects(snapshot.docs.map((document) => ({
+            id: document.id,
+            ...document.data(),
+          } as PortfolioItem)));
         }
       } catch {
-        // Firestore 미활성화 또는 네트워크 에러 시 fallback 데이터 유지
+        if (isMounted) setLoadError(true);
       } finally {
-        setLoading(false);
+        if (isMounted) setIsLoading(false);
       }
     };
 
-    fetchPortfolio();
-  }, []);
+    void fetchPortfolio();
+    return () => {
+      isMounted = false;
+    };
+  }, [loadAttempt]);
 
-  const handleProjectClick = (project: PortfolioItem) => {
-    setSelectedProject(project);
-    document.body.style.overflow = "hidden";
-  };
-
-  const handleCloseModal = () => {
-    setSelectedProject(null);
-    document.body.style.overflow = "unset";
-  };
+  const publishedProjects = projects.filter(isPublishedProject);
+  const tradeOptions = getTradeOptions(publishedProjects);
+  const clientTypeOptions = getClientTypeOptions(publishedProjects);
+  const filteredProjects = filterProjects(publishedProjects, filter);
+  const hasActiveFilter = filter.trade !== "" || filter.clientType !== "" || filter.query.trim() !== "";
+  // 필터 UI는 /portfolio 목록(view="page")에서 실데이터가 있을 때만 노출.
+  const showFilters = !isHome && publishedProjects.length > 0;
+  const visibleProjects = isHome ? publishedProjects.slice(0, 3) : filteredProjects;
+  const Heading = isHome ? "h2" : "h1";
+  const isHomeExample = isHome && !isLoading && !loadError && publishedProjects.length === 0;
+  const sectionHeader = (
+        <div data-portfolio-header className={isHome ? `${homeStyles.header} flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between` : "mb-7 md:mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"}>
+          <div className="max-w-2xl">
+            <Heading id="portfolio-heading" className={isHome ? homeStyles.title : "text-3xl font-bold tracking-tight text-brand-900 md:text-4xl"}>
+              주요 시공실적
+            </Heading>
+            <p className={isHome ? homeStyles.description : "mt-2.5 leading-6 text-gray-600"}>
+              {isHome
+                ? "공종과 현장별 시공 정보를 확인하세요."
+                : "공종·위치·시공 범위와 현장 사진을 살펴보세요."}
+            </p>
+          </div>
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600">
+            <Building2 className="h-4 w-4 text-brand-700" aria-hidden="true" />
+            시공 프로젝트
+          </span>
+        </div>
+  );
 
   return (
-    <section id="portfolio" className="py-16 md:py-24 bg-white">
+    <section
+      id="portfolio"
+      aria-labelledby="portfolio-heading"
+      className={isHome ? `bg-white ${isHomeExample ? "" : "py-8 md:py-12"}` : "bg-white py-10 md:py-12"}
+    >
       <div className="container mx-auto px-4 md:px-6">
-        {/* Section Title */}
-        <div className="text-center mb-12 md:mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-brand-700 font-semibold text-sm uppercase tracking-wide"
-          >
-            Our Works
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold mt-2 mb-4"
-          >
-            주요 시공실적
-          </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="w-20 h-1 bg-brand-700 mx-auto mb-6"
-          />
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="text-gray-600 max-w-2xl mx-auto"
-          >
-            토목, 조경, 방수, 도장 등 다양한 건설 분야의 대표 프로젝트를 소개합니다.
-          </motion.p>
-        </div>
+        {!isHomeExample && sectionHeader}
 
-        {/* Grid Gallery */}
-        <motion.div
-          layout
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {projects.map((project, idx) => (
-            <motion.div
-              key={project.id}
-              layout
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              onClick={() => handleProjectClick(project)}
-              className="group relative overflow-hidden rounded-xl shadow-lg cursor-pointer bg-white"
+        {isLoading ? (
+          <p role="status" className="border-y border-gray-200 py-8 text-center text-base text-gray-600">
+            시공실적을 불러오고 있습니다.
+          </p>
+        ) : loadError ? (
+          <div role="alert" className="border-y border-gray-200 py-10 text-center">
+            <p className="font-semibold text-gray-900">시공실적을 불러오지 못했습니다.</p>
+            <button
+              type="button"
+              onClick={() => setLoadAttempt((attempt) => attempt + 1)}
+              className="mt-4 inline-flex min-h-10 items-center justify-center rounded-lg border border-gray-300 px-4 text-sm font-semibold text-gray-700 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2"
             >
-              {/* Image Container */}
-              <div className="relative h-64 md:h-72 overflow-hidden">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-
-                {/* Category Badge */}
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-brand-700 text-xs font-semibold rounded-full">
-                    {categoryMap[project.category] || project.category}
-                  </span>
-                </div>
-
-                {/* Year Badge */}
-                <div className="absolute top-4 right-4 z-10">
-                  <span className="px-3 py-1 bg-brand-700/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
-                    {project.year}
-                  </span>
-                </div>
-
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
-
-                {/* Content */}
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                  <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-brand-200 transition-colors">
-                    {project.title}
-                  </h3>
-
-                  {/* Details - Always visible on mobile, hover on desktop */}
-                  <div className="grid grid-cols-2 gap-2 max-h-24 md:max-h-0 md:group-hover:max-h-24 overflow-hidden transition-all duration-500">
-                    <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                      <div className="text-xs text-gray-300">발주처</div>
-                      <div className="text-sm font-medium">{project.client}</div>
-                    </div>
-                    <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-150">
-                      <div className="text-xs text-gray-300">공사규모</div>
-                      <div className="text-sm font-medium">{project.scale}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* View All Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="text-center mt-10"
-        >
-          <a
-            href="/portfolio"
-            className="inline-flex items-center gap-2 px-6 py-3 border-2 border-brand-700 text-brand-700 font-semibold rounded-full hover:bg-brand-700 hover:text-white transition-all duration-300"
-          >
-            전체 프로젝트 보기
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-        </motion.div>
-      </div>
-
-      {/* Detail Modal */}
-      <AnimatePresence>
-        {selectedProject && (
+              다시 시도
+            </button>
+          </div>
+        ) : publishedProjects.length === 0 ? (
           <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={handleCloseModal}
-              className="fixed inset-0 bg-black/70 z-50"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 50 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 50 }}
-              className="fixed inset-4 md:inset-8 lg:inset-12 bg-white rounded-2xl z-50 overflow-hidden flex flex-col"
-            >
-              {/* Close Button */}
-              <button
-                onClick={handleCloseModal}
-                className="absolute top-4 right-4 z-10 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-colors"
-              >
-                <X className="w-6 h-6 text-gray-700" />
-              </button>
-
-              <div className="flex-1 overflow-y-auto">
-                {/* Hero Image */}
-                <div className="relative h-64 md:h-80 lg:h-96 bg-gray-100">
-                  <Image
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    fill
-                    className="object-cover"
+            <ExamplePortfolio view={view === "home" ? "home" : "page"} header={sectionHeader} />
+            {!isHome && <PortfolioWorkExamples />}
+          </>
+        ) : (
+          <>
+            {showFilters && (
+              <div aria-label="시공사례 검색 조건" className="mb-6 grid gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4 sm:grid-cols-3">
+                {tradeOptions.length > 0 && (
+                  <div>
+                    <label htmlFor="portfolio-filter-trade" className="mb-1.5 block text-sm font-semibold text-brand-900">
+                      공종
+                    </label>
+                    <select
+                      id="portfolio-filter-trade"
+                      value={filter.trade}
+                      onChange={(event) => setFilter((previous) => ({ ...previous, trade: event.target.value }))}
+                      className="min-h-11 w-full rounded-lg border border-gray-300 bg-white px-3 text-base text-gray-900 outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700"
+                    >
+                      <option value="">전체 공종</option>
+                      {tradeOptions.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                {clientTypeOptions.length > 0 && (
+                  <div>
+                    <label htmlFor="portfolio-filter-client-type" className="mb-1.5 block text-sm font-semibold text-brand-900">
+                      발주처 유형
+                    </label>
+                    <select
+                      id="portfolio-filter-client-type"
+                      value={filter.clientType}
+                      onChange={(event) => setFilter((previous) => ({ ...previous, clientType: event.target.value }))}
+                      className="min-h-11 w-full rounded-lg border border-gray-300 bg-white px-3 text-base text-gray-900 outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700"
+                    >
+                      <option value="">전체 유형</option>
+                      {clientTypeOptions.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                <div>
+                  <label htmlFor="portfolio-filter-query" className="mb-1.5 block text-sm font-semibold text-brand-900">
+                    검색
+                  </label>
+                  <input
+                    id="portfolio-filter-query"
+                    type="search"
+                    value={filter.query}
+                    onChange={(event) => setFilter((previous) => ({ ...previous, query: event.target.value }))}
+                    placeholder="제목·위치·시공범위·결과 검색"
+                    className="min-h-11 w-full rounded-lg border border-gray-300 bg-white px-3 text-base text-gray-900 outline-none placeholder:text-gray-400 focus:border-brand-700 focus:ring-2 focus:ring-brand-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-                  {/* Category Badge */}
-                  <div className="absolute top-6 left-6">
-                    <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 ${categoryInfo.construction.textColor}`}>
-                      {(() => {
-                        const Icon = categoryInfo.construction.icon;
-                        return <Icon className="w-4 h-4" />;
-                      })()}
-                      {categoryInfo.construction.label}
-                    </span>
-                  </div>
-
-                  {/* Year Badge */}
-                  <div className="absolute top-6 right-16">
-                    <span className="px-4 py-2 bg-brand-700/90 text-white rounded-full font-semibold">
-                      {selectedProject.year}
-                    </span>
-                  </div>
-
-                  {/* Title Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
-                      {selectedProject.title}
-                    </h2>
-                    <p className="text-lg text-white/80">{selectedProject.client}</p>
-                  </div>
-                </div>
-
-                {/* Details */}
-                <div className="p-6 md:p-8 lg:p-12">
-                  {/* Info Cards */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                    <div className={`p-4 rounded-xl ${categoryInfo.construction.bgColor}`}>
-                      <div className="flex items-center gap-2 text-gray-500 mb-1">
-                        <Users className="w-4 h-4" />
-                        <span className="text-sm">발주처</span>
-                      </div>
-                      <p className="font-bold text-gray-900">{selectedProject.client}</p>
-                    </div>
-                    <div className={`p-4 rounded-xl ${categoryInfo.construction.bgColor}`}>
-                      <div className="flex items-center gap-2 text-gray-500 mb-1">
-                        <Calendar className="w-4 h-4" />
-                        <span className="text-sm">연도</span>
-                      </div>
-                      <p className="font-bold text-gray-900">{selectedProject.year}</p>
-                    </div>
-                    <div className={`p-4 rounded-xl ${categoryInfo.construction.bgColor}`}>
-                      <div className="flex items-center gap-2 text-gray-500 mb-1">
-                        <Clock className="w-4 h-4" />
-                        <span className="text-sm">공사기간</span>
-                      </div>
-                      <p className="font-bold text-gray-900">{selectedProject.duration || "-"}</p>
-                    </div>
-                    <div className={`p-4 rounded-xl ${categoryInfo.construction.bgColor}`}>
-                      <div className="flex items-center gap-2 text-gray-500 mb-1">
-                        <Ruler className="w-4 h-4" />
-                        <span className="text-sm">규모</span>
-                      </div>
-                      <p className="font-bold text-gray-900">{selectedProject.scale || "-"}</p>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  {selectedProject.description && (
-                    <div className="border-t border-gray-100 pt-8">
-                      <h3 className="text-lg font-bold text-gray-900 mb-4">프로젝트 개요</h3>
-                      <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">
-                        {selectedProject.description}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* CTA */}
-                  <div className="border-t border-gray-100 pt-8 mt-8">
-                    <div className="bg-brand-50 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
-                      <div>
-                        <h3 className="font-bold text-gray-900 mb-1">
-                          비슷한 프로젝트가 필요하신가요?
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                          오주건설이 고객의 요구에 맞는 최적의 솔루션을 제공합니다.
-                        </p>
-                      </div>
-                      <a
-                        href="/contact"
-                        className="whitespace-nowrap px-6 py-3 bg-brand-700 text-white font-semibold rounded-lg hover:bg-brand-800 transition-colors"
-                      >
-                        문의하기
-                      </a>
-                    </div>
-                  </div>
                 </div>
               </div>
-            </motion.div>
+            )}
+            {visibleProjects.length === 0 ? (
+              <div className="border-y border-gray-200 py-10 text-center">
+                <p className="text-base font-semibold text-gray-900">조건에 맞는 시공사례가 없습니다.</p>
+                <button
+                  type="button"
+                  onClick={() => setFilter(EMPTY_PORTFOLIO_FILTER)}
+                  className="mt-4 inline-flex min-h-11 items-center justify-center rounded-lg bg-brand-700 px-5 font-semibold text-white transition-colors hover:bg-brand-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2"
+                >
+                  전체 보기
+                </button>
+              </div>
+            ) : (
+            <>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {visibleProjects.map((project, index) => {
+                const images = getPortfolioImages(project);
+                const trade = getTradeLabel(project);
+                const scope = getProjectScope(project);
+                const clientType = project.clientType?.trim() || "";
+                const result = project.result?.trim() || "";
+                const coverImage = images[0] || project.imageAfter || project.imageBefore;
+                const coverAlt = project.imageAfter && !images[0]
+                  ? `${project.title} 시공 후 사진`
+                  : `${project.title} 현장 사진`;
+
+                return (
+                  <article
+                    key={project.id}
+                    className="group overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-lg"
+                  >
+                    <Link
+                      href={`/portfolio/detail?id=${encodeURIComponent(project.id)}`}
+                      aria-label={`${project.title} 상세 보기`}
+                      className="block h-full outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-700"
+                    >
+                      {coverImage && (
+                        <div className="relative h-60 overflow-hidden bg-gray-100 md:h-64">
+                          <Image
+                            src={coverImage}
+                            alt={coverAlt}
+                            fill
+                            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
+                          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 text-white">
+                            <span className="font-semibold">{project.title}</span>
+                            {images.length > 1 && (
+                              <span className="shrink-0 rounded-full bg-black/50 px-2.5 py-1 text-xs font-medium">
+                                사진 {images.length}장
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="p-5">
+                        <div className="mb-3 flex flex-wrap items-center gap-2">
+                          {trade && (
+                            <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
+                              {trade}
+                            </span>
+                          )}
+                          {clientType && (
+                            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+                              {clientType}
+                            </span>
+                          )}
+                          {project.year && (
+                            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium tabular-nums text-gray-500">{project.year}</span>
+                          )}
+                          {project.videoUrl?.trim() && (
+                            <span className="rounded-full bg-brand-700 px-3 py-1 text-xs font-semibold text-white">
+                              작업 영상
+                            </span>
+                          )}
+                        </div>
+                        {!coverImage && <h3 className="text-lg font-bold text-gray-900">{project.title}</h3>}
+                        <div className="space-y-1.5 text-base leading-relaxed text-gray-600">
+                          {project.location && (
+                            <p className="flex items-start gap-1.5">
+                              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
+                              <span>{project.location}</span>
+                            </p>
+                          )}
+                          {scope && <p className="line-clamp-2">{scope}</p>}
+                          {result && <p className="line-clamp-2">{result}</p>}
+                          {project.duration && <p>{project.duration}</p>}
+                        </div>
+                        <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-700">
+                          상세 정보 <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </span>
+                      </div>
+                    </Link>
+                  </article>
+                );
+              })}
+            </div>
+
+            {isHome && visibleProjects.length > 0 && (
+              <div className="mt-9 text-center">
+                <Link
+                  href="/portfolio"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full border-2 border-brand-700 px-6 py-2.5 font-semibold text-brand-700 transition-colors hover:bg-brand-700 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2"
+                >
+                  전체 시공실적 보기 <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </div>
+            )}
+            </>
+            )}
           </>
         )}
-      </AnimatePresence>
+      </div>
     </section>
   );
 }

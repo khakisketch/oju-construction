@@ -1,5 +1,9 @@
 # 🚀 시작하기 - 오주건설 Next.js 프로젝트
 
+> 이 문서는 초기 개발 시점의 기록으로 일부 화면·구조·배포 절차가 오래되었습니다.
+> 현재 실행 명령과 위험 사항은 [개발 인계 문서](docs/DEVELOPMENT-HANDOFF.md)를
+> 우선하세요. 운영 Firebase의 데이터·권한·Hosting은 별도 승인 없이 바꾸지 않습니다.
+
 ## 📋 전제 조건
 
 - Node.js 20 이상
@@ -60,7 +64,7 @@ Contact 섹션의 문의 폼을 사용하려면 Firebase 설정이 필요합니�
 
 1. Firebase Console → "Firestore Database"
 2. "데이터베이스 만들기" 클릭
-3. **보안 규칙**: "테스트 모드로 시작" 선택 (30일 제한)
+3. 보안 규칙은 프로젝트 소유자와 검토합니다. 운영 프로젝트에서 테스트 모드를 켜지 않습니다.
 4. 위치: `asia-northeast3` (서울)
 
 ### 4단계: 환경변수 설정
@@ -96,33 +100,16 @@ npm run dev
 
 ## 🔒 Firestore 보안 규칙 (프로덕션용)
 
-테스트 모드는 30일 후 만료됩니다. 프로덕션 환경에서는 아래 규칙을 사용하세요:
-
-### Firestore Rules 설정
-
-Firebase Console → Firestore Database → 규칙:
-
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    // Contacts: 모두 생성 가능, Admin만 읽기/수정/삭제
-    match /contacts/{contactId} {
-      allow create: if true;  // 누구나 문의 작성 가능
-      allow read, update, delete: if request.auth != null;  // Admin만
-    }
-  }
-}
-```
-
-**규칙 배포**:
-1. Firebase Console → Firestore → 규칙 탭
-2. 위 코드 복사-붙여넣기
-3. "게시" 클릭
+저장소의 `firestore.rules`와 `storage.rules`를 검토하되 곧바로 게시하지 마세요.
+현재 규칙은 기존 클라이언트와의 호환성 및 Storage 관리자 권한에 검토가 필요합니다.
+상세 사항은 [개발 인계 문서](docs/DEVELOPMENT-HANDOFF.md)를 참고하세요.
 
 ---
 
 ## 🌐 프로덕션 빌드 및 배포
+
+> 아래 배포 설명은 초기 기록입니다. 운영 배포나 Firebase 초기화·규칙 게시는
+> [현재 인계 문서](docs/DEVELOPMENT-HANDOFF.md)의 검토와 별도 승인 없이 실행하지 않습니다.
 
 ### 1. 로컬 프로덕션 빌드 테스트
 
@@ -245,10 +232,8 @@ ojuenc/
 # Node.js 버전 확인 (20 이상 필요)
 node -v
 
-# npm 캐시 삭제 후 재설치
-npm cache clean --force
-rm -rf node_modules package-lock.json
-npm install
+# 저장된 lockfile을 유지하며 의존성 설치
+npm ci
 ```
 
 ### 2. Firebase 연결 오류
@@ -258,7 +243,7 @@ npm install
 
 ### 3. Contact 폼 제출 실패
 - Firestore Database가 활성화되어 있는지 확인
-- Firestore 보안 규칙 확인 (테스트 모드 or 프로덕션 규칙)
+- 승인된 테스트 환경에서 Firestore 보안 규칙과 클라이언트 호환성 확인
 - 브라우저 콘솔에서 에러 메시지 확인
 
 ### 4. 이미지 표시 안 됨

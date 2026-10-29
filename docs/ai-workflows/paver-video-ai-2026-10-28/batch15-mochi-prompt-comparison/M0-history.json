@@ -1,0 +1,646 @@
+{
+  "prompt": [
+    0,
+    "6d046f8d-4ec4-42b2-9da9-da1eab0692e1",
+    {
+      "3": {
+        "inputs": {
+          "seed": 2026102937,
+          "steps": 30,
+          "cfg": 4.5,
+          "sampler_name": "euler",
+          "scheduler": "simple",
+          "denoise": 1.0,
+          "model": [
+            "37",
+            0
+          ],
+          "positive": [
+            "6",
+            0
+          ],
+          "negative": [
+            "7",
+            0
+          ],
+          "latent_image": [
+            "21",
+            0
+          ]
+        },
+        "class_type": "KSampler"
+      },
+      "6": {
+        "inputs": {
+          "text": "A stationary tripod looks diagonally down at an ordinary outdoor pedestrian walkway of small, weathered gray rectangular concrete pavers in staggered rows. Soft overcast daylight, realistic full-size materials, no people or tools, a single fixed camera shot. A small group of pavers in the middle slowly settles a little, then stops.",
+          "clip": [
+            "38",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode"
+      },
+      "7": {
+        "inputs": {
+          "text": "",
+          "clip": [
+            "38",
+            0
+          ]
+        },
+        "class_type": "CLIPTextEncode"
+      },
+      "8": {
+        "inputs": {
+          "samples": [
+            "3",
+            0
+          ],
+          "vae": [
+            "39",
+            0
+          ]
+        },
+        "class_type": "VAEDecode"
+      },
+      "21": {
+        "inputs": {
+          "width": 848,
+          "height": 480,
+          "length": 49,
+          "batch_size": 1
+        },
+        "class_type": "EmptyMochiLatentVideo"
+      },
+      "28": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "8",
+            0
+          ],
+          "filename_prefix": "batch15-M0"
+        }
+      },
+      "37": {
+        "inputs": {
+          "unet_name": "mochi_preview_fp8_scaled.safetensors",
+          "weight_dtype": "default"
+        },
+        "class_type": "UNETLoader"
+      },
+      "38": {
+        "inputs": {
+          "clip_name": "t5xxl_fp8_e4m3fn_scaled.safetensors",
+          "type": "mochi"
+        },
+        "class_type": "CLIPLoader"
+      },
+      "39": {
+        "inputs": {
+          "vae_name": "mochi_vae.safetensors"
+        },
+        "class_type": "VAELoader"
+      }
+    },
+    {
+      "client_id": "oju-mochi-local",
+      "create_time": 1793242581610
+    },
+    [
+      "28"
+    ]
+  ],
+  "outputs": {
+    "28": {
+      "images": [
+        {
+          "filename": "batch15-M0_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00002_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00003_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00004_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00005_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00006_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00007_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00008_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00009_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00010_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00011_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00012_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00013_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00014_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00015_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00016_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00017_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00018_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00019_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00020_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00021_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00022_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00023_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00024_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00025_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00026_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00027_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00028_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00029_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00030_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00031_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00032_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00033_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00034_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00035_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00036_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00037_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00038_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00039_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00040_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00041_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00042_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00043_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00044_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00045_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00046_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00047_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00048_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        },
+        {
+          "filename": "batch15-M0_00049_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 848,
+            "height": 480
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "6d046f8d-4ec4-42b2-9da9-da1eab0692e1",
+          "timestamp": 1793242581610
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [],
+          "prompt_id": "6d046f8d-4ec4-42b2-9da9-da1eab0692e1",
+          "timestamp": 1793242581611
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "6d046f8d-4ec4-42b2-9da9-da1eab0692e1",
+          "timestamp": 1793242837919
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "28": {
+      "node_id": "28",
+      "display_node": "28",
+      "parent_node": null,
+      "real_node_id": "28"
+    }
+  }
+}

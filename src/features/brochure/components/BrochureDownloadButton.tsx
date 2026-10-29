@@ -8,6 +8,7 @@ import { BrochureData } from "../types";
 
 interface BrochureDownloadButtonProps {
   data: BrochureData;
+  mode?: "selected" | "generated";
   companyName?: string;
   companyInfo?: {
     address: string;
@@ -19,11 +20,15 @@ interface BrochureDownloadButtonProps {
 
 export default function BrochureDownloadButton({
   data,
+  mode = "selected",
   companyName = "OJU CONSTRUCTION",
   companyInfo = { address: "", phone: "", email: "", fax: "" },
 }: BrochureDownloadButtonProps) {
   const [isClient, setIsClient] = useState(false);
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string | null>(null);
+  const designFile = mode === "selected" && data.useDesignPdf && data.designPdf?.url
+    ? data.designPdf
+    : null;
 
   useEffect(() => {
     setIsClient(true);
@@ -50,6 +55,33 @@ export default function BrochureDownloadButton({
 
   const fileName = `${companyName.replace(/\s+/g, "_")}_회사소개서_${new Date().toISOString().split("T")[0]}.pdf`;
 
+  if (designFile) {
+    const uploadedDate = designFile.uploadedAt && !Number.isNaN(Date.parse(designFile.uploadedAt))
+      ? new Date(designFile.uploadedAt).toLocaleDateString("ko-KR")
+      : "";
+    const fileDetails = [designFile.version ? `v${designFile.version}` : "", uploadedDate]
+      .filter(Boolean)
+      .join(" · ");
+
+    return (
+      <div className="flex flex-col items-end gap-0.5">
+        <a
+          href={designFile.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`디자인 PDF 다운로드: ${designFile.fileName}`}
+          className="flex min-h-10 items-center gap-2 rounded-xl bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2"
+        >
+          <FileDown className="h-5 w-5 shrink-0" aria-hidden="true" />
+          <span>PDF 다운로드</span>
+        </a>
+        <span className="max-w-40 truncate text-[10px] leading-4 text-gray-500" title={fileDetails || "디자인 PDF"}>
+          {fileDetails ? `디자인 PDF · ${fileDetails}` : "디자인 PDF"}
+        </span>
+      </div>
+    );
+  }
+
   return (
     <PDFDownloadLink
       document={
@@ -75,7 +107,7 @@ export default function BrochureDownloadButton({
         ) : (
           <>
             <FileDown className="w-5 h-5" />
-            PDF 다운로드
+            {mode === "generated" ? "자동 생성 PDF 다운로드" : "PDF 다운로드"}
           </>
         )
       }

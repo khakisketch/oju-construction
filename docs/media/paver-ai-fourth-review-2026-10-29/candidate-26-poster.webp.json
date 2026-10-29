@@ -1,0 +1,4 @@
+{
+  "prompt": "Origin: ffmpeg WebP frame at 1.75s from candidate-26.mp4 SHA256 66adcbe053a2f405c95a56c6e8d5d1a99ca10ee26b0519965459d861027752b5; locally generated with Wan2.1 VACE 14B under temporal video conditioning; AI image references include RealVisXL V5.0 by SG_161222. Exact workflow: docs/ai-workflows/paver-video-ai-2026-10-28/candidate-26.json. Model terms and control provenance: docs/paver-video-ai-provenance-2026-10-28.md. AI-generated experimental review material, not field footage or a physical simulation.",
+  "createdAt": "2026-10-28T16:17:16.459Z"
+}

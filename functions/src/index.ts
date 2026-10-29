@@ -10,12 +10,22 @@ const db = admin.firestore();
 const smtpEmail = defineSecret("SMTP_EMAIL");
 const smtpPassword = defineSecret("SMTP_PASSWORD");
 
+interface ContactScreening {
+  clientChecked?: boolean;
+  budgetChecked?: boolean;
+  contractPartyChecked?: boolean;
+  paymentTermsChecked?: boolean;
+}
+
 interface ContactData {
   name: string;
   phone: string;
   place: string;
   category: string[];
   message: string;
+  inquiryType?: string;
+  subject?: string;
+  screening?: ContactScreening;
 }
 
 interface NotificationEmail {
@@ -55,6 +65,19 @@ export const onNewContact = onDocumentCreated(
     const placeLabel = data.place || "-";
     const categoryLabel = Array.isArray(data.category) ? data.category.join(", ") : (data.category || "-");
     const messageLabel = data.message || "-";
+    const inquiryTypeLabel = data.inquiryType || data.subject || "-";
+    const screeningLabels: { key: keyof ContactScreening; label: string }[] = [
+      { key: "clientChecked", label: "발주 주체 확인" },
+      { key: "budgetChecked", label: "예산·승인 확인" },
+      { key: "contractPartyChecked", label: "계약·지급 주체 확인" },
+      { key: "paymentTermsChecked", label: "지급 조건 확인" },
+    ];
+    const screeningText = data.screening
+      ? screeningLabels.map((item) => `${item.label}: ${data.screening?.[item.key] ? "확인" : "미확인"}`).join("\n")
+      : "";
+    const screeningHtml = data.screening
+      ? screeningLabels.map((item) => `<div style="font-size: 13px; color: #374151; line-height: 1.8;">${data.screening?.[item.key] ? "✅" : "⬜"} ${item.label}</div>`).join("")
+      : "";
 
     const subject = `[오주건설] 새 문의가 접수되었습니다 - ${data.name}님`;
 
@@ -65,10 +88,12 @@ export const onNewContact = onDocumentCreated(
 - 연락처: ${data.phone}
 
 ■ 문의 내용
+- 문의 종류: ${inquiryTypeLabel}
 - 공사 장소: ${placeLabel}
+- 발주 위치: ${placeLabel}
 - 공사 유형: ${categoryLabel}
 - 추가 요청: ${messageLabel}
-
+${data.screening ? `\n■ 선별 확인\n${screeningText}\n` : ""}
 ■ 관리자 페이지에서 확인:
 https://ojuec.co.kr/admin/contacts
 `;
@@ -124,15 +149,25 @@ https://ojuec.co.kr/admin/contacts
       <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
           <td style="padding: 14px 18px; border-bottom: 1px solid #f3f4f6; width: 40%;">
-            <div style="font-size: 11px; color: #9ca3af; margin-bottom: 3px;">공사 장소</div>
-            <div style="font-size: 14px; color: #111827; font-weight: 500;">${placeLabel}</div>
+            <div style="font-size: 11px; color: #9ca3af; margin-bottom: 3px;">문의 종류</div>
+            <div style="font-size: 14px; color: #111827; font-weight: 600;">${inquiryTypeLabel}</div>
           </td>
           <td style="padding: 14px 18px; border-bottom: 1px solid #f3f4f6;">
             <div style="font-size: 11px; color: #9ca3af; margin-bottom: 3px;">공사 유형</div>
             <div style="font-size: 14px; color: #111827;">${categoryBadges}</div>
           </td>
         </tr>
+        <tr>
+          <td style="padding: 14px 18px; border-bottom: 1px solid #f3f4f6;" colspan="2">
+            <div style="font-size: 11px; color: #9ca3af; margin-bottom: 3px;">공사 장소 / 발주 위치</div>
+            <div style="font-size: 14px; color: #111827; font-weight: 500;">${placeLabel}</div>
+          </td>
+        </tr>
       </table>
+      ${data.screening ? `<div style="padding: 16px 18px; border-top: 1px solid #f3f4f6;">
+        <div style="font-size: 11px; color: #9ca3af; margin-bottom: 6px;">선별 확인</div>
+        ${screeningHtml}
+      </div>` : ""}
       ${data.message ? `<div style="padding: 16px 18px;">
         <div style="font-size: 11px; color: #9ca3af; margin-bottom: 6px;">추가 요청사항</div>
         <div style="background: #f9fafb; border-left: 3px solid #0e2f64; padding: 14px 16px; font-size: 14px; color: #374151; line-height: 1.7; white-space: pre-wrap;">${data.message}</div>

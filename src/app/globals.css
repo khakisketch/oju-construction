@@ -37,6 +37,20 @@
   }
 }
 
+@layer base {
+  /* Keep Korean words together, while still protecting narrow layouts from long tokens. */
+  :lang(ko) {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  /* Code, email addresses, phone numbers, and literal URLs retain normal break rules. */
+  :lang(ko) :is(code, pre, kbd, samp, a[href^="mailto:"], a[href^="tel:"], a[href*="://"]) {
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* Smooth scroll */
 html {
   scroll-behavior: smooth;
@@ -45,8 +59,16 @@ html {
 /* Prevent horizontal overflow on mobile */
 html,
 body {
-  overflow-x: hidden;
   max-width: 100vw;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+/* Clip horizontal overscroll without making body a sticky scroll container. */
+body {
+  overflow-x: clip;
 }
 
 /* Custom scrollbar */
@@ -83,22 +105,6 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Marquee infinite scroll */
-@keyframes marquee-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-33.333%); }
-}
-@keyframes marquee-right {
-  0% { transform: translateX(-33.333%); }
-  100% { transform: translateX(0); }
-}
-.animate-marquee-left {
-  animation: marquee-left linear infinite;
-}
-.animate-marquee-right {
-  animation: marquee-right linear infinite;
 }
 
 /* Focus visible styles for accessibility */

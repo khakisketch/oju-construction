@@ -1,0 +1,986 @@
+{
+  "prompt": [
+    10,
+    "06245084-4f03-4978-9a7f-363717fd39dd",
+    {
+      "1": {
+        "class_type": "UNETLoader",
+        "inputs": {
+          "unet_name": "wan2.2_ti2v_5B_fp16.safetensors",
+          "weight_dtype": "default"
+        }
+      },
+      "2": {
+        "class_type": "CLIPLoader",
+        "inputs": {
+          "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "type": "wan",
+          "device": "default"
+        }
+      },
+      "3": {
+        "class_type": "VAELoader",
+        "inputs": {
+          "vae_name": "wan2.2_vae.safetensors"
+        }
+      },
+      "4": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "2",
+            0
+          ],
+          "text": "Realistic fixed-camera documentary shot of an outdoor walkway, viewed at a low angle in overcast daylight. Weathered gray rectangular concrete sidewalk pavers form a shallow localized low area, with a quiet shallow puddle reflecting the sky. Gradually the pavers in this small area lower slightly together, staying rigid and distinct with straight grout joints. The rest of the path and the camera remain completely still. No people, no sudden collapse, no new objects."
+        }
+      },
+      "5": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "2",
+            0
+          ],
+          "text": "toy, miniature, cartoon, illustration, CGI, text, logo, people, camera movement, zoom, pan, flickering, melting stones, shifting patterns, vortex, hole, dramatic collapse, splashes, new objects"
+        }
+      },
+      "10": {
+        "class_type": "Wan22ImageToVideoLatent",
+        "inputs": {
+          "vae": [
+            "3",
+            0
+          ],
+          "width": 832,
+          "height": 480,
+          "length": 81,
+          "batch_size": 1
+        }
+      },
+      "11": {
+        "class_type": "ModelSamplingSD3",
+        "inputs": {
+          "model": [
+            "1",
+            0
+          ],
+          "shift": 8.0
+        }
+      },
+      "12": {
+        "class_type": "KSampler",
+        "inputs": {
+          "model": [
+            "11",
+            0
+          ],
+          "positive": [
+            "4",
+            0
+          ],
+          "negative": [
+            "5",
+            0
+          ],
+          "latent_image": [
+            "10",
+            0
+          ],
+          "seed": 2026102812,
+          "steps": 25,
+          "cfg": 5.0,
+          "sampler_name": "uni_pc",
+          "scheduler": "simple",
+          "denoise": 1.0
+        }
+      },
+      "14": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "12",
+            0
+          ],
+          "vae": [
+            "3",
+            0
+          ]
+        }
+      },
+      "15": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "14",
+            0
+          ],
+          "filename_prefix": "candidate-12"
+        }
+      }
+    },
+    {
+      "client_id": "oju-batch2",
+      "create_time": 1793199423199
+    },
+    [
+      "15"
+    ]
+  ],
+  "outputs": {
+    "15": {
+      "images": [
+        {
+          "filename": "candidate-12_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00002_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00003_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00004_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00005_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00006_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00007_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00008_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00009_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00010_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00011_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00012_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00013_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00014_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00015_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00016_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00017_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00018_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00019_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00020_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00021_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00022_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00023_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00024_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00025_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00026_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00027_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00028_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00029_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00030_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00031_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00032_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00033_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00034_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00035_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00036_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00037_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00038_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00039_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00040_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00041_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00042_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00043_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00044_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00045_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00046_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00047_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00048_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00049_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00050_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00051_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00052_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00053_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00054_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00055_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00056_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00057_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00058_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00059_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00060_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00061_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00062_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00063_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00064_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00065_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00066_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00067_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00068_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00069_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00070_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00071_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00072_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00073_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00074_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00075_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00076_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00077_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00078_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00079_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00080_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        },
+        {
+          "filename": "candidate-12_00081_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 832,
+            "height": 480
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "06245084-4f03-4978-9a7f-363717fd39dd",
+          "timestamp": 1793199423200
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1",
+            "2",
+            "3",
+            "11"
+          ],
+          "prompt_id": "06245084-4f03-4978-9a7f-363717fd39dd",
+          "timestamp": 1793199423201
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "06245084-4f03-4978-9a7f-363717fd39dd",
+          "timestamp": 1793199510254
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "15": {
+      "node_id": "15",
+      "display_node": "15",
+      "parent_node": null,
+      "real_node_id": "15"
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "prompt": [
+    4,
+    "6660f347-4907-43c2-b6ae-1199c90bffeb",
+    {
+      "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+          "ckpt_name": "RealVisXL_V5.0_fp16.safetensors"
+        }
+      },
+      "2": {
+        "class_type": "VAELoader",
+        "inputs": {
+          "vae_name": "sdxl_vae.safetensors"
+        }
+      },
+      "3": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "1",
+            1
+          ],
+          "text": "toy, miniature, model, tabletop, plinth, illustration, cartoon, 3d render, plastic, text, logo, watermark, workers, people, oversaturated, blurred, distorted, impossible geometry, extra pipe, floor, supports, polished shiny metal"
+        }
+      },
+      "4": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+          "width": 1024,
+          "height": 640,
+          "batch_size": 1
+        }
+      },
+      "10": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "1",
+            1
+          ],
+          "text": "Realistic photo at an outdoor worksite of an exposed vertical slice of sidewalk, a side view. Upper surface: small gray rectangular concrete pavers in a row. Under them: thin bedding sand, densely compacted fine gravel, and brown soil. Near the lower center there is a hollow gray round drainage pipe cut end and a small irregular hollow beside it in the soil. Entire image filled by the soil face and surface, soft light, documentary photograph."
+        }
+      },
+      "11": {
+        "class_type": "KSampler",
+        "inputs": {
+          "seed": 2026102908,
+          "steps": 30,
+          "cfg": 5.5,
+          "sampler_name": "dpmpp_2m",
+          "scheduler": "karras",
+          "denoise": 1.0,
+          "model": [
+            "1",
+            0
+          ],
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "3",
+            0
+          ],
+          "latent_image": [
+            "4",
+            0
+          ]
+        }
+      },
+      "12": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "11",
+            0
+          ],
+          "vae": [
+            "2",
+            0
+          ]
+        }
+      },
+      "13": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "12",
+            0
+          ],
+          "filename_prefix": "reference-8"
+        }
+      }
+    },
+    {
+      "client_id": "oju-batch3",
+      "create_time": 1793200011929
+    },
+    [
+      "13"
+    ]
+  ],
+  "outputs": {
+    "13": {
+      "images": [
+        {
+          "filename": "reference-8_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 1024,
+            "height": 640
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "6660f347-4907-43c2-b6ae-1199c90bffeb",
+          "timestamp": 1793200011930
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "prompt_id": "6660f347-4907-43c2-b6ae-1199c90bffeb",
+          "timestamp": 1793200011930
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "6660f347-4907-43c2-b6ae-1199c90bffeb",
+          "timestamp": 1793200019537
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "13": {
+      "node_id": "13",
+      "display_node": "13",
+      "parent_node": null,
+      "real_node_id": "13"
+    }
+  }
+}

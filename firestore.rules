@@ -2,22 +2,56 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // 1. 관리자(Admin) 여부 확인 함수 (추후 Custom Claims 등으로 고도화 가능)
-    // 현재는 단순히 "로그인한 사용자"를 관리자로 간주합니다.
-    // (Firebase Console에서 이메일/비밀번호 인증을 켜고, 관리자 계정만 생성해야 함)
+    // 관리자 판정.
+    // 로그인한 사용자 중 아래 둘 중 하나를 만족할 때만 관리자로 봅니다.
+    //   1) 커스텀 클레임 admin=true 를 가진 사용자
+    //   2) /admins/{uid} 문서가 등록된 사용자
+    // 최초 관리자 1명은 Firebase 콘솔에서 admins/{사용자UID} 문서를 직접 만들어
+    // 주세요. 규칙으로는 생성할 수 없습니다(allow write: if false).
     function isAdmin() {
-      return request.auth != null;
+      return request.auth != null
+        && (request.auth.token.admin == true
+          || exists(/databases/$(database)/documents/admins/$(request.auth.uid)));
     }
 
-    // 2. 'contacts' 컬렉션 (문의하기)
-    // - 누구나 생성(create) 가능 (문의 남기기)
+    // 0. 'admins' 컬렉션 (관리자 등록)
+    // - 읽기는 관리자만 가능, 쓰기는 콘솔에서만(규칙으로는 불가)
+    match /admins/{uid} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // 1. 'contacts' 컬렉션 (문의하기)
+    // - 누구나 생성(create) 가능하되 값 형태를 검증합니다.
     // - 관리자만 읽기(read), 수정(update), 삭제(delete) 가능
+    function isValidInquiry() {
+      let data = request.resource.data;
+      return data.name is string
+        && data.name.size() >= 1
+        && data.name.size() <= 50
+        && data.phone is string
+        && data.phone.size() >= 9
+        && data.phone.size() <= 20
+        && data.inquiryType in [
+          '현장 공사 검토',
+          '입찰 참가 요청',
+          '업체 소개·자료 요청',
+          '기타'
+        ]
+        && (!('place' in data) || (data.place is string && data.place.size() <= 100))
+        && (!('message' in data) || (data.message is string && data.message.size() <= 2000))
+        && (!('email' in data) || (data.email is string && data.email.size() <= 120))
+        && (!('company' in data) || (data.company is string && data.company.size() <= 120))
+        && (!('status' in data) || data.status == 'new')
+        && !data.keys().hasAny(['adminMemo', 'screening']);
+    }
+
     match /contacts/{document=**} {
-      allow create: if true;
+      allow create: if isValidInquiry();
       allow read, update, delete: if isAdmin();
     }
 
-    // 3. 'settings' 컬렉션 (설정)
+    // 2. 'settings' 컬렉션 (설정)
     // - 일반 설정(general)은 누구나 읽기 가능 (Footer 정보 등)
     // - notifications 문서는 관리자만 읽기/쓰기 가능 (알림 이메일 목록)
     match /settings/{document} {
@@ -25,7 +59,39 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // 4. 그 외 모든 문서는 기본적으로 차단 (보안 강화)
+    // 3. 'news' 컬렉션 (소식/공지)
+    // - 공개 페이지(/news, 홈 소식 섹션)에서 읽으므로 공개 읽기 허용
+    // - 작성/수정/삭제는 관리자만 가능
+    match /news/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 4. 'portfolio' 컬렉션 (시공실적)
+    // - 공개 페이지(/portfolio)에서 읽으므로 공개 읽기 허용
+    // - 작성/수정/삭제는 관리자만 가능
+    match /portfolio/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 5. 'company-documents' 컬렉션 (회사 문서)
+    // - brochure(회사소개서)는 공개 페이지(/brochure)에서 읽으므로 공개 읽기 허용
+    // - nomination(지명원)은 관리자만 조회 가능 (인력/장비/실적 등 비공개 정보 포함)
+    // - 쓰기는 관리자만 가능
+    match /company-documents/{document} {
+      allow read: if document == "brochure";
+      allow write: if isAdmin();
+    }
+
+    // 6. 'company-documents-private' 컬렉션 (비공개 운영 정보)
+    // - Canva 편집 링크 등 외부에 노출되면 안 되는 값만 보관
+    // - 공개 읽기가 허용된 문서에 함께 두면 노출되므로 반드시 분리 보관
+    match /company-documents-private/{document} {
+      allow read, write: if isAdmin();
+    }
+
+    // 7. 그 외 모든 문서는 기본적으로 차단 (보안 강화)
     match /{document=**} {
       allow read, write: if false;
     }

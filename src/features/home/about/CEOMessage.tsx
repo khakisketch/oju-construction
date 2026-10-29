@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { BUSINESS_AREA_LIST } from "@/shared/config/businessAreas";
 
 export default function CEOMessage() {
   return (
@@ -77,11 +78,11 @@ export default function CEOMessage() {
               <div className="space-y-5 text-gray-600 leading-relaxed">
                 <p className="text-lg">
                   안녕하세요. 저희 오주건설(주)는 전문건설 면허를 보유하고 있으며,
-                  토목공사 및 시설물 유지보수를 전문으로 하는 종합건설회사입니다.
+                  {BUSINESS_AREA_LIST} 분야의 공사를 진행합니다.
                 </p>
                 <p>
                   2004년 법인설립 이후 다수의 관공서, 산업단지, 군부대 등 다양한 시설물의
-                  토목공사 및 유지보수공사를 진행하며, 축적된 노하우와 우수한 인재들의
+                  사업 분야별 공사를 진행하며, 축적된 노하우와 우수한 인재들의
                   경험을 바탕으로 업계의 리더로 자리매김하고자 끊임없이 노력하고 있습니다.
                 </p>
                 <p>

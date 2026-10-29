@@ -1,0 +1,29 @@
+# Batch 12: outcome and review
+
+**Three new locally inferred synthetic videos; none passes the complete explanatory gate.** No B preview or production change. These are invented illustrative scenes, not footage, field evidence, physical simulation, measurements, diagnosis or validated construction details. Whole 49-frame grids and nine native-resolution samples were inspected in sequence; no human real-time playback or expert field review was performed. A/B were intended as complete surface-plus-subsurface experiments, C is explicitly surface-only diagnostic; none is a substitute for the approved continuous story.
+
+| Clip | Observed frame sequence | Verdict |
+|---|---|---|
+| A-oblique | A row of oversized isolated pavers borders a deep-looking trench; foreground is loose gravel, not a connected paved surface. Earth appears beside rather than legibly supporting the pavers; no readable thin bedding/support section. Camera and shapes appear approximately stable; no meaningful group settlement is visible, despite the requested timing. | Fail: structure and action missing. |
+| B-section | Surface is fragmented into uneven slabs, gaps and stripes. Exposed dirt sits beyond the paved field rather than showing continuous layers directly beneath it; the shot is near overhead rather than requested trench-wall view. Camera approximately fixed; little coherent settlement is visible. | Fail: no readable continuous section or visible controlled event. |
+| C-surface | More recognizable weathered paved surface, existing dark gaps and slight shape/texture changes, but no clear group downward event and no subsurface. Identity of main bricks approximately persists, yet adjacent edges subtly change; cannot certify rigid motion. | Diagnostic only, fail as complete sequence, not selected for preview. |
+
+Comparison: matching seed and generation parameters limits stochastic settings but changes prompts and framing simultaneously; these outputs do not isolate a single factor or demonstrate general model superiority. Model often obeyed fixed camera better than connected structural anatomy or staged motion. Timing is requested, not observed. Avoid presenting A/B as explanatory just because dirt is visible.
+
+## Exact Korean translations of the model input (model received English only)
+
+**A positive:** 평범한 야외 콘크리트 보도블록 길과 그 옆 이미 노출된 얕은 점검 도랑을 사실적인 다큐멘터리 영상으로 촬영한다. 삼각대 고정, 자연스러운 흐린 날의 빛, 실제 크기와 사실적인 입자 질감. 풍화된 회색 직사각형 블록 다수가 이어진 포장면, 얇은 모래 깔기층, 다짐된 쇄석, 갈색 흙이 하나로 연결된 구조를 이룬다. 카메라와 주변은 고정된다. 먼저 정지 상태를 유지하고, 이후 작은 포장 영역이 천천히 함께 내려앉되 각각의 콘크리트 블록은 단단한 형태와 식별 가능성을 유지하고, 마지막에 움직임이 멈춘다. 원인은 보이지 않으며 주장하지 않는다. 카메라는 3/4 사선에서 보도 위와 노출된 도랑 옆면을 동시에 내려다본다. 상부 줄눈, 블록 아래 얇은 모래와 골재가 함께 보인다. 흙은 화면 밖으로 이어지며 독립된 덩어리가 아니다.
+
+**B positive:** 평범한 야외 콘크리트 보도블록 길과 그 옆 이미 노출된 얕은 점검 도랑을 사실적인 다큐멘터리 영상으로 촬영한다. 삼각대 고정, 자연스러운 흐린 날의 빛, 실제 크기와 사실적인 입자 질감. 풍화된 회색 직사각형 블록 다수가 이어진 포장면, 얇은 모래 깔기층, 다짐된 쇄석, 갈색 흙이 하나로 연결된 구조를 이룬다. 카메라와 주변은 고정된다. 먼저 정지 상태를 유지하고, 이후 작은 포장 영역이 천천히 함께 내려앉되 각각의 콘크리트 블록은 단단한 형태와 식별 가능성을 유지하고, 마지막에 움직임이 멈춘다. 원인은 보이지 않으며 주장하지 않는다. 카메라는 기존 도랑의 수직 벽을 거의 수평으로 바라본다. 위쪽 가장자리에 뒤쪽으로 이어지는 보도 상면이 보이고, 그 아래 좁게 이어진 깔기층과 골재가 자연 흙으로 이어진다. 굴착된 흙벽은 화면의 모든 가장자리 밖으로 이어지며 독립된 전시물이 아니다.
+
+**C positive:** 평범한 야외 콘크리트 보도블록 길의 사실적인 다큐멘터리 영상. 삼각대 고정, 자연스러운 흐린 날의 빛, 실제 크기와 거친 회색 콘크리트 질감. 카메라는 직사각형 블록 다수를 사선으로 바라본다. 먼저 정지 상태를 유지하고, 이후 작은 블록 무리가 천천히 함께 내려앉되 각각의 콘크리트 블록은 단단한 형태와 식별 가능성을 유지하고, 마지막에 움직임이 멈춘다. 주변 포장과 카메라는 고정된다. 표면만 보이며 지하 원인은 보이지 않는다.
+
+**Common negative:** 장난감, 미니어처, 축척 모형, 탁상, 받침대, 떠 있는 판, 돌출부, 거대한 구멍, 검은 직사각형 구멍, 해치, 들린 블록, 새 물체, 녹거나 휘는 콘크리트, 바뀌는 벽돌 패턴, 형상 변형, 카메라 이동, 팬, 줌, 깜빡임, 글자, 라벨, 로고, 사람, 물, 관, 만화, CGI, 플라스틱.
+
+English inputs and exact settings are preserved in the individual JSON graphs, not these translations. All 640×384, 49 frames, 16 fps, same seed 2026102912, 20 steps, CFG 5, uni_pc/simple, denoise 1, shift 8; H.264 CRF20 yuv420p made from 49 model-decoded PNGs. Native ComfyUI nodes only, no external inference or control images. MP4, grid and sample sheet filenames correspond to each graph; histories report successful execution. Raw PNGs and server log are temporary at `/tmp/opencode/oju-batch12-structured/`, not durable.
+
+## Terms and runtime
+
+[Wan-AI 2.2 TI2V 5B](https://huggingface.co/Wan-AI/Wan2.2-TI2V-5B) and [Comfy-Org repack pinned revision](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/ee6f4a40737a995bf5818954cfce6d59443b0f04) state Apache-2.0. Text encoder is from [Comfy-Org/Wan-2.1 pinned revision](https://huggingface.co/Comfy-Org/Wan-2.1/tree/123acf1cc74bccbb9bfff8ac1ee72edc08c2341d), Apache-2.0. These permit commercial use subject to terms and notices; not legal clearance or an output-rights guarantee. Provider LFS hashes were previously checked in the main provenance; the actual local files were rehashed this run: model `456f901338bd9eadbded3828b819109a9b68e8a525ca5cf8d0049a69fcfeca1e`, VAE `e40321bd36b9709991dae2530eb4ac303dd168276980d3e9bc4b6e2b75fed156`, encoder `c3355d30191f1f066b26d93fba017ae9809dce6c627dda5f6a66eaa651204f68`. No new weights downloaded.
+
+ComfyUI `cdf272f3514353aab04dc2d9fceef57a260dc156`, isolated base and loopback port 18412, custom/API nodes disabled, process 1727016 terminated by own runner; port no longer listening and only GNOME baseline compute remains. Preflight >75 GiB available with no foreign compute, guard sampled during inference approximately every four seconds; minimum sampled 88,579,836 KiB (~84.5 GiB); guard log records 30 samples. Small gaps during local image encoding/sheet assembly were not monitored; server was idle then. No other process terminated, no shared package/model/config edits. The runner assumes GNOME baseline PID 94107 and a fresh temporary directory; update baseline after independently checking and choose a new temporary directory before reproduction; do not blindly run against a changed environment. Hash manifest covers this batch's durable artifacts, not itself.

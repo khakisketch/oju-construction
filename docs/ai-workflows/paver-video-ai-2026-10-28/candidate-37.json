@@ -1,0 +1,104 @@
+{
+  "client_id": "oju-mochi-local",
+  "prompt": {
+    "3": {
+      "inputs": {
+        "seed": 2026102937,
+        "steps": 30,
+        "cfg": 4.5,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1.0,
+        "model": [
+          "37",
+          0
+        ],
+        "positive": [
+          "6",
+          0
+        ],
+        "negative": [
+          "7",
+          0
+        ],
+        "latent_image": [
+          "21",
+          0
+        ]
+      },
+      "class_type": "KSampler"
+    },
+    "6": {
+      "inputs": {
+        "text": "A stationary tripod looks diagonally down at a real outdoor pedestrian walkway of small, weathered gray rectangular concrete pavers, all lying flat and flush in staggered rows. In a gentle time-lapse, two adjacent pavers in the middle slowly move a little lower together, becoming a shallow localized dip. Their straight rectangular outlines remain intact and all surrounding stones stay in place. Soft overcast daylight. An ordinary full-size sidewalk, no people or tools, fixed camera.",
+        "clip": [
+          "38",
+          0
+        ]
+      },
+      "class_type": "CLIPTextEncode"
+    },
+    "7": {
+      "inputs": {
+        "text": "",
+        "clip": [
+          "38",
+          0
+        ]
+      },
+      "class_type": "CLIPTextEncode"
+    },
+    "8": {
+      "inputs": {
+        "samples": [
+          "3",
+          0
+        ],
+        "vae": [
+          "39",
+          0
+        ]
+      },
+      "class_type": "VAEDecode"
+    },
+    "21": {
+      "inputs": {
+        "width": 848,
+        "height": 480,
+        "length": 49,
+        "batch_size": 1
+      },
+      "class_type": "EmptyMochiLatentVideo"
+    },
+    "28": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "8",
+          0
+        ],
+        "filename_prefix": "candidate-37"
+      }
+    },
+    "37": {
+      "inputs": {
+        "unet_name": "mochi_preview_fp8_scaled.safetensors",
+        "weight_dtype": "default"
+      },
+      "class_type": "UNETLoader"
+    },
+    "38": {
+      "inputs": {
+        "clip_name": "t5xxl_fp8_e4m3fn_scaled.safetensors",
+        "type": "mochi"
+      },
+      "class_type": "CLIPLoader"
+    },
+    "39": {
+      "inputs": {
+        "vae_name": "mochi_vae.safetensors"
+      },
+      "class_type": "VAELoader"
+    }
+  }
+}

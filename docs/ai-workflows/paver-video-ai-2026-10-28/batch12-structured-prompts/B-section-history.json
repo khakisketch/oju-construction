@@ -1,0 +1,668 @@
+{
+  "prompt": [
+    1,
+    "4d38d07f-9dee-443d-a6bd-56d8ccf45569",
+    {
+      "1": {
+        "class_type": "UNETLoader",
+        "inputs": {
+          "unet_name": "wan2.2_ti2v_5B_fp16.safetensors",
+          "weight_dtype": "default"
+        }
+      },
+      "2": {
+        "class_type": "CLIPLoader",
+        "inputs": {
+          "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "type": "wan",
+          "device": "default"
+        }
+      },
+      "3": {
+        "class_type": "VAELoader",
+        "inputs": {
+          "vae_name": "wan2.2_vae.safetensors"
+        }
+      },
+      "4": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "2",
+            0
+          ],
+          "text": "Photorealistic documentary footage of an ordinary outdoor concrete-paver sidewalk beside an existing shallow inspection trench. Locked tripod, natural overcast daylight, realistic full scale and granular textures. A continuous field of many individual weathered gray rectangular pavers, thin sand bedding, compacted crushed aggregate and brown soil form one connected construction. The camera and surroundings stay fixed. First hold still; then a small area of the paved surface slowly settles down together while each concrete paver remains rigid and recognizable; finally the movement stops. No cause is shown or claimed. Camera looks almost horizontally at the vertical wall of the existing trench. At the upper edge see the sidewalk top receding into the background and beneath it a narrow continuous bedding and aggregate, merging into natural earth. The excavated soil wall extends beyond all image edges; no freestanding display."
+        }
+      },
+      "5": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "2",
+            0
+          ],
+          "text": "toy, miniature, scale model, tabletop, plinth, floating slabs, overhang, giant hole, black rectangular hole, hatch, raised blocks, new objects, melting or bending concrete, changing brick pattern, morphing, camera movement, pan, zoom, flicker, text, labels, logo, people, water, pipe, cartoon, CGI, plastic"
+        }
+      },
+      "10": {
+        "class_type": "Wan22ImageToVideoLatent",
+        "inputs": {
+          "vae": [
+            "3",
+            0
+          ],
+          "width": 640,
+          "height": 384,
+          "length": 49,
+          "batch_size": 1
+        }
+      },
+      "11": {
+        "class_type": "ModelSamplingSD3",
+        "inputs": {
+          "model": [
+            "1",
+            0
+          ],
+          "shift": 8.0
+        }
+      },
+      "12": {
+        "class_type": "KSampler",
+        "inputs": {
+          "model": [
+            "11",
+            0
+          ],
+          "positive": [
+            "4",
+            0
+          ],
+          "negative": [
+            "5",
+            0
+          ],
+          "latent_image": [
+            "10",
+            0
+          ],
+          "seed": 2026102912,
+          "steps": 20,
+          "cfg": 5.0,
+          "sampler_name": "uni_pc",
+          "scheduler": "simple",
+          "denoise": 1.0
+        }
+      },
+      "14": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "12",
+            0
+          ],
+          "vae": [
+            "3",
+            0
+          ]
+        }
+      },
+      "15": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "14",
+            0
+          ],
+          "filename_prefix": "batch12-B-section"
+        }
+      }
+    },
+    {
+      "client_id": "batch12-structured",
+      "create_time": 1793240951235
+    },
+    [
+      "15"
+    ]
+  ],
+  "outputs": {
+    "15": {
+      "images": [
+        {
+          "filename": "batch12-B-section_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00002_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00003_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00004_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00005_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00006_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00007_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00008_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00009_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00010_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00011_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00012_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00013_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00014_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00015_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00016_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00017_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00018_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00019_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00020_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00021_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00022_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00023_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00024_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00025_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00026_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00027_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00028_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00029_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00030_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00031_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00032_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00033_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00034_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00035_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00036_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00037_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00038_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00039_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00040_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00041_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00042_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00043_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00044_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00045_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00046_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00047_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00048_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-B-section_00049_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "4d38d07f-9dee-443d-a6bd-56d8ccf45569",
+          "timestamp": 1793240951236
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1",
+            "2",
+            "3",
+            "5",
+            "10",
+            "11"
+          ],
+          "prompt_id": "4d38d07f-9dee-443d-a6bd-56d8ccf45569",
+          "timestamp": 1793240951236
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "4d38d07f-9dee-443d-a6bd-56d8ccf45569",
+          "timestamp": 1793240977777
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "15": {
+      "node_id": "15",
+      "display_node": "15",
+      "parent_node": null,
+      "real_node_id": "15"
+    }
+  }
+}

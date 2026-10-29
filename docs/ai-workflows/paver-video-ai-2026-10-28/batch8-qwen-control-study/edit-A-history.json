@@ -1,0 +1,274 @@
+{
+  "prompt": [
+    0,
+    "bc2d38c7-587c-4e8c-a02b-6ed32cd700c9",
+    {
+      "1": {
+        "class_type": "UNETLoader",
+        "inputs": {
+          "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+          "weight_dtype": "default"
+        }
+      },
+      "2": {
+        "class_type": "ModelSamplingAuraFlow",
+        "inputs": {
+          "model": [
+            "1",
+            0
+          ],
+          "shift": 3.1
+        }
+      },
+      "3": {
+        "class_type": "CFGNorm",
+        "inputs": {
+          "model": [
+            "2",
+            0
+          ],
+          "strength": 1.0,
+          "pre_cfg": false
+        }
+      },
+      "4": {
+        "class_type": "CLIPLoader",
+        "inputs": {
+          "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+          "type": "qwen_image",
+          "device": "default"
+        }
+      },
+      "5": {
+        "class_type": "VAELoader",
+        "inputs": {
+          "vae_name": "qwen_image_vae.safetensors"
+        }
+      },
+      "6": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "reference-4.png"
+        }
+      },
+      "7": {
+        "class_type": "FluxKontextImageScale",
+        "inputs": {
+          "image": [
+            "6",
+            0
+          ]
+        }
+      },
+      "8": {
+        "class_type": "TextEncodeQwenImageEditPlus",
+        "inputs": {
+          "clip": [
+            "4",
+            0
+          ],
+          "vae": [
+            "5",
+            0
+          ],
+          "image1": [
+            "7",
+            0
+          ],
+          "prompt": "Edit this same photograph only. The two rectangular paving blocks immediately to the right of the central vertical joint are now a few centimeters lower together than the surrounding walkway, forming a subtle shallow dip. Each stone remains solid, flat and rigid with straight edges and narrow natural joints; no black hole, missing block or floating stone. Preserve the identical camera angle, paving pattern, concrete texture, lighting and every other block."
+        }
+      },
+      "9": {
+        "class_type": "TextEncodeQwenImageEditPlus",
+        "inputs": {
+          "clip": [
+            "4",
+            0
+          ],
+          "vae": [
+            "5",
+            0
+          ],
+          "image1": [
+            "7",
+            0
+          ],
+          "prompt": ""
+        }
+      },
+      "10": {
+        "class_type": "FluxKontextMultiReferenceLatentMethod",
+        "inputs": {
+          "conditioning": [
+            "8",
+            0
+          ],
+          "reference_latents_method": "index_timestep_zero"
+        }
+      },
+      "11": {
+        "class_type": "FluxKontextMultiReferenceLatentMethod",
+        "inputs": {
+          "conditioning": [
+            "9",
+            0
+          ],
+          "reference_latents_method": "index_timestep_zero"
+        }
+      },
+      "12": {
+        "class_type": "VAEEncode",
+        "inputs": {
+          "pixels": [
+            "7",
+            0
+          ],
+          "vae": [
+            "5",
+            0
+          ]
+        }
+      },
+      "13": {
+        "class_type": "KSampler",
+        "inputs": {
+          "model": [
+            "3",
+            0
+          ],
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "11",
+            0
+          ],
+          "latent_image": [
+            "12",
+            0
+          ],
+          "seed": 2026102941,
+          "steps": 40,
+          "cfg": 4.0,
+          "sampler_name": "euler",
+          "scheduler": "simple",
+          "denoise": 1.0
+        }
+      },
+      "14": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "13",
+            0
+          ],
+          "vae": [
+            "5",
+            0
+          ]
+        }
+      },
+      "15": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "14",
+            0
+          ],
+          "filename_prefix": "edit-A"
+        }
+      },
+      "16": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "7",
+            0
+          ],
+          "filename_prefix": "scaled-input-A"
+        }
+      }
+    },
+    {
+      "client_id": "oju-qwen-edit-local",
+      "create_time": 1793209080073
+    },
+    [
+      "16",
+      "15"
+    ]
+  ],
+  "outputs": {
+    "16": {
+      "images": [
+        {
+          "filename": "scaled-input-A_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 1328,
+            "height": 800
+          }
+        }
+      ]
+    },
+    "15": {
+      "images": [
+        {
+          "filename": "edit-A_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 1328,
+            "height": 800
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "bc2d38c7-587c-4e8c-a02b-6ed32cd700c9",
+          "timestamp": 1793209080074
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [],
+          "prompt_id": "bc2d38c7-587c-4e8c-a02b-6ed32cd700c9",
+          "timestamp": 1793209080076
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "bc2d38c7-587c-4e8c-a02b-6ed32cd700c9",
+          "timestamp": 1793209339430
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "16": {
+      "node_id": "16",
+      "display_node": "16",
+      "parent_node": null,
+      "real_node_id": "16"
+    },
+    "15": {
+      "node_id": "15",
+      "display_node": "15",
+      "parent_node": null,
+      "real_node_id": "15"
+    }
+  }
+}

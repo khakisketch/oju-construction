@@ -1,0 +1,8 @@
+Mochi 1 Preview
+Copyright 2024 Genmo, Inc.
+
+This repository is licensed under the Apache License, Version 2.0. See the LICENSE file.
+
+This repository includes third-party material:
+
+The files in text_encoder/ and tokenizer/ are an unmodified copy of Google's T5 v1.1 XXL text encoder and tokenizer (https://huggingface.co/google/t5-v1_1-xxl). Copyright Google LLC. Licensed under the Apache License, Version 2.0.

@@ -1,0 +1,125 @@
+{
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "water-scene-base.png"
+    }
+  },
+  "2": {
+    "class_type": "LoadImageMask",
+    "inputs": {
+      "image": "water-scene-mask.png",
+      "channel": "red"
+    }
+  },
+  "3": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "RealVisXL_V5.0_fp16.safetensors"
+    }
+  },
+  "6": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "A small rectangular stormwater drain grate embedded level with the wet asphalt, thin parallel metal slots, next to a shallow puddle in an apartment parking lot. Realistic documentary architectural image, natural perspective, overcast daylight.",
+      "clip": [
+        "3",
+        1
+      ]
+    }
+  },
+  "7": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "text, letters, numbers, logo, people, cars, excavation, pipes, raised object, floating, cartoon, warped lines, blurry",
+      "clip": [
+        "3",
+        1
+      ]
+    }
+  },
+  "8": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "sdxl_vae.safetensors"
+    }
+  },
+  "12": {
+    "class_type": "VAEEncodeForInpaint",
+    "inputs": {
+      "pixels": [
+        "1",
+        0
+      ],
+      "mask": [
+        "2",
+        0
+      ],
+      "vae": [
+        "8",
+        0
+      ],
+      "grow_mask_by": 10
+    }
+  },
+  "13": {
+    "class_type": "RepeatLatentBatch",
+    "inputs": {
+      "samples": [
+        "12",
+        0
+      ],
+      "amount": 2
+    }
+  },
+  "9": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 20261078,
+      "steps": 32,
+      "cfg": 5.5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1.0,
+      "model": [
+        "3",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "13",
+        0
+      ]
+    }
+  },
+  "10": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "9",
+        0
+      ],
+      "vae": [
+        "8",
+        0
+      ]
+    }
+  },
+  "11": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "water-scene-inpaint-v3",
+      "images": [
+        "10",
+        0
+      ]
+    }
+  }
+}

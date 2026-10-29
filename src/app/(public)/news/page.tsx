@@ -6,16 +6,8 @@ import { Calendar, Megaphone, FileText, Trophy, ChevronRight } from "lucide-reac
 import Link from "next/link";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "@/shared/lib/firebase/firestore";
-
-interface NewsItem {
-  id: string;
-  category: "announcement" | "news" | "award";
-  title: string;
-  summary: string;
-  content: string;
-  isNew: boolean;
-  createdAt: any;
-}
+import { isFirebaseConfigured } from "@/shared/config/env";
+import { newsFallbackItems, type NewsItem } from "@/features/home/news/newsFallback";
 
 const newsCategories = {
   all: { label: "전체", icon: FileText },
@@ -24,94 +16,37 @@ const newsCategories = {
   award: { label: "수상", icon: Trophy, color: "bg-yellow-100 text-yellow-700" },
 };
 
-// 기본 더미 데이터 (Firestore 데이터가 없을 때 사용)
-const defaultNewsItems: NewsItem[] = [
-  {
-    id: "1",
-    category: "news",
-    title: "2024년 상반기 신규 프로젝트 수주",
-    summary: "청주시 도로 정비사업 및 세종시 산업단지 조성공사를 신규 수주하였습니다.",
-    content: "오주건설(주)는 2024년 상반기에 청주시 도로 정비사업과 세종시 산업단지 조성공사를 신규 수주하였습니다. 이번 수주를 통해 회사의 기술력과 신뢰성을 다시 한번 입증하였으며, 성공적인 프로젝트 완수를 위해 최선을 다하겠습니다.",
-    createdAt: new Date("2024-01-15"),
-    isNew: true,
-  },
-  {
-    id: "2",
-    category: "announcement",
-    title: "설 연휴 휴무 안내",
-    summary: "2024년 설 연휴 기간(2/9~2/12) 동안 휴무입니다. 긴급 문의는 비상연락망을 이용해 주세요.",
-    content: "2024년 설 연휴를 맞이하여 2월 9일(금)부터 2월 12일(월)까지 휴무합니다. 긴급한 문의사항은 비상연락망을 통해 연락 부탁드립니다. 새해 복 많이 받으세요.",
-    createdAt: new Date("2024-01-10"),
-    isNew: true,
-  },
-  {
-    id: "3",
-    category: "award",
-    title: "2023년 우수 시공업체 선정",
-    summary: "충청남도 건설협회로부터 2023년 우수 시공업체로 선정되었습니다.",
-    content: "오주건설(주)가 충청남도 건설협회로부터 2023년 우수 시공업체로 선정되었습니다. 이번 선정은 그동안의 품질 경영과 안전 관리에 대한 노력을 인정받은 결과입니다.",
-    createdAt: new Date("2023-12-20"),
-    isNew: false,
-  },
-  {
-    id: "4",
-    category: "news",
-    title: "스마트 건설 기술 도입",
-    summary: "BIM 기반 스마트 건설 시스템을 도입하여 시공 품질과 효율성을 높이고 있습니다.",
-    content: "오주건설(주)는 BIM(Building Information Modeling) 기반 스마트 건설 시스템을 본격적으로 도입합니다. 이를 통해 공사 효율성을 높이고 품질을 향상시킬 예정입니다.",
-    createdAt: new Date("2023-12-05"),
-    isNew: false,
-  },
-  {
-    id: "5",
-    category: "announcement",
-    title: "2023년 연말 휴무 안내",
-    summary: "2023년 연말연시 휴무 일정을 안내드립니다.",
-    content: "2023년 12월 30일(토)부터 2024년 1월 1일(월)까지 연말연시 휴무입니다. 새해에도 변함없는 성원 부탁드립니다.",
-    createdAt: new Date("2023-12-01"),
-    isNew: false,
-  },
-  {
-    id: "6",
-    category: "news",
-    title: "천안 교량 보수공사 완공",
-    summary: "한국도로공사 발주 천안 교량 보수공사를 성공적으로 완공하였습니다.",
-    content: "오주건설(주)는 한국도로공사에서 발주한 천안 교량 보수공사를 성공적으로 완공하였습니다. 총 6개월간의 공사 기간 동안 무재해로 공사를 마무리하였습니다.",
-    createdAt: new Date("2023-11-15"),
-    isNew: false,
-  },
-];
-
 export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState("all");
-  const [allNewsItems, setAllNewsItems] = useState<NewsItem[]>(defaultNewsItems);
-  const [loading, setLoading] = useState(true);
+  const [allNewsItems, setAllNewsItems] = useState<NewsItem[]>(newsFallbackItems);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
+    // Firebase 미설정 시에는 기본 안내 항목을 표시합니다.
+    if (!isFirebaseConfigured) return;
+
+    let isMounted = true;
     const fetchNews = async () => {
       try {
         const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
         const querySnapshot = await getDocs(q);
 
-        if (!querySnapshot.empty) {
-          const newsData: NewsItem[] = [];
-          querySnapshot.forEach((doc) => {
-            newsData.push({
-              id: doc.id,
-              ...doc.data(),
-            } as NewsItem);
-          });
-          setAllNewsItems(newsData);
-        }
+        if (!isMounted) return;
+        const fetchedItems = querySnapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as NewsItem)
+        );
+        if (fetchedItems.length > 0) setAllNewsItems(fetchedItems);
+        setLoadError(false);
       } catch (error) {
         console.error("Error fetching news:", error);
-        // Firestore 오류 시 기본 데이터 유지
-      } finally {
-        setLoading(false);
+        if (isMounted) setLoadError(true);
       }
     };
 
     fetchNews();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const filteredNews = activeCategory === "all"
@@ -136,7 +71,7 @@ export default function NewsPage() {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=80)'
+              backgroundImage: 'url(/images/construction/hero-main.webp)'
             }}
           />
         </div>
@@ -182,7 +117,7 @@ export default function NewsPage() {
                 }`}
               >
                 {value.label}
-                {key !== "all" && (
+                {key !== "all" && allNewsItems.length > 0 && (
                   <span className="ml-1.5 opacity-70">
                     ({allNewsItems.filter(item => item.category === key).length})
                   </span>
@@ -225,7 +160,7 @@ export default function NewsPage() {
                       <h3 className="font-bold text-gray-900 text-lg mb-1 group-hover:text-brand-700 transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-gray-600 text-sm line-clamp-1">
+                       <p className="line-clamp-2 text-base leading-relaxed text-gray-600">
                         {item.summary}
                       </p>
                     </div>
@@ -241,11 +176,21 @@ export default function NewsPage() {
             })}
           </div>
 
-          {/* Empty State */}
+          {/* 기본 안내는 유지하고, 실시간 조회가 실패한 경우만 알립니다. */}
+          {loadError && (
+            <div role="alert" className="mb-4 text-base text-amber-900">
+              <p>소식을 불러오지 못해 기본 안내를 표시합니다.</p>
+            </div>
+          )}
+
           {filteredNews.length === 0 && (
             <div className="text-center py-16">
-              <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">등록된 소식이 없습니다.</p>
+              <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" aria-hidden="true" />
+              <p className="text-gray-500">
+                {allNewsItems.length === 0
+                  ? "등록된 소식이 없습니다."
+                  : "선택한 분류에 등록된 소식이 없습니다."}
+              </p>
             </div>
           )}
         </div>

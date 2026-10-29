@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { env } from "@/shared/config/env";
 
 export const metadata: Metadata = {
   title: "개인정보처리방침",
@@ -20,17 +21,16 @@ export default function PrivacyPage() {
               이용 목적이 변경되는 경우에는 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
             </p>
             <ul className="list-disc list-inside text-gray-600 space-y-2 mt-4">
-              <li>견적 문의 및 상담 접수</li>
-              <li>프로젝트 관련 연락 및 회신</li>
-              <li>서비스 개선을 위한 통계 분석</li>
+              <li>견적·상담 문의 접수 및 회신</li>
+              <li>발주 주체·예산·지급 조건 등 상담에 필요한 범위에서의 확인</li>
             </ul>
           </section>
 
           <section>
             <h2 className="text-xl font-bold mb-4">2. 수집하는 개인정보 항목</h2>
             <ul className="list-disc list-inside text-gray-600 space-y-2">
-              <li>필수항목: 성명, 연락처</li>
-              <li>선택항목: 이메일, 소속(회사명), 문의 내용</li>
+              <li>필수항목: 성함, 연락처, 문의 종류(상담 종류)</li>
+              <li>선택항목: 현장 위치</li>
             </ul>
           </section>
 
@@ -41,8 +41,8 @@ export default function PrivacyPage() {
               단, 관련 법령에 의해 보존할 필요가 있는 경우 해당 법령에서 정한 기간 동안 보관합니다.
             </p>
             <ul className="list-disc list-inside text-gray-600 space-y-2 mt-4">
-              <li>문의 접수 기록: 3년 (전자상거래법)</li>
-              <li>계약 관련 기록: 5년 (상법)</li>
+              <li>상담 목적 달성 시 지체 없이 파기합니다.</li>
+              <li>관련 법령에 따라 보존이 필요한 경우에는 해당 기간 동안 안전하게 보관합니다.</li>
             </ul>
           </section>
 
@@ -65,16 +65,20 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-bold mb-4">6. 개인정보 보호 책임자</h2>
             <div className="bg-gray-50 rounded-lg p-6">
-              <p className="text-gray-600">성명: 이자영 (대표이사)</p>
-              <p className="text-gray-600">연락처: 043-265-6010</p>
-              <p className="text-gray-600">이메일: thdgjs6560@hanmail.net</p>
+              <p className="text-gray-600">성명: {env.company.ceo} (대표이사)</p>
+              <p className="text-gray-600">
+                연락처: <a href={`tel:${env.company.phone}`} className="underline underline-offset-2 hover:text-brand-700">{env.company.phone}</a>
+              </p>
+              <p className="text-gray-600">
+                이메일: <a href={`mailto:${env.company.email}`} className="break-all underline underline-offset-2 hover:text-brand-700">{env.company.email}</a>
+              </p>
             </div>
           </section>
 
           <section>
             <h2 className="text-xl font-bold mb-4">7. 개인정보처리방침 변경</h2>
             <p className="text-gray-600 leading-relaxed">
-              이 개인정보처리방침은 2024년 1월 1일부터 적용됩니다.
+              이 개인정보처리방침은 2026년 10월 20일부터 적용됩니다.
               변경 사항이 있을 경우 웹사이트를 통하여 공지할 예정입니다.
             </p>
           </section>

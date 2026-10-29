@@ -1,0 +1,60 @@
+{
+  "method": "darkest row averaged x+-2 over y 105:140; not rigid-body or physical verification",
+  "x": [
+    350,
+    390,
+    430
+  ],
+  "rows": {
+    "control_start": [
+      121,
+      120,
+      120
+    ],
+    "control_end": [
+      126,
+      119,
+      119
+    ],
+    "candidate28_start": [
+      122,
+      122,
+      122
+    ],
+    "candidate28_end": [
+      122,
+      121,
+      120
+    ],
+    "candidate29_start": [
+      121,
+      121,
+      120
+    ],
+    "candidate29_end": [
+      126,
+      122,
+      122
+    ],
+    "candidate30_start": [
+      121,
+      120,
+      120
+    ],
+    "candidate30_end": [
+      126,
+      120,
+      120
+    ],
+    "candidate31_start": [
+      121,
+      120,
+      120
+    ],
+    "candidate31_end": [
+      126,
+      120,
+      120
+    ]
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "prompt": [
+    2,
+    "49d04217-6bf5-4900-831b-7217d69dc8e6",
+    {
+      "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+          "ckpt_name": "RealVisXL_V5.0_fp16.safetensors"
+        }
+      },
+      "2": {
+        "class_type": "VAELoader",
+        "inputs": {
+          "vae_name": "sdxl_vae.safetensors"
+        }
+      },
+      "3": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "1",
+            1
+          ],
+          "text": "toy, miniature, model, tabletop, plinth, illustration, cartoon, 3d render, plastic, text, logo, watermark, workers, people, oversaturated, blurred, distorted, impossible geometry, extra pipe, floor, supports, polished shiny metal"
+        }
+      },
+      "4": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+          "width": 1024,
+          "height": 640,
+          "batch_size": 1
+        }
+      },
+      "10": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "1",
+            1
+          ],
+          "text": "Straight-on close-up photograph of a freshly excavated vertical wall next to a real sidewalk. At the top are rows of rectangular concrete paving blocks, directly below is a thin layer of tan sand and dense gray angular gravel, below is compact dark brown natural soil. A short gray drainage pipe emerges from the soil with a clearly hollow round mouth facing the camera. A small dark cavity in the soil beside the pipe. Real full scale excavation in daylight. Soil wall extends to all edges of image; no pedestal, no product display, no floor."
+        }
+      },
+      "11": {
+        "class_type": "KSampler",
+        "inputs": {
+          "seed": 2026102906,
+          "steps": 30,
+          "cfg": 5.5,
+          "sampler_name": "dpmpp_2m",
+          "scheduler": "karras",
+          "denoise": 1.0,
+          "model": [
+            "1",
+            0
+          ],
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "3",
+            0
+          ],
+          "latent_image": [
+            "4",
+            0
+          ]
+        }
+      },
+      "12": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "11",
+            0
+          ],
+          "vae": [
+            "2",
+            0
+          ]
+        }
+      },
+      "13": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "12",
+            0
+          ],
+          "filename_prefix": "reference-6"
+        }
+      }
+    },
+    {
+      "client_id": "oju-batch3",
+      "create_time": 1793199993917
+    },
+    [
+      "13"
+    ]
+  ],
+  "outputs": {
+    "13": {
+      "images": [
+        {
+          "filename": "reference-6_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 1024,
+            "height": 640
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "49d04217-6bf5-4900-831b-7217d69dc8e6",
+          "timestamp": 1793199993918
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "prompt_id": "49d04217-6bf5-4900-831b-7217d69dc8e6",
+          "timestamp": 1793199993918
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "49d04217-6bf5-4900-831b-7217d69dc8e6",
+          "timestamp": 1793200001542
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "13": {
+      "node_id": "13",
+      "display_node": "13",
+      "parent_node": null,
+      "real_node_id": "13"
+    }
+  }
+}

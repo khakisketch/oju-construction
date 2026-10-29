@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="../public/images/ojuconstruction-logo.png">
+<title>증상 장면 탐색 시안 · 오주건설(주) 디자인 검토용</title>
+<style>
+@font-face{font-family:OjuNoto;src:url('../public/fonts/NotoSansKR-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:OjuNoto;src:url('../public/fonts/NotoSansKR-Bold.ttf') format('truetype');font-weight:700 900;font-display:swap}
+:root{--navy:#102c59;--deep:#071a38;--blue:#194b8c;--ink:#142a46;--muted:#53667b;--soft:#eef4f9;--line:#dce5ee;--white:#fff;--amber:#9a3412;--focus:#3195e8}
+*{box-sizing:border-box}[hidden]{display:none!important}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:#fff;color:var(--ink);font-family:OjuNoto,'Noto Sans KR',sans-serif;line-height:1.6;word-break:keep-all}
+img{max-width:100%;display:block}h1,h2,h3,h4,p,ol,ul,figure,figcaption{margin:0}ol,ul{padding:0;list-style:none}
+a{color:inherit}a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+.wrap{width:min(100% - 96px,1200px);margin:auto}
+.top{background:#fff}
+.notice{background:#eaf1fa;color:#173b6c;text-align:center;font-size:12px;font-weight:700;padding:8px 16px}
+.topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e6ebf1}
+.top-inner{min-height:68px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:11px;line-height:1.15}
+.brand img{width:40px;height:40px}.brand b{font-size:16px}.brand small{display:block;color:#64758a;font-size:11px;margin-top:2px}
+.draft-tag{margin-left:auto;font-size:12px;font-weight:700;color:var(--navy);background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:7px 14px;white-space:nowrap}
+.hero{background:var(--deep);color:#fff;overflow:hidden}
+.hero-inner{padding:28px 0}
+.hero h1{font-size:clamp(28px,3.4vw,44px);line-height:1.28;letter-spacing:-.03em}
+.hero p.lead{margin-top:12px;font-size:15px;line-height:1.75;color:#d7e5f3;max-width:46em}
+main section.block{padding:40px 0}
+.block.alt{background:#f4f8fb}
+.block-head{margin-bottom:22px}.block-head h2{font-size:clamp(24px,3vw,36px);letter-spacing:-.03em;line-height:1.35}
+.block-head p{margin-top:10px;color:var(--muted);font-size:15px;max-width:60em}
+/* symptom tabs */
+.symptom-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.symptom-nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border:1px solid #c8d7e5;border-radius:999px;background:#fff;color:#304c6b;font-weight:700;font-size:14px;text-decoration:none}
+.symptom-nav a[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.symptom{margin-bottom:34px}
+.symptom:last-child{margin-bottom:0}
+.scene-card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}
+.scene-head{padding:20px 22px 14px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.scene-head h3{font-size:22px;letter-spacing:-.02em}
+.scene-head .no{display:inline-grid;place-items:center;min-width:30px;height:30px;padding:0 8px;border-radius:999px;background:var(--navy);color:#fff;font-size:13px;font-weight:700}
+.scene-head p{width:100%;color:var(--muted);font-size:14px}
+.panel-cols{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(0,1fr);gap:20px;padding:0 20px;align-items:start}
+.scene{position:relative;background:linear-gradient(180deg,#f2f6fa 0%,#e7eef5 100%);border-radius:12px;overflow:hidden;margin:0}
+.scene svg{display:block;width:100%;height:auto}
+.hotspot{position:absolute;width:44px;height:44px;border-radius:50%;border:2px solid #fff;background:var(--navy);color:#fff;font-weight:800;font-size:17px;display:grid;place-items:center;box-shadow:0 3px 10px #071a3855;transform:translate(-50%,-50%);cursor:pointer;padding:0;transition:background-color .15s ease}
+.hotspot:hover{background:var(--blue)}
+.hotspot[aria-pressed="true"]{background:var(--amber);box-shadow:0 0 0 3px #fff,0 0 0 6px var(--amber),0 3px 10px #071a3855}
+.scene-cap{padding:10px 2px 0;font-size:12px;color:#60758b}
+.detail-col{min-width:0}
+.picker{display:grid;gap:8px;margin:0 0 12px}
+.picker button{display:flex;gap:10px;align-items:center;min-height:56px;padding:10px 14px;border:1px solid #c8d7e5;border-radius:12px;background:#fff;font:inherit;font-weight:700;font-size:14px;color:#304c6b;text-align:left;cursor:pointer;width:100%}
+.picker button:hover{border-color:var(--blue)}
+.picker button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.picker button .p-no{background:var(--navy)}
+.picker button[aria-pressed="true"] .p-no{background:#fff;color:var(--navy)}
+.picker button small{display:block;font-weight:400;font-size:12px;opacity:.85}
+.p-no{display:inline-grid;place-items:center;width:28px;height:28px;flex:none;border-radius:50%;background:var(--amber);color:#fff;font-weight:800;font-size:15px}
+.detail{border:1px solid var(--line);border-radius:14px;background:#fffdf9;padding:2px 18px 6px}
+.point{padding:14px 0;scroll-margin-top:100px}
+.p-head{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.p-head h4{font-size:16px}
+.detail .why{font-size:14px;color:#405a73}
+.detail .memo{margin-top:8px;font-size:13px;color:#2c4a68;background:var(--soft);border-radius:8px;padding:9px 12px}
+.detail .memo b{color:var(--navy)}
+.photo-strip{display:grid;grid-template-columns:168px minmax(0,1fr);gap:14px;margin:18px 20px 20px;border-top:1px solid #ebf0f4;padding-top:16px;align-items:start}
+.photo-strip img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+.photo-strip figcaption{min-width:0}
+.badge{display:inline-block;color:#fff;background:#0a1c38;border-radius:5px;padding:4px 9px;font-size:12px;font-weight:700}
+.photo-strip p{margin-top:8px;font-size:13px;color:#405a73}
+.photo-link{font-size:12px;color:#4d6072;margin-top:6px}
+.status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+/* inquiry + guardrails */
+.inquiry{background:var(--deep);color:#fff}
+.inquiry-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.inquiry h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.03em}
+.inquiry .lead{margin-top:12px;color:#cbdced;font-size:15px;line-height:1.8}
+.inquiry ol.steps{margin-top:20px;display:grid;gap:10px}
+.inquiry ol.steps li{background:#ffffff12;border:1px solid #ffffff26;border-radius:10px;padding:12px 15px;font-size:14px;color:#e6eef7}
+.form-mock{background:#fff;color:var(--ink);border-radius:18px;padding:26px}
+.form-mock h3{font-size:19px}.form-mock>p{font-size:13px;color:#50677e;margin-top:6px}
+.field{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:13px;font-weight:700}
+.field input,.field select,.field textarea{min-height:46px;padding:10px 12px;border:1px solid #cdd9e4;border-radius:8px;font:inherit;font-weight:400;color:#8a9aa9;background:#f4f7fa}
+.form-mock button{width:100%;min-height:48px;margin-top:16px;border:0;border-radius:999px;background:#dce6ef;color:#50647a;font-weight:700;cursor:not-allowed}
+.form-warn{font-size:12px;color:#53687e;margin-top:12px}
+.guards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px}
+.guards li{border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:13px;color:#405a73;background:#fff}
+.guards b{display:block;color:var(--navy);font-size:14px;margin-bottom:4px}
+.noscript-note{border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:12px 16px;font-size:13px;color:#304c6b;margin-bottom:18px}
+footer{background:var(--deep);color:#c3d2e2;font-size:12px;padding:34px 0 40px}
+footer b{display:block;color:#fff;font-size:15px;margin-bottom:8px}
+footer p{line-height:1.8}
+@media(max-width:900px){
+.wrap{width:min(100% - 40px,1200px)}
+.panel-cols{grid-template-columns:1fr}
+.photo-strip{grid-template-columns:132px minmax(0,1fr);margin:16px 16px 18px}
+.panel-cols{padding:0 16px}
+.scene-head{padding:18px 16px 12px}
+.inquiry-grid{grid-template-columns:1fr;gap:26px}
+.guards{grid-template-columns:1fr}
+main section.block{padding:32px 0}
+.hotspot{width:48px;height:48px;font-size:18px}
+.hero-inner{padding:24px 0}
+}
+/* Keep the paving targets separate at both desktop and mobile scene widths. */
+[data-point="pavers-1"]{left:40%!important;top:60%!important}
+[data-point="pavers-2"]{left:68%!important;top:66%!important}
+[data-point="pavers-3"]{left:16%!important;top:84%!important}
+@media(max-width:760px){
+/* Keep the remaining tap targets separate on narrow screens. */
+[data-point="drain-1"]{left:32%!important;top:54%!important}
+[data-point="drain-2"]{left:56%!important;top:82%!important}
+[data-point="leak-1"]{left:64%!important;top:45%!important}
+[data-point="leak-2"]{left:40%!important;top:70%!important}
+[data-point="leak-3"]{left:87%!important;top:18%!important}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+<p class="notice">디자인 검토용 시안 · 실제 사이트에 적용되지 않았으며 온라인 문의가 전송되지 않습니다.</p>
+<div class="topbar"><div class="wrap top-inner">
+<a class="brand" href="#top"><img src="../public/images/ojuconstruction-logo.png" alt="오주건설(주)"><span><b>오주건설(주)</b><small>Oju Construction</small></span></a>
+<span class="draft-tag">인터랙티브 시안 · 검토용</span>
+</div></div>
+</header>
+
+<main id="top">
+<section class="hero"><div class="wrap hero-inner">
+<h1>증상 뒤에서, 무엇을 살필까요?</h1>
+<p class="lead">증상과 그림 속 <b>확인 지점을 선택해</b> 무엇을 왜 살피는지 알아보세요. 회전형 3D가 아닌 고정 시점의 설명용 그림입니다.</p>
+</div></section>
+
+<section class="block" aria-labelledby="explore-title"><div class="wrap">
+<div class="block-head">
+<h2 id="explore-title">네 가지 증상 장면</h2>
+</div>
+<noscript><p class="noscript-note">번호 선택에는 자바스크립트가 필요하며, 지금은 꺼져 있습니다. 대신 네 장면과 모든 설명을 아래에서 순서대로 볼 수 있습니다.</p></noscript>
+
+<nav class="symptom-nav" id="symptom-nav" aria-label="증상 선택">
+<a href="#symptom-water" data-tab="symptom-water" aria-selected="true">① 물 고임</a>
+<a href="#symptom-pavers" data-tab="symptom-pavers" aria-selected="false">② 보도블럭 꺼짐·들뜸</a>
+<a href="#symptom-drain" data-tab="symptom-drain" aria-selected="false">③ 배수구 막힘·냄새</a>
+<a href="#symptom-leak" data-tab="symptom-leak" aria-selected="false">④ 지하주차장 천장 누수</a>
+</nav>
+<div class="status" id="live-status" aria-live="polite" aria-atomic="true"></div>
+
+<!-- ============ 1. 물 고임 ============ -->
+<section class="symptom" id="symptom-water" aria-labelledby="t-water" data-panel>
+<div class="scene-card">
+<div class="scene-head"><span class="no" aria-hidden="true">1</span><h3 id="t-water">비 온 뒤 물이 고인다</h3>
+<p>주차장 한 칸을 비스듬히 자른 장면입니다. 고인 물·기울기·배수구의 위치 관계를 함께 보세요.</p></div>
+<div class="panel-cols">
+<div class="scene-col">
+<figure class="scene">
+<svg viewBox="0 0 720 460" role="img" aria-label="주차장 물 고임 입체 개념도. 포장 위에 물웅덩이가 있고, 낮은 쪽에 배수구가 있으며, 앞면 단면에 포장 하부 층이 보인다. 직접 그린 설명용 그림으로 실제 설계도가 아니다.">
+<defs>
+<linearGradient id="w-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dce8f2"/><stop offset="1" stop-color="#eef3f7"/></linearGradient>
+<linearGradient id="w-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd0ee"/><stop offset="1" stop-color="#5ea3d4"/></linearGradient>
+<pattern id="w-soil" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M0 14 14 0" stroke="#a98f6f" stroke-width="1.4" opacity=".55"/></pattern>
+</defs>
+<rect x="0" y="0" width="720" height="460" fill="url(#w-sky)"/>
+<rect x="60" y="60" width="600" height="90" rx="6" fill="#c9d5e0"/>
+<rect x="60" y="60" width="600" height="90" rx="6" fill="#102c59" opacity=".08"/>
+<rect x="120" y="60" width="26" height="90" fill="#8fa1b3"/>
+<rect x="560" y="60" width="26" height="90" fill="#8fa1b3"/>
+<text x="310" y="112" font-size="20" fill="#5b7186">아파트 건물 (뒤편)</text>
+<polyline points="74,276 354,394" stroke="#767d85" stroke-width="14" fill="none"/>
+<polyline points="74,276 354,394" stroke="#a7adb4" stroke-width="11" fill="none"/>
+<polygon points="80,268 380,150 660,268 360,386" fill="#4c5a68"/>
+<polygon points="80,268 380,150 660,268 360,386" fill="#000" opacity=".12"/>
+<polyline points="210,232 470,320" stroke="#f2c230" stroke-width="9" fill="none" opacity=".92"/>
+<polyline points="300,200 560,288" stroke="#f2c230" stroke-width="9" fill="none" opacity=".92"/>
+<ellipse cx="205" cy="330" rx="24" ry="8" fill="#39424d"/>
+<ellipse cx="205" cy="330" rx="24" ry="8" fill="none" stroke="#202b36" stroke-width="2"/>
+<text x="172" y="352" font-size="13" fill="#33414f">맨홀</text>
+<ellipse cx="372" cy="278" rx="128" ry="40" fill="url(#w-water)" opacity=".95"/>
+<ellipse cx="340" cy="270" rx="70" ry="18" fill="#fff" opacity=".45"/>
+<ellipse cx="430" cy="288" rx="40" ry="10" fill="#fff" opacity=".3"/>
+<g><line x1="180" y1="262" x2="300" y2="282" stroke="#fff" stroke-width="4" stroke-dasharray="9 7"/><polygon points="300,282 284,272 284,292" fill="#fff"/></g>
+<text x="115" y="308" font-size="17" fill="#fff" stroke="#273e52" stroke-width="4" stroke-linejoin="round" paint-order="stroke" font-weight="bold">낮은 쪽으로 흐름</text>
+<polygon points="360,386 660,268 660,318 360,436" fill="#d8d3c4"/>
+<polygon points="360,386 660,268 660,282 360,400" fill="#3d4753"/>
+<polygon points="360,400 660,282 660,298 360,416" fill="#b9b3a4"/>
+<polygon points="360,416 660,298 660,318 360,436" fill="#c2b493"/>
+<polygon points="360,416 660,298 660,318 360,436" fill="url(#w-soil)"/>
+<text x="392" y="432" font-size="15" fill="#5b5644">포장 하부 · 기층 · 지반 (간략)</text>
+<g>
+<polygon points="560,236 628,262 628,330 560,304" fill="#202b36"/>
+<polygon points="560,236 628,262 606,272 538,246" fill="#8fa1b3"/>
+<polygon points="538,246 606,272 606,342 538,316" fill="#33414f"/>
+<g stroke="#cfd9e2" stroke-width="3"><line x1="548" y1="258" x2="596" y2="276"/><line x1="548" y1="270" x2="596" y2="288"/><line x1="548" y1="282" x2="596" y2="300"/></g>
+<polygon points="606,272 628,262 628,330 606,342" fill="#6b7885"/>
+<text x="520" y="368" font-size="16" fill="#33414f" font-weight="bold">배수구</text>
+</g>
+<line x1="470" y1="292" x2="540" y2="282" stroke="#4a95cb" stroke-width="4" stroke-dasharray="8 6"/>
+</svg>
+<button type="button" class="hotspot" style="left:52%;top:60%" data-point="water-1" aria-pressed="true" aria-label="1. 고인 물의 가장자리">1</button>
+<button type="button" class="hotspot" style="left:26%;top:52%" data-point="water-2" aria-pressed="false" aria-label="2. 포장 표면의 기울기">2</button>
+<button type="button" class="hotspot" style="left:81%;top:60%" data-point="water-3" aria-pressed="false" aria-label="3. 배수구와 그레이팅">3</button>
+</figure>
+<p class="scene-cap">직접 그린 입체 개념도입니다. 실제 포장 두께·구배·관경을 나타내지 않으며, 엔지니어 기술 검수 전입니다.</p>
+</div>
+<div class="detail-col">
+<div class="picker" role="group" aria-label="물 고임 확인 지점 선택">
+<button type="button" data-pick="water-1" aria-pressed="true"><span class="p-no" aria-hidden="true">1</span><span>고인 물의 가장자리<small>퍼진 범위부터 봅니다</small></span></button>
+<button type="button" data-pick="water-2" aria-pressed="false"><span class="p-no" aria-hidden="true">2</span><span>포장 표면의 기울기<small>물이 흘러야 할 방향</small></span></button>
+<button type="button" data-pick="water-3" aria-pressed="false"><span class="p-no" aria-hidden="true">3</span><span>배수구와 그레이팅<small>물이 빠지는 입구</small></span></button>
+</div>
+<div class="detail">
+<section class="point" id="d-water-1" aria-label="1번 지점 설명">
+<div class="p-head"><span class="p-no" aria-hidden="true">1</span><h4>고인 물의 가장자리 — 퍼진 범위부터 봅니다</h4></div>
+<p class="why">물이 머무는 범위를 알면 낮은 쪽이 어디쯤인지 짐작하는 데 도움이 됩니다. 단정할 수는 없지만, 범위를 알아두면 현장 확인이 빨라집니다.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 비가 그친 뒤 얼마나 지나야 없어지는지, 발자국·타이어 자국과 비교한 대략의 범위. 보여주실 사진 1~2장을 준비해 두세요.</p></section>
+<section class="point" id="d-water-2" aria-label="2번 지점 설명" hidden>
+<div class="p-head"><span class="p-no" aria-hidden="true">2</span><h4>포장 표면의 기울기 — 물이 흘러야 할 방향</h4></div>
+<p class="why">물은 대체로 높은 곳에서 낮은 곳으로 흐릅니다. 배수구와 반대쪽에 물이 머문다면, 기울기도 함께 살펴볼 만한 지점입니다.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 고인 자리에서 가장 가까운 배수구까지의 방향과 거리, 비 오는 날 물이 흐르는 방향.</p></section>
+<section class="point" id="d-water-3" aria-label="3번 지점 설명" hidden>
+<div class="p-head"><span class="p-no" aria-hidden="true">3</span><h4>배수구와 그레이팅 — 물이 빠지는 입구</h4></div>
+<p class="why">입구가 낙엽·토사로 덮여 있으면 빗물이 바로 들어가지 못하고 옆으로 넘칠 수 있습니다. 겉에서 보이는 막힘부터 확인해 보세요.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 그레이팅 위 이물질 유무, 고인 물이 배수구 쪽으로 흐르는지 여부.</p></section>
+</div>
+</div>
+</div>
+<figure class="photo-strip">
+<img src="../public/images/renewal/symptom-water.webp" alt="노란 주차선 사이에 물이 고인 아스팔트 바닥의 AI 예시 사진">
+<figcaption><span class="badge">AI 이미지 예시</span>
+<p>겉모습 예시입니다. 실제 오주건설 시공 실적이 아니며, 입체 그림과 같은 현장이 아닙니다.</p>
+<p class="photo-link">사진 속 고인 물 → 입체 그림의 ①·② 자리에서 살펴봅니다.</p></figcaption>
+</figure>
+</div>
+</section>
+
+<!-- ============ 2. 보도블럭 ============ -->
+<section class="symptom" id="symptom-pavers" aria-labelledby="t-pavers" data-panel hidden>
+<div class="scene-card">
+<div class="scene-head"><span class="no" aria-hidden="true">2</span><h3 id="t-pavers">보도블럭이 꺼지고 들뜬다</h3>
+<p>보도 한 뼘을 비스듬히 자른 장면입니다. 꺼진 블록·벌어진 틈·경계석의 관계를 함께 보세요.</p></div>
+<div class="panel-cols">
+<div class="scene-col">
+<figure class="scene">
+<svg viewBox="0 0 720 460" role="img" aria-label="보도블럭 꺼짐 입체 개념도. 일부 블록이 가라앉고 일부가 들떠 있으며, 벌어진 틈 사이로 흙이 보인다. 직접 그린 설명용 그림으로 실제 설계도가 아니다.">
+<defs><pattern id="p-soil" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="3" cy="4" r="1.6" fill="#5d4a33"/><circle cx="8" cy="8" r="1.3" fill="#4a3a28"/></pattern></defs>
+<rect x="0" y="0" width="720" height="460" fill="#dfe8d8"/>
+<g fill="#9db894"><ellipse cx="90" cy="400" rx="52" ry="16"/><ellipse cx="640" cy="400" rx="60" ry="17"/><ellipse cx="560" cy="130" rx="55" ry="14"/><ellipse cx="150" cy="140" rx="48" ry="13"/></g>
+<g><rect x="592" y="60" width="14" height="60" fill="#7a5c3e"/><ellipse cx="599" cy="48" rx="42" ry="30" fill="#6f9a5c"/><ellipse cx="575" cy="62" rx="26" ry="20" fill="#7fae6b"/></g>
+<text x="560" y="140" font-size="14" fill="#3e5a33">가로수</text>
+<polygon points="360,430 630,330 630,358 360,458" fill="#7e858d"/>
+<polygon points="80,330 350,190 630,330 360,430" fill="#b3a88f"/>
+<polygon points="80,330 350,190 630,330 360,430" fill="#fff" opacity=".08"/>
+<g stroke="#6f6656" stroke-width="3">
+<line x1="172" y1="363" x2="442" y2="236"/>
+<line x1="350" y1="190" x2="360" y2="430"/>
+<line x1="215" y1="260" x2="220" y2="380"/>
+<line x1="490" y1="260" x2="495" y2="380"/>
+</g>
+<line x1="265" y1="396" x2="535" y2="283" stroke="#3a2f22" stroke-width="14"/>
+<line x1="265" y1="396" x2="535" y2="283" stroke="url(#p-soil)" stroke-width="9"/>
+<polygon points="172,373 353,288 357,370 265,406" fill="#8a806c"/>
+<polygon points="172,373 353,288 357,370 265,406" fill="#000" opacity=".12"/>
+<polygon points="172,363 353,278 353,288 172,373" fill="#5d5641"/>
+<text x="200" y="352" font-size="16" fill="#fff" font-weight="bold">꺼짐</text>
+<polygon points="442,236 535,283 357,358 353,278" fill="#000" opacity=".18"/>
+<polygon points="357,346 535,259 535,283 357,358" fill="#847b68"/>
+<polygon points="442,224 535,271 535,283 442,236" fill="#6f6656"/>
+<polygon points="353,266 442,224 535,271 357,346" fill="#e0d9c7"/>
+<text x="408" y="262" font-size="16" fill="#4d463a" font-weight="bold">들뜸</text>
+<text x="548" y="306" font-size="16" fill="#4d463a" font-weight="bold">벌어진 틈·흙</text>
+<polyline points="80,330 360,430" stroke="#767d85" stroke-width="26" fill="none" transform="translate(0,10)"/>
+<polyline points="80,330 360,430" stroke="#a7adb4" stroke-width="24" fill="none"/>
+<text x="120" y="412" font-size="16" fill="#3f4a54" font-weight="bold">경계석</text>
+<g stroke="#5f8a4e" stroke-width="3" fill="none"><path d="M480 300 q4 -14 10 -20 M490 302 q8 -12 16 -16 M470 302 q-2 -12 2 -20"/><path d="M300 400 q4 -12 10 -18 M310 402 q8 -10 15 -13"/></g>
+</svg>
+<button type="button" class="hotspot" style="left:36%;top:80%" data-point="pavers-1" aria-pressed="true" aria-label="1. 단차가 생긴 블록">1</button>
+<button type="button" class="hotspot" style="left:57%;top:73%" data-point="pavers-2" aria-pressed="false" aria-label="2. 벌어진 틈과 흙">2</button>
+<button type="button" class="hotspot" style="left:29%;top:83%" data-point="pavers-3" aria-pressed="false" aria-label="3. 경계석과 주변 지반">3</button>
+</figure>
+<p class="scene-cap">직접 그린 입체 개념도입니다. 블록 규격·하부 구성을 나타내지 않으며, 엔지니어 기술 검수 전입니다.</p>
+</div>
+<div class="detail-col">
+<div class="picker" role="group" aria-label="보도블럭 확인 지점 선택">
+<button type="button" data-pick="pavers-1" aria-pressed="true"><span class="p-no" aria-hidden="true">1</span><span>단차가 생긴 블록<small>발이 걸리기 쉬운 자리</small></span></button>
+<button type="button" data-pick="pavers-2" aria-pressed="false"><span class="p-no" aria-hidden="true">2</span><span>벌어진 틈과 흙<small>블록 사이가 비는 자리</small></span></button>
+<button type="button" data-pick="pavers-3" aria-pressed="false"><span class="p-no" aria-hidden="true">3</span><span>경계석과 주변 지반<small>보도를 받치는 가장자리</small></span></button>
+</div>
+<div class="detail">
+<section class="point" id="d-pavers-1" aria-label="1번 지점 설명">
+<div class="p-head"><span class="p-no" aria-hidden="true">1</span><h4>단차가 생긴 블록 — 발이 걸리기 쉬운 자리</h4></div>
+<p class="why">꺼지거나 들뜬 블록은 발이 걸려 넘어지기 쉬운 자리입니다. 어느 블록이 얼마나 어긋났는지 짚어두면 조심해야 할 구간부터 가릴 수 있습니다.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 단차가 있는 블록의 위치(동·출입구 기준). 주변 사물과 비교한 사진을 준비해 두세요.</p></section>
+<section class="point" id="d-pavers-2" aria-label="2번 지점 설명" hidden>
+<div class="p-head"><span class="p-no" aria-hidden="true">2</span><h4>벌어진 틈과 흙 — 블록 사이가 비는 자리</h4></div>
+<p class="why">틈이 벌어지고 흙이 보이면 아래가 비었을 가능성도 염두에 둡니다. 틈의 너비와 흙의 상태를 함께 보면 진행 정도를 가늠하는 데 도움이 됩니다.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 틈이 벌어진 구간의 길이와 방향, 비 온 뒤 틈으로 물이 스며드는지 여부.</p></section>
+<section class="point" id="d-pavers-3" aria-label="3번 지점 설명" hidden>
+<div class="p-head"><span class="p-no" aria-hidden="true">3</span><h4>경계석과 주변 지반 — 보도를 받치는 가장자리</h4></div>
+<p class="why">가장자리가 무너지면 블록이 함께 밀릴 수 있습니다. 경계석의 기울기와 옆 지반(화단·흙)의 꺼짐을 함께 살피는 것이 순서입니다.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 경계석이 기울거나 빈틈이 생긴 자리, 옆 화단·흙이 함께 꺼진 곳이 있는지.</p></section>
+</div>
+</div>
+</div>
+<figure class="photo-strip">
+<img src="../public/images/renewal/symptom-pavers.webp" alt="틈이 벌어지고 흙이 드러난 보도블럭의 AI 예시 사진">
+<figcaption><span class="badge">AI 이미지 예시</span>
+<p>겉모습 예시입니다. 실제 오주건설 시공 실적이 아니며, 입체 그림과 같은 현장이 아닙니다.</p>
+<p class="photo-link">사진 속 벌어진 틈 → 입체 그림의 ② 자리에서 살펴봅니다.</p></figcaption>
+</figure>
+</div>
+</section>
+
+<!-- ============ 3. 배수구 ============ -->
+<section class="symptom" id="symptom-drain" aria-labelledby="t-drain" data-panel hidden>
+<div class="scene-card">
+<div class="scene-head"><span class="no" aria-hidden="true">3</span><h3 id="t-drain">배수구가 막히고 냄새가 난다</h3>
+<p>트렌치 배수구를 비스듬히 자른 장면입니다. 겉의 낙엽부터 속의 고인 물·연결관까지 이어서 보세요.</p></div>
+<div class="panel-cols">
+<div class="scene-col">
+<figure class="scene">
+<svg viewBox="0 0 720 460" role="img" aria-label="배수구 막힘 입체 개념도. 그레이팅 위에 낙엽이 쌓여 있고, 잘린 집수정 안에 고인 물과 퇴적물, 옆으로 이어지는 연결관이 보인다. 직접 그린 설명용 그림으로 실제 설계도가 아니다.">
+<rect x="0" y="0" width="720" height="460" fill="#e6ebef"/>
+<rect x="420" y="40" width="240" height="150" rx="6" fill="#b7c2cc"/>
+<rect x="420" y="160" width="240" height="30" fill="#000" opacity=".12"/>
+<text x="450" y="110" font-size="19" fill="#5b6b78">건물 외벽</text>
+<polygon points="60,330 330,200 660,330 390,440 120,440" fill="#9aa4ac"/>
+<g stroke="#4a95cb" stroke-width="3" stroke-dasharray="7 7" opacity=".7"><line x1="120" y1="360" x2="240" y2="342"/><line x1="560" y1="360" x2="470" y2="330"/></g>
+<polygon points="150,330 360,224 500,288 290,394" fill="#2c3640"/>
+<polygon points="290,394 500,288 500,330 290,436" fill="#1d242c"/>
+<polygon points="150,330 290,394 290,436 150,372" fill="#454f59"/>
+<polygon points="290,394 500,288 500,306 290,412" fill="#6e6250"/>
+<polygon points="290,412 500,306 500,330 290,436" fill="#4e7fa3" opacity=".85"/>
+<text x="160" y="405" font-size="15" fill="#fff">고인 물·퇴적물</text>
+<g stroke="#d7dee4" stroke-width="7">
+<line x1="180" y1="318" x2="380" y2="220"/><line x1="220" y1="336" x2="420" y2="238"/><line x1="260" y1="354" x2="460" y2="256"/>
+</g>
+<polygon points="150,330 360,224 388,238 178,344" fill="#39434d"/>
+<polygon points="472,274 500,288 290,394 262,380" fill="#39434d"/>
+<g>
+<ellipse cx="240" cy="300" rx="26" ry="12" fill="#c98f3d" transform="rotate(-18 240 300)"/>
+<ellipse cx="300" cy="276" rx="24" ry="11" fill="#a86f2c" transform="rotate(12 300 276)"/>
+<ellipse cx="360" cy="300" rx="26" ry="12" fill="#d9a94e" transform="rotate(-8 360 300)"/>
+<ellipse cx="420" cy="278" rx="22" ry="10" fill="#b57e35" transform="rotate(20 420 278)"/>
+<ellipse cx="270" cy="330" rx="22" ry="10" fill="#c98f3d" transform="rotate(8 270 330)"/>
+</g>
+<text x="140" y="248" font-size="16" fill="#4d463a" font-weight="bold">쌓인 낙엽·토사</text>
+<polygon points="500,288 590,250 590,300 500,338" fill="#7c8894"/>
+<ellipse cx="590" cy="275" rx="14" ry="26" fill="#313b45"/>
+<text x="520" y="360" font-size="16" fill="#33414f" font-weight="bold">연결관</text>
+<line x1="500" y1="312" x2="576" y2="278" stroke="#4a95cb" stroke-width="4" stroke-dasharray="8 6"/>
+</svg>
+<button type="button" class="hotspot" style="left:43%;top:62%" data-point="drain-1" aria-pressed="true" aria-label="1. 그레이팅 위 낙엽과 토사">1</button>
+<button type="button" class="hotspot" style="left:56%;top:86%" data-point="drain-2" aria-pressed="false" aria-label="2. 집수정 안 고인 물과 퇴적물">2</button>
+<button type="button" class="hotspot" style="left:80%;top:62%" data-point="drain-3" aria-pressed="false" aria-label="3. 연결관 입구">3</button>
+</figure>
+<p class="scene-cap">직접 그린 입체 개념도입니다. 실제 집수정 깊이·관경·구배를 나타내지 않으며, 엔지니어 기술 검수 전입니다.</p>
+</div>
+<div class="detail-col">
+<div class="picker" role="group" aria-label="배수구 확인 지점 선택">
+<button type="button" data-pick="drain-1" aria-pressed="true"><span class="p-no" aria-hidden="true">1</span><span>그레이팅 위 낙엽·토사<small>가장 먼저 막히는 자리</small></span></button>
+<button type="button" data-pick="drain-2" aria-pressed="false"><span class="p-no" aria-hidden="true">2</span><span>집수정 안 고인 물·퇴적물<small>겉에서 보이는 범위까지</small></span></button>
+<button type="button" data-pick="drain-3" aria-pressed="false"><span class="p-no" aria-hidden="true">3</span><span>연결관 입구<small>물이 빠져나가는 길목</small></span></button>
+</div>
+<div class="detail">
+<section class="point" id="d-drain-1" aria-label="1번 지점 설명">
+<div class="p-head"><span class="p-no" aria-hidden="true">1</span><h4>그레이팅 위 낙엽·토사 — 가장 먼저 막히는 자리</h4></div>
+<p class="why">겉이 덮이면 빗물이 잘 들어가지 못해 옆으로 넘칠 수 있습니다. 청소로 해결될 일인지 가리는 첫 관문입니다.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 이물질의 종류(낙엽·토사·쓰레기)와 쌓인 범위, 마지막으로 치운 시점.</p></section>
+<section class="point" id="d-drain-2" aria-label="2번 지점 설명" hidden>
+<div class="p-head"><span class="p-no" aria-hidden="true">2</span><h4>집수정 안 고인 물·퇴적물 — 겉에서 보이는 범위까지</h4></div>
+<p class="why">속에 물과 흙이 오래 고이면 냄새·벌레의 원인이 될 수 있습니다. 겉을 치워도 냄새가 남는다면, 그레이팅 사이로 보이는 물·냄새 상태까지 함께 전해 보세요. 무거운 덮개는 직접 열지 마세요.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 냄새가 나는 시간대(비 온 뒤·평소), 고인 물의 색·냄새 정도, 벌레 발생 여부.</p></section>
+<section class="point" id="d-drain-3" aria-label="3번 지점 설명" hidden>
+<div class="p-head"><span class="p-no" aria-hidden="true">3</span><h4>연결관 입구 — 물이 빠져나가는 길목</h4></div>
+<p class="why">겉과 속을 치웠는데도 물이 잘 빠지지 않거나 넘친다면, 이어지는 관 쪽도 함께 살펴볼 신호일 수 있습니다. 이 지점부터는 전문가 점검이 필요합니다. 덮개 열기 등 위험한 확인은 하지 마세요.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 비 오는 날 물이 넘치는 모습(사진·영상), 넘치는 구간의 길이.</p></section>
+</div>
+</div>
+</div>
+<figure class="photo-strip">
+<img src="../public/images/renewal/symptom-drain.webp" alt="낙엽과 흙탕물이 쌓인 배수구 그레이팅의 AI 예시 사진">
+<figcaption><span class="badge">AI 이미지 예시</span>
+<p>겉모습 예시입니다. 실제 오주건설 시공 실적이 아니며, 입체 그림과 같은 현장이 아닙니다.</p>
+<p class="photo-link">사진 속 쌓인 낙엽 → 입체 그림의 ① 자리에서 살펴봅니다.</p></figcaption>
+</figure>
+</div>
+</section>
+
+<!-- ============ 4. 지하주차장 누수 ============ -->
+<section class="symptom" id="symptom-leak" aria-labelledby="t-leak" data-panel hidden>
+<div class="scene-card">
+<div class="scene-head"><span class="no" aria-hidden="true">4</span><h3 id="t-leak">지하주차장 천장에서 물이 샌다</h3>
+<p>지하주차장 한 칸을 비스듬히 자른 장면입니다. 천장의 흔적·물방울·위층 지상의 관계를 함께 보세요.</p></div>
+<div class="panel-cols">
+<div class="scene-col">
+<figure class="scene">
+<svg viewBox="0 0 720 460" role="img" aria-label="지하주차장 천장 누수 입체 개념도. 천장에 얼룩이 있고 물방울이 맺히며, 잘린 천장 옆면에 위층 지상과의 관계가 보인다. 직접 그린 설명용 그림으로 실제 설계도가 아니다.">
+<rect x="0" y="0" width="720" height="460" fill="#dfe5ea"/>
+<polygon points="60,60 660,60 660,110 60,110" fill="#9fbf8a"/>
+<g fill="#7fa06b"><ellipse cx="160" cy="60" rx="40" ry="14"/><ellipse cx="420" cy="60" rx="52" ry="15"/><ellipse cx="600" cy="60" rx="36" ry="12"/></g>
+<text x="80" y="96" font-size="16" fill="#3e5a33">지상 (위층 바깥)</text>
+<polygon points="60,110 660,110 660,150 60,150" fill="#8f9dab"/>
+<line x1="60" y1="128" x2="660" y2="128" stroke="#fff" stroke-width="3" stroke-dasharray="10 7"/>
+<text x="368" y="140" font-size="15" fill="#fff">천장 구조 (간략)</text>
+<polygon points="60,150 660,150 560,300 120,300" fill="#c3ccd3"/>
+<g stroke="#8b959e" stroke-width="6"><line x1="120" y1="166" x2="600" y2="166"/><line x1="140" y1="180" x2="580" y2="180"/></g>
+<g fill="#767d85"><rect x="220" y="158" width="8" height="16"/><rect x="420" y="158" width="8" height="16"/></g>
+<text x="600" y="178" font-size="13" fill="#5b6b78">천장 배관</text>
+<ellipse cx="350" cy="222" rx="110" ry="34" fill="#a98f6f" opacity=".45"/>
+<ellipse cx="350" cy="222" rx="70" ry="21" fill="#8a6f4d" opacity=".5"/>
+<ellipse cx="350" cy="222" rx="34" ry="11" fill="#5f4c36" opacity=".65"/>
+<text x="468" y="252" font-size="16" fill="#4d463a" font-weight="bold">얼룩·흔적</text>
+<path d="M350 233 c-9 13 -13 18 -13 25 a13 13 0 0 0 26 0 c0 -7 -5 -12 -13 -25z" fill="#5ea3d4"/>
+<line x1="350" y1="262" x2="350" y2="330" stroke="#5ea3d4" stroke-width="3" stroke-dasharray="6 6"/>
+<polygon points="120,300 560,300 660,440 20,440" fill="#7d8892"/>
+<polygon points="120,300 560,300 660,440 20,440" fill="#000" opacity=".08"/>
+<ellipse cx="350" cy="380" rx="70" ry="16" fill="#5ea3d4" opacity=".5"/>
+<polygon points="560,300 600,300 620,440 570,440" fill="#aab4bc"/>
+<polygon points="560,300 600,300 600,318 560,318" fill="#8b959e"/>
+<rect x="562" y="330" width="34" height="40" rx="4" fill="#102c59"/>
+<text x="568" y="347" font-size="13" fill="#fff">B1</text>
+<text x="568" y="362" font-size="11" fill="#cfe0f2">P3</text>
+<g><rect x="180" y="340" width="150" height="44" rx="14" fill="#31465c"/><rect x="205" y="318" width="100" height="34" rx="12" fill="#3f5873"/><circle cx="220" cy="388" r="14" fill="#202b36"/><circle cx="290" cy="388" r="14" fill="#202b36"/></g>
+<text x="180" y="418" font-size="15" fill="#eef3f7">주차 차량</text>
+</svg>
+<button type="button" class="hotspot" style="left:68%;top:43%" data-point="leak-1" aria-pressed="true" aria-label="1. 천장의 얼룩과 흔적">1</button>
+<button type="button" class="hotspot" style="left:45%;top:59%" data-point="leak-2" aria-pressed="false" aria-label="2. 물방울이 맺히는 자리">2</button>
+<button type="button" class="hotspot" style="left:83%;top:26%" data-point="leak-3" aria-pressed="false" aria-label="3. 위층 지상과의 관계">3</button>
+</figure>
+<p class="scene-cap">직접 그린 입체 개념도입니다. 실제 천장 구조·방수층·원인을 단정하지 않으며, 엔지니어 기술 검수 전입니다.</p>
+</div>
+<div class="detail-col">
+<div class="picker" role="group" aria-label="천장 누수 확인 지점 선택">
+<button type="button" data-pick="leak-1" aria-pressed="true"><span class="p-no" aria-hidden="true">1</span><span>천장의 얼룩·흔적<small>물이 다녀간 기록</small></span></button>
+<button type="button" data-pick="leak-2" aria-pressed="false"><span class="p-no" aria-hidden="true">2</span><span>물방울이 맺히는 자리<small>지금 새는 지점</small></span></button>
+<button type="button" data-pick="leak-3" aria-pressed="false"><span class="p-no" aria-hidden="true">3</span><span>위층 지상과의 관계<small>천장 위에는 무엇이</small></span></button>
+</div>
+<div class="detail">
+<section class="point" id="d-leak-1" aria-label="1번 지점 설명">
+<div class="p-head"><span class="p-no" aria-hidden="true">1</span><h4>천장의 얼룩·흔적 — 물이 다녀간 기록</h4></div>
+<p class="why">마른 뒤에도 얼룩과 변색은 남습니다. 얼룩의 모양과 번진 범위는 물이 지나간 자리와 시기를 짐작하는 단서가 될 수 있습니다.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 얼룩의 위치(기둥·주차번호 기준). 번진 범위를 손·A4용지와 비교한 사진을 준비해 두세요.</p></section>
+<section class="point" id="d-leak-2" aria-label="2번 지점 설명" hidden>
+<div class="p-head"><span class="p-no" aria-hidden="true">2</span><h4>물방울이 맺히는 자리 — 지금 새는 지점</h4></div>
+<p class="why">실제로 물방울이 맺히거나 떨어지는 자리는 위치를 전할 때 가장 확실한 정보가 됩니다. 떨어지는 간격을 함께 보면 전할 내용이 분명해집니다.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 비 온 뒤인지 평소에도 떨어지는지, 떨어지는 간격, 바닥에 고인 자국의 사진.</p></section>
+<section class="point" id="d-leak-3" aria-label="3번 지점 설명" hidden>
+<div class="p-head"><span class="p-no" aria-hidden="true">3</span><h4>위층 지상과의 관계 — 천장 위에는 무엇이 있는지</h4></div>
+<p class="why">단정할 수는 없지만, 천장 누수는 위층 바깥(조경·도로·화단)과 이어져 있을 수 있습니다. 천장 아래 자리와 지상 위 자리를 함께 짚어두면 조사 범위를 좁히는 데 도움이 됩니다.</p>
+<p class="memo"><b>통화할 때 적어둘 것</b> — 누수 자리 바로 위 지상이 어디인지(화단·도로·옥상), 위층에서 물을 쓰는 시설이 있는지.</p></section>
+</div>
+</div>
+</div>
+<figure class="photo-strip">
+<img src="../public/images/renewal/symptom-leak.webp" alt="얼룩과 물방울이 맺힌 지하주차장 천장의 AI 예시 사진">
+<figcaption><span class="badge">AI 이미지 예시</span>
+<p>겉모습 예시입니다. 실제 오주건설 시공 실적이 아니며, 입체 그림과 같은 현장이 아닙니다.</p>
+<p class="photo-link">사진 속 얼룩·물방울 → 입체 그림의 ①·② 자리에서 살펴봅니다.</p></figcaption>
+</figure>
+</div>
+</section>
+</div></section>
+
+<section class="block alt" aria-labelledby="ask-title"><div class="wrap">
+<div class="block-head"><h2 id="ask-title">이 시안으로 문의한다면</h2>
+<p>연결 시안이므로 아래 양식은 동작하지 않는 모형입니다. 이 시안에서는 온라인으로 접수되지 않습니다.</p></div>
+<div class="inquiry-grid" style="color:var(--ink)">
+<div>
+<h3 style="font-size:20px">번호를 눌러 확인한 뒤, 이렇게 전하세요</h3>
+<ol class="steps" style="margin-top:16px;display:grid;gap:10px">
+<li style="border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px 15px;font-size:14px;color:#405a73"><b>1.</b> 증상 장면과 번호를 함께 말하세요. <span style="color:#60758b">예: “주차장 물 고임 장면 1번 자리처럼, 출입구 옆에 발자국만 한 범위로 고입니다.”</span></li>
+<li style="border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px 15px;font-size:14px;color:#405a73"><b>2.</b> 언제부터·비와 함께 왔는지 덧붙이세요. <span style="color:#60758b">예: “장마 뒤부터, 비 그치고 반나절은 남아 있습니다.”</span></li>
+<li style="border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px 15px;font-size:14px;color:#405a73"><b>3.</b> 사진 1~2장을 통화 때 보여주실 수 있게 준비해 두세요. <span style="color:#60758b">전체 위치가 보이는 사진과 가까운 사진이면 충분합니다.</span></li>
+</ol>
+<p style="margin-top:16px;font-size:15px"><b>전화 상담</b> · <a href="tel:043-265-6010" style="font-size:22px;font-weight:800;color:var(--navy)">043-265-6010</a></p>
+</div>
+<div class="form-mock" aria-label="온라인 문의 양식 모형">
+<h3>현장 진단 요청 (모형)</h3>
+<p>아래는 온라인 문의 양식의 디자인 예시입니다. * 필수 항목</p>
+<form onsubmit="return false" aria-describedby="mock-warn">
+<label class="field">담당자 성함 * <input disabled placeholder="성함" tabindex="-1" aria-hidden="true"></label>
+<label class="field">연락처 * <input disabled placeholder="연락받으실 번호" tabindex="-1" aria-hidden="true"></label>
+<label class="field">주된 증상 <input disabled value="" placeholder="위에서 고른 증상" tabindex="-1" aria-hidden="true"></label>
+<button type="button" disabled>온라인 문의 전송 · 시안 (동작 안 함)</button>
+</form>
+<p class="form-warn" id="mock-warn">이 시안에서는 온라인 문의가 전송되지 않습니다. 편하시면 전화로 문의해 주세요.</p>
+</div>
+</div>
+</div></section>
+
+<section class="block" aria-labelledby="limits-title"><div class="wrap">
+<div class="block-head"><h2 id="limits-title">그림의 한계 — 정확히 알려드립니다</h2>
+<p>설계 검토용으로 그 경계를 분명히 합니다.</p></div>
+<ul class="guards">
+<li><b>AI 예시 사진은 실적이 아닙니다</b>옆 사진 네 장은 이해를 돕는 AI 예시이며, 오주건설의 실제 시공 실적·준공 현장이 아닙니다.</li>
+<li><b>입체 그림은 개념도입니다</b>직접 그린 고정 시점 그림으로, 실제 구조·두께·구배·관경·방수 상세를 나타내지 않습니다. 치수와 공법은 어떤 것도 지시하지 않습니다.</li>
+<li><b>원인을 단정하지 않습니다</b>이 시안은 ‘어디를 살펴볼지’의 안내일 뿐입니다. 실제 원인과 공법은 현장 조건과 전문가 검토로 결정되며, 엔지니어 기술 검수가 필요합니다.</li>
+<li><b>지하 구조를 사실로 보지 마세요</b>단면에 그려진 흙·층·관은 이해를 위한 간략 표현입니다. 반복 검증되지 않은 AI 지하 구조를 사실처럼 표시하지 않았습니다.</li>
+</ul>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+<b>오주건설(주)</b>
+<p>대표 이자영 · 사업자등록번호 217-81-16716<br>
+충청북도 청주시 상당구 용암북로160번길 20, 2층 201호 · 전화 043-265-6010</p>
+<p style="margin-top:10px;color:#abbfd2">디자인 검토용 시안입니다. 이미지와 도면은 설명을 위한 예시이며 실제 시공 실적이 아닙니다. 실제 접수를 연결하지 않았습니다.</p>
+</div></footer>
+
+<script>
+(function(){
+var nav=document.getElementById('symptom-nav');
+var links=Array.prototype.slice.call(nav.querySelectorAll('[data-tab]'));
+var panels=Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
+var live=document.getElementById('live-status');
+nav.setAttribute('role','tablist');
+links.forEach(function(a){
+a.setAttribute('role','tab');
+a.setAttribute('aria-selected',a.getAttribute('aria-selected')==='true'?'true':'false');
+a.setAttribute('aria-controls',a.getAttribute('data-tab'));
+a.setAttribute('id','tab-'+a.getAttribute('data-tab'));
+a.setAttribute('tabindex',a.getAttribute('aria-selected')==='true'?'0':'-1');
+});
+panels.forEach(function(p){
+p.setAttribute('role','tabpanel');
+var tab=document.getElementById('tab-'+p.id);
+if(tab){p.setAttribute('aria-labelledby',tab.id);}
+});
+function show(id,focusTab,announce){
+links.forEach(function(a){
+var on=a.getAttribute('data-tab')===id;
+a.setAttribute('aria-selected',on?'true':'false');
+a.setAttribute('tabindex',on?'0':'-1');
+});
+panels.forEach(function(p){p.hidden=(p.id!==id);});
+if(focusTab){var t=document.getElementById('tab-'+id);if(t){t.focus();}}
+if(announce!==false&&live){
+var h=document.querySelector('#'+id+' h3');
+live.textContent=(h?h.textContent:'증상')+' 장면을 보여줍니다.';
+}
+}
+function idFromHash(){var h=location.hash.replace('#','');var el=document.getElementById(h);return (el&&el.hasAttribute('data-panel'))?h:null;}
+var initial=idFromHash()||'symptom-water';
+show(initial,false,false);
+links.forEach(function(a,i){
+a.addEventListener('click',function(e){e.preventDefault();var id=a.getAttribute('data-tab');show(id,false);history.replaceState(null,'','#'+id);});
+a.addEventListener('keydown',function(e){
+var j=null;
+if(e.key==='ArrowRight'||e.key==='ArrowDown'){j=(i+1)%links.length;}
+else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){j=(i-1+links.length)%links.length;}
+else if(e.key==='Home'){j=0;}else if(e.key==='End'){j=links.length-1;}
+if(j!==null){e.preventDefault();var id=links[j].getAttribute('data-tab');show(id,true);history.replaceState(null,'','#'+id);}
+});
+});
+window.addEventListener('hashchange',function(){var id=idFromHash();if(id){show(id,false);}});
+/* point selection: hotspots <-> picker list <-> detail, no focus moves */
+function selectPoint(panel,id,announce){
+var spots=panel.querySelectorAll('.hotspot');
+spots.forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-point')===id));});
+var picks=panel.querySelectorAll('.picker button');
+picks.forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-pick')===id));});
+panel.querySelectorAll('.point').forEach(function(d){d.hidden=(d.id!==('d-'+id));});
+if(announce!==false&&live){
+var sec=document.getElementById('d-'+id);
+var head=sec?sec.querySelector('h4'):null;
+live.textContent=head?('선택한 지점: '+head.textContent):'지점을 선택했습니다.';
+}
+}
+document.querySelectorAll('[data-panel]').forEach(function(panel){
+panel.querySelectorAll('.hotspot,.picker button').forEach(function(btn){
+btn.addEventListener('click',function(){
+var id=btn.getAttribute('data-point')||btn.getAttribute('data-pick');
+if(id){selectPoint(panel,id,true);}
+});
+});
+});
+})();
+</script>
+<noscript><style>.hotspot,.picker{display:none}.point[hidden]{display:block!important}[data-panel][hidden]{display:block!important}.symptom-nav a[aria-selected]{background:#fff!important;color:#304c6b!important}</style></noscript>
+</body>
+</html>

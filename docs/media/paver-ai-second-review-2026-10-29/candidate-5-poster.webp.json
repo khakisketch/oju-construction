@@ -1,0 +1,4 @@
+{
+  "prompt": "Origin: ffmpeg WebP frame at 1.75s from candidate-5.mp4 SHA256 8554c28f5ef37adb321db5fc0c2d8f3193a7e85a090acd057fab7341c76bc972; locally generated with Wan2.1 VACE 14B. Exact workflow: docs/ai-workflows/paver-video-ai-2026-10-28/candidate-5.json. Model terms and provenance: docs/paver-video-ai-provenance-2026-10-28.md. AI-generated experimental review material, not field footage or a physical simulation.",
+  "createdAt": "2026-10-28T15:03:00.972Z"
+}

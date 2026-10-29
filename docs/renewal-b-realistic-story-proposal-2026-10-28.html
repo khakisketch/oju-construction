@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>오주건설(주) · 물길을 따라 보는 입체 단면 시안</title>
+<meta name="description" content="물 고임 한 사례를 단면에서 입체로 살펴보며 물길과 가능한 높이 차, 점검할 곳을 설명하는 디자인 시안입니다.">
+<link rel="icon" href="data:,">
+<style>
+@font-face{font-family:OjuNoto;src:url('../public/fonts/NotoSansKR-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:OjuNoto;src:url('../public/fonts/NotoSansKR-Bold.ttf') format('truetype');font-weight:700 900;font-display:swap}
+:root{--navy:#102c59;--deep:#071a38;--contact:#0d2850;--blue:#194b8c;--link:#174e8f;--ink:#142a46;--body:#2c4259;--muted:#4b637b;--soft:#eef4f9;--line:#dce5ee;--white:#fff;--focus:#3195e8;--rx:90deg;--rz:0deg;--label-z:20px;--plan-opacity:0}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:92px}body{margin:0;background:#fff;color:var(--ink);font-family:OjuNoto,'Noto Sans KR',sans-serif;line-height:1.65;word-break:keep-all}img{max-width:100%;display:block}h1,h2,h3,p,ul,ol,figure,blockquote{margin:0}h1,h2,h3{letter-spacing:-.03em;line-height:1.32}ul,ol{padding:0;list-style:none}a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus);outline-offset:3px}::selection{background:#b5dbfa;color:#09284e}[hidden]{display:none!important}
+.skip{position:absolute;left:-9999px;top:0;background:var(--navy);color:#fff;padding:12px 18px;border-radius:0 0 10px 0;z-index:99;font-weight:700}.skip:focus{left:0}
+.wrap{width:min(100% - 96px,1280px);margin:0 auto}
+.notice{background:#eaf1fa;color:#173b6c;text-align:center;font-size:12px;font-weight:700;padding:8px 16px;line-height:1.6}
+.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e6ebf1}.top-inner{min-height:72px;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:8px 0}.brand{display:flex;align-items:center;gap:11px;line-height:1.15;white-space:nowrap;text-decoration:none}.brand img{width:42px;height:42px}.brand b{font-size:17px}.brand small{display:block;color:#3f5468;font-size:10px;letter-spacing:.01em;margin-top:3px}.nav{display:flex;gap:26px;align-items:center;color:#344b65;font-size:14px;font-weight:700}.nav a{text-decoration:none;white-space:nowrap}.nav a:hover{color:#15569e}.nav .nav-contact{background:var(--navy);color:#fff;border-radius:100px;padding:10px 20px;text-decoration:none}.nav .nav-contact:hover{background:#194b8c;color:#fff}.mobile-links{display:none;gap:10px;font-size:13px;font-weight:700;color:var(--navy)}.mobile-links a{text-decoration:none;white-space:nowrap}
+.hero{position:relative;display:flex;align-items:center;background:#14304a url('../public/images/home/hero-slide1.webp') center center/cover no-repeat;color:#fff;overflow:hidden;min-height:600px}.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,18,38,.87) 0%,rgba(3,18,38,.55) 62%,rgba(3,18,38,.28) 100%)}.hero-inner{position:relative;padding:88px 0 104px}.eyebrow{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.02em;color:#cfe3f6;border:1px solid #ffffff55;border-radius:100px;padding:6px 14px;margin-bottom:18px}.hero h1{font-size:clamp(38px,4.2vw,62px);max-width:780px;color:#fff}.hero .lede{font-size:17px;line-height:1.8;color:#edf5fd;margin-top:20px;max-width:720px}.hero-actions{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}.primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:100px;background:#205698;color:#fff;font-size:15px;font-weight:700;text-decoration:none}.primary:hover{background:#123f79}.hero-hint{position:absolute;bottom:24px;left:0;color:#e0edfa;font-size:12px}
+.identity{border-bottom:1px solid var(--line);background:#fff}.identity-inner{display:flex;align-items:center;gap:28px;min-height:88px;padding:14px 0;flex-wrap:wrap}.identity-head{font-weight:700;font-size:15px;white-space:nowrap}.identity-list{display:flex;gap:26px;flex-wrap:wrap;color:#3f5468;font-size:13px}.identity-list strong{color:#263f5d;font-weight:700}.identity-link{margin-left:auto;font-size:13px;font-weight:700;color:var(--link);text-decoration:none;white-space:nowrap}
+.scope{background:#f1f6fb}.scope-inner{padding:34px 0;display:grid;grid-template-columns:1.1fr 2.9fr;gap:50px;align-items:center}.scope h2{font-size:22px}.scope p{font-size:13px;color:var(--muted);margin-top:6px}.scope-list{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.scope-item{padding-left:20px;border-left:1px solid #bed0df}.scope-item b{display:block;font-size:15px}.scope-item span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+section.block{padding:88px 0}.section-head{margin-bottom:32px;max-width:none}.kicker{font-size:13px;font-weight:700;letter-spacing:.06em;color:#3f6ea3;text-transform:uppercase}.section-head h2{font-size:clamp(28px,3vw,40px);margin-top:10px}.section-head p{font-size:13px;color:var(--muted);margin-top:10px}
+/* symptoms — 4 concise cards, all readable without clicks */
+#symptoms{background:#fff}.symptom-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}.symptom-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;display:flex;flex-direction:column}.symptom-fig{position:relative;aspect-ratio:4/3;overflow:hidden;background:#dfe7ee}.symptom-fig img{width:100%;height:100%;object-fit:cover}.badge{position:absolute;top:12px;left:12px;color:#fff;background:rgba(4,20,38,.88);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;line-height:1.5;white-space:nowrap}.symptom-body{padding:20px;display:flex;flex-direction:column;gap:8px}.symptom-body h3{font-size:17px}.symptom-body .desc{font-size:14px;color:var(--body);line-height:1.65}.symptom-body .first{font-size:12px;font-weight:700;color:#3f6ea3}
+/* ============ scroll reveal: same scene 2D -> 3D ============ */
+.reveal{background:var(--deep);color:#fff}.reveal-scroll{position:relative;height:300vh}.reveal-sticky{position:sticky;top:72px;height:calc(100vh - 72px);height:calc(100svh - 72px);display:flex;align-items:center;overflow:hidden}
+.reveal-box{width:min(100% - 96px,1280px);margin:0 auto;padding:16px 0}
+.reveal-head{display:flex;align-items:end;justify-content:space-between;gap:20px}.reveal-head h2{font-size:clamp(26px,2.7vw,36px);color:#fff}.reveal-head p{color:#c7d7e8;font-size:13px;line-height:1.5}
+.reveal-main{display:flex;flex-direction:column;align-items:center}
+/* The same CSS-3D scene starts as a frontal section and tilts to reveal the surface. */
+.stage{width:min(100%,1100px);perspective:1800px;perspective-origin:50% 42%;padding-bottom:130px}
+.tilt{position:relative;width:min(76vw,860px);margin:0 auto;aspect-ratio:10/4.6;transform:rotateX(var(--rx)) rotateZ(var(--rz));transform-style:preserve-3d}
+.lot{position:absolute;inset:0;transform-style:preserve-3d;overflow:visible}
+.lot-surface{position:absolute;inset:0;background-color:#545a5b;background-image:linear-gradient(150deg,#121c2080,#111b2233),url('images/realistic-story-asphalt-top.webp');background-size:cover;background-position:center;clip-path:polygon(0 0,100% 0,100% 100%,45% 100%,37% 92%,25% 92%,17% 100%,0 100%)}
+.parkline{position:absolute;background:rgba(240,228,194,.8);border-radius:2px}
+.parkline.p1{left:6%;top:12%;width:3px;height:76%}.parkline.p2{left:6%;top:12%;width:26%;height:3px}.parkline.p3{left:6%;bottom:12%;width:26%;height:3px}
+.joint{position:absolute;left:0;right:0;top:64%;height:2px;background:rgba(0,0,0,.25)}
+/* Plan symbols and the front cut describe the same illustrative low spot and inlet. */
+.lowzone{position:absolute;left:16%;top:58%;width:34%;height:35%;border-radius:48%;background:radial-gradient(ellipse at 50% 55%,rgba(10,22,34,.38),rgba(10,22,34,.12) 62%,transparent 72%);transform:translateZ(1px)}
+.puddle{position:absolute;left:19.5%;top:67%;width:27%;height:25%;border-radius:57% 43% 53% 47% / 48% 57% 43% 52%;background:radial-gradient(ellipse at 40% 28%,#c2d5daaa 0%,transparent 38%),linear-gradient(160deg,#7796a3,#405e69 55%,#202e36);box-shadow:0 0 0 2px #b5cbd166,0 7px 18px #0c171caa inset;transform:translateZ(2px)}
+.puddle-edge{position:absolute;left:17%;bottom:0;width:28%;height:8%;background:#47575e;clip-path:polygon(0 100%,28% 0,72% 0,100% 100%);transform:translateZ(1px)}
+.grate{position:absolute;left:66%;top:67%;width:11%;aspect-ratio:1/1;background:repeating-linear-gradient(0deg,#1c2f42 0 5px,#718088 5px 8px);border:4px solid #dfe8ef;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.5);transform:translateZ(2px)}
+.lot-surface,.parkline,.joint,.lowzone,.puddle,.puddle-edge,.grate{opacity:var(--plan-opacity)}
+@supports (mask-image:radial-gradient(black,transparent)) or (-webkit-mask-image:radial-gradient(black,transparent)){
+.lot-surface{-webkit-mask-image:radial-gradient(ellipse 16% 16% at 33% 79.5%,transparent 80%,#000 95%);mask-image:radial-gradient(ellipse 16% 16% at 33% 79.5%,transparent 80%,#000 95%)}
+.puddle{transform:translateZ(-5px)}
+}
+/* floating tags ride above the surface */
+.tag3d{position:absolute;transform:translate(-50%,-100%) translateZ(var(--label-z)) rotateZ(calc(-1 * var(--rz))) rotateX(calc(-1 * var(--rx)));display:flex;flex-direction:column;align-items:center;pointer-events:none;white-space:nowrap}
+.tag3d span{background:#0b2547;border:1px solid #fff;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.5)}
+.tag3d i{display:block;height:14px;width:2px;background:#ffcf3f}
+.tag3d:after{content:'';display:block;width:9px;height:9px;border:2px solid #ffcf3f;border-radius:50%;background:#0b2547}
+.tag-water{left:33%;top:72%}.tag-drain{left:71.5%;top:72%}
+/* The sectional face exaggerates the elevation difference; it is not a construction drawing. */
+.face{position:absolute;left:0;top:100%;width:100%;height:clamp(132px,20vw,190px);transform-origin:50% 0;transform:rotateX(-90deg);transform-style:preserve-3d;overflow:hidden}
+.face svg{display:block;width:100%;height:100%}
+/* The narrative remains close to the model instead of taking a separate column. */
+.story-copy{transform:translateY(var(--note-shift,0px))}.story-note{text-align:center;min-height:80px;max-width:760px;margin:2px auto 0}
+.story-note h3{font-size:clamp(21px,2.1vw,28px);color:#fff}
+.story-note p{font-size:15px;color:#d8e7f5;margin-top:6px;line-height:1.6}
+.reveal-hint{text-align:center;font-size:12px;color:#b5cadc;margin-top:5px}
+.reveal-scroll[data-phase="0"] .tag-water span,.reveal-scroll[data-phase="1"] .tag-drain span,.reveal-scroll[data-phase="2"] .tag3d span{border-color:#ffd77d;color:#fff3ce}
+.reveal-fallback{display:none}
+/* static detail cards below the sticky scene: full info, no scroll needed */
+.reveal-detail{background:#f4f8fb;color:var(--ink);padding:70px 0}
+.detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:24px}
+.detail-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+.detail-card b{display:block;font-size:16px}.detail-card b .k{color:#3f6ea3;font-size:12px;display:block;letter-spacing:.05em;margin-bottom:4px}
+.detail-card p{font-size:14px;color:var(--body);margin-top:8px;line-height:1.75}
+.detail-fine{font-size:12px;color:var(--muted);margin-top:16px;line-height:1.7}
+/* comparison */
+.comparison{background:var(--deep);color:#fff;padding:82px 0 90px}.comparison h2{font-size:clamp(28px,3vw,40px);color:#fff}.comparison-intro{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:24px}.comparison-intro p{color:#c7d7e8;font-size:15px;margin-top:9px}.compare-note{color:#c6d7e7;font-size:12px;white-space:nowrap}.split{position:relative;aspect-ratio:16/8.5;overflow:hidden;border-radius:18px;background:#2a3947;--split:50%;--handle:50%}.split img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%}.split-before{clip-path:inset(0 calc(100% - var(--split)) 0 0)}.split-divider{position:absolute;left:var(--split);top:0;bottom:0;width:2px;background:#fff;transform:translateX(-50%);box-shadow:0 0 2px #1b293c;pointer-events:none}.split-handle{position:absolute;left:var(--handle);top:50%;transform:translate(-50%,-50%);width:48px;height:48px;border:2px solid #fff;border-radius:50%;background:#10386d;display:flex;align-items:center;justify-content:center;pointer-events:none;color:#fff;font-size:18px;font-weight:700;z-index:2}.split-handle svg{width:24px;height:24px}.split-range{position:absolute;left:0;right:0;top:50%;height:48px;transform:translateY(-50%);z-index:1;width:100%;margin:0;background:transparent;appearance:none;-webkit-appearance:none;cursor:ew-resize;opacity:1}.split-range::-webkit-slider-runnable-track{height:2px;background:transparent}.split-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:48px;height:48px;border:2px solid #fff;border-radius:50%;background:#10386d;margin-top:-23px;box-shadow:0 4px 12px #0008}.split-range::-moz-range-track{background:transparent}.split-range::-moz-range-thumb{width:44px;height:44px;border:2px solid #fff;border-radius:50%;background:#10386d}.split-label{position:absolute;top:18px;padding:7px 11px;border-radius:6px;background:#0a1938d9;color:#fff;font-size:12px;font-weight:700;pointer-events:none}.split-label.before{left:18px}.split-label.after{right:18px}.split-badge{position:absolute;bottom:16px;left:16px;background:#07172de8;color:#fff;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:700}.split:has(.split-range:focus-visible) .split-handle{outline:3px solid #71c3ff;outline-offset:3px}.compare-bottom{color:#c7d7e8;font-size:13px;margin-top:12px}
+/* trust + contact + footer (B chrome) */
+.trust{background:#fff}.trust-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}.trust h2{font-size:clamp(27px,3vw,36px)}.trust p.lead{color:var(--muted);font-size:15px;margin-top:12px}.trust-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.trust-item{padding:22px 24px}.trust-item+.trust-item{border-left:1px solid var(--line)}.trust-item b,.trust-item span{display:block}.trust-item b{font-size:15px}.trust-item span{color:var(--muted);font-size:13px;margin-top:6px}
+.contact{padding:85px 0 95px;background:var(--contact);color:#fff}.contact-layout{display:grid;grid-template-columns:1fr .95fr;gap:70px;align-items:start}.contact h2{font-size:clamp(30px,3.3vw,44px);color:#fff}.contact-intro{color:#cbdced;margin-top:14px;font-size:16px;line-height:1.8}.phone-box{margin-top:26px;border-top:1px solid #59718e;padding-top:24px}.phone-box span{display:block;color:#c8d9ed;font-size:13px}.phone-box a.tel{display:inline-block;font-size:32px;font-weight:700;margin-top:4px;letter-spacing:-.02em;color:#fff;text-decoration:none}.phone-box p{font-size:13px;color:#d5e2ef;margin-top:6px}.form-panel{background:#fff;color:var(--ink);border-radius:18px;padding:30px}.form-panel h3{font-size:20px}.form-panel .mock{font-size:13px;color:#50677e;margin:7px 0 18px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;font-size:13px;font-weight:700}.field input,.field select,.field textarea{min-height:46px;padding:10px 12px;border:1px solid #cdd9e4;border-radius:8px;background:#f2f5f8;color:#5b6f84;width:100%}.field textarea{min-height:68px;resize:vertical}.consent{display:flex;align-items:center;gap:8px;margin:0 0 14px;font-size:12px;color:#405a73}.consent input{width:18px;height:18px}.form-disabled{width:100%;min-height:48px;background:#dce6ef;border:0;border-radius:100px;color:#50647a;font-weight:700;cursor:not-allowed;font-size:14px}.form-warning{font-size:12px!important;line-height:1.6;color:#53687e!important;margin:13px 0 0!important}
+.footer{padding:36px 0 44px;background:#071a34;color:#c3d2e2;font-size:12px}.footer b{display:block;color:#fff;font-size:16px;margin-bottom:10px}.footer p{line-height:1.8}.footer .legal{margin-top:12px;color:#abbfd2}.mobile-bar{display:none}
+@media(max-width:1000px){.scope-inner{grid-template-columns:1fr;gap:22px}.trust-inner{grid-template-columns:1fr;gap:28px}.contact-layout{grid-template-columns:1fr;gap:30px}}
+@media(max-width:900px){.symptom-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}}
+@media(max-width:720px){
+.wrap{width:calc(100% - 36px)}.top-inner{min-height:62px}.brand img{width:36px;height:36px}.brand b{font-size:15px}.nav{display:none}.mobile-links{display:flex}
+.hero{min-height:510px}.hero-inner{padding:60px 0 84px}.hero h1{font-size:36px}.hero .lede{font-size:15px}.hero-hint{bottom:20px}
+.identity-inner{gap:8px 18px;padding:18px 0}.identity-head{width:100%}.identity-list{gap:4px 16px;font-size:12px}.identity-link{margin-left:0}
+section.block{padding:62px 0}.symptom-grid{gap:10px}.symptom-body{padding:14px}.symptom-body h3{font-size:14px;line-height:1.4}.symptom-body .desc{font-size:13px;line-height:1.6}.badge{top:8px;left:8px}
+.reveal-sticky{top:62px;height:calc(100vh - 118px);height:calc(100svh - 118px)}.reveal-box{width:calc(100% - 32px);padding:8px 0}.reveal-head{display:block}.reveal-head h2{font-size:23px}.reveal-head p{font-size:12px;margin-top:4px}.stage{padding-bottom:105px}.tilt{width:min(94%,460px);aspect-ratio:10/5.4}.tag3d span{font-size:11px;padding:4px 8px}.tag3d i{height:10px}.face .layer-labels{font-size:18px}.story-note{min-height:70px;margin-top:2px}.story-note h3{font-size:18px}.story-note p{font-size:13px;margin-top:4px}.reveal-hint{margin-top:4px}
+.comparison{padding:62px 0}.comparison-intro{display:block}.compare-note{display:block;white-space:normal;margin-top:10px}.split{aspect-ratio:4/4.6;border-radius:12px}.split-label{font-size:11px;top:10px}.split-label.before{left:10px}.split-label.after{right:10px}.split-badge{left:10px;bottom:10px;font-size:12px;max-width:calc(100% - 20px)}
+.reveal-detail{padding:52px 0}.detail-grid{gap:12px}.detail-card{padding:18px}
+.trust-row{grid-template-columns:1fr}.trust-item{padding:17px 0}.trust-item+.trust-item{border-left:0;border-top:1px solid var(--line)}
+.contact{padding:64px 0 90px}.phone-box a.tel{font-size:28px}.form-panel{padding:22px}
+.mobile-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}.mobile-bar a{flex:1;display:flex;align-items:center;justify-content:center;min-height:56px;font-weight:700;font-size:14px;text-decoration:none}.mobile-bar a.call{color:var(--navy)}.mobile-bar a.request{background:var(--navy);color:#fff}body{padding-bottom:calc(60px + env(safe-area-inset-bottom))}html{scroll-padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+}
+@media(max-width:380px){.brand small{display:none}.top-inner{gap:10px}.mobile-links{font-size:12px}.tag3d span{font-size:10px}.story-note h3{font-size:17px}.scope-list{gap:10px}.scope-item{padding-left:10px;min-width:0}.scope-item b{font-size:12px;overflow-wrap:anywhere}.scope-item span{font-size:11px;overflow-wrap:anywhere}}
+@media(max-width:720px) and (min-height:641px) and (max-height:680px){.reveal-main{margin-top:12px}.tilt{width:min(87%,400px)}.stage{padding-bottom:94px}}
+@media(min-width:1001px) and (min-height:721px) and (max-height:800px){.tilt{width:min(76vw,860px,calc((100vh - 425px)*2.17));width:min(76vw,860px,calc((100svh - 425px)*2.17))}}
+@media(max-width:720px) and (max-height:640px){.reveal-scroll{height:auto}.reveal-sticky{position:static;height:auto;overflow:visible}.reveal-box{padding:36px 0}.reveal-hint{display:none}}
+@media(min-width:721px) and (max-width:1000px) and (max-height:820px){.reveal-scroll{height:auto}.reveal-sticky{position:static;height:auto;overflow:visible}.reveal-box{padding:48px 0}.reveal-hint{display:none}}
+@media(min-width:1001px) and (max-height:720px){.reveal-scroll{height:auto}.reveal-sticky{position:static;height:auto;overflow:visible}.reveal-box{padding:48px 0}.reveal-hint{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}.reveal-scroll{height:auto}.reveal-sticky{position:static;height:auto;overflow:visible}.reveal-box{padding:48px 0}.reveal-hint{display:none}}
+@supports not (transform-style:preserve-3d){
+.stage{padding-bottom:0}.tilt{display:none}.reveal-fallback{display:block;background:#0e2c52;border:1px solid #ffffff2e;border-radius:14px;padding:18px;font-size:13px;color:#d8e7f5}.reveal-fallback svg{display:block;width:100%;height:auto;margin-bottom:10px}
+.reveal-scroll{height:auto}.reveal-sticky{position:static;height:auto;overflow:visible}.reveal-box{padding:48px 0}.reveal-hint{display:none}
+}
+</style>
+<noscript><style>
+.reveal-scroll{height:auto}.reveal-sticky{position:static;height:auto;overflow:visible}.reveal-box{padding:48px 0}.reveal-hint{display:none}
+.split{aspect-ratio:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:none}
+.split img{position:static;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:12px}.split-before{clip-path:none;grid-column:1;grid-row:1}.split img:not(.split-before){grid-column:2;grid-row:1}
+.split-divider,.split-handle,.split-range,.compare-bottom{display:none}
+</style></noscript>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<div class="notice">디자인 검토용 시안 · 실제 사이트에 적용되지 않았습니다 · 이 페이지의 문의 양식은 전송되지 않으며 실제 문의는 전화로 해주세요.</div>
+<header class="top"><div class="wrap top-inner">
+<a class="brand" href="#top" aria-label="오주건설(주) 시안 맨 위로"><img src="../public/images/ojuconstruction-logo.png" alt=""><span><b>오주건설(주)</b><small>Oju Construction</small></span></a>
+<nav class="nav" aria-label="페이지 내 구역 이동"><a href="#scope">시공범위</a><a href="#symptoms">현장 상황</a><a href="#scene-water">물 고임 보기</a><a href="#comparison">전·후 예시</a><a href="#company">회사정보</a><a href="#contact" class="nav-contact">현장 상담</a></nav>
+<div class="mobile-links"><a href="#symptoms">증상 보기</a><a href="tel:043-265-6010">043-265-6010</a></div>
+</div></header>
+<main id="main">
+<section class="hero" id="top" aria-labelledby="hero-title"><div class="wrap hero-inner">
+<h1 id="hero-title">아파트 단지의 땅과 길,<br>함께 시공합니다.</h1>
+<p class="lede">부대토목부터 포장·배수·조경·유지보수까지,<br>외부공간의 여러 공종을 함께 살핍니다.</p>
+<div class="hero-actions"><a class="primary" href="#contact">현장 상담 안내 →</a></div>
+<div class="hero-hint">오주건설(주) · 2004년 설립 · 충북 청주</div>
+</div></section>
+<div class="identity"><div class="wrap identity-inner"><div class="identity-head">오주건설(주)</div><div class="identity-list"><span><strong>대표</strong> 이자영</span><span><strong>사업자등록번호</strong> 217-81-16716</span><span><strong>소재지</strong> 충북 청주시 상당구</span><span><strong>전화</strong> <a href="tel:043-265-6010">043-265-6010</a></span></div><a class="identity-link" href="#company">회사 정보 보기 →</a></div></div>
+<section class="scope" id="scope" aria-labelledby="scope-title"><div class="wrap scope-inner"><div><h2 id="scope-title">외부공간을 폭넓게</h2><p>서로 맞물리는 공종을 한 계약으로 살핍니다.</p></div><div class="scope-list"><div class="scope-item"><b>토목·지반조성</b><span>단지 외부 기반 조성</span></div><div class="scope-item"><b>포장</b><span>주차장·보도·경계석</span></div><div class="scope-item"><b>배수·습식·도장</b><span>물길·누수·도막 관리</span></div><div class="scope-item"><b>조경·유지보수</b><span>식재·시설물·하자 대응</span></div></div></div></section>
+<section class="block" id="symptoms" aria-labelledby="symptoms-title"><div class="wrap">
+<div class="section-head"><h2 id="symptoms-title">우리 현장의 증상은 무엇인가요?</h2><p>사진은 AI 예시이며 실제 오주건설 시공 실적이 아닙니다. 물 고임 한 사례를 아래에서 입체로 살펴봅니다.</p></div>
+<div class="symptom-grid">
+<article class="symptom-card" aria-labelledby="s-water"><figure class="symptom-fig"><img src="../public/images/renewal/symptom-water.webp" alt="비 온 뒤 주차장에 물이 고인 AI 예시 이미지" loading="lazy"><figcaption class="badge">AI 예시</figcaption></figure><div class="symptom-body"><h3 id="s-water">비 온 뒤 물이 고인다</h3><p class="desc">포장 높이와 배수구·관로를 확인합니다.</p></div></article>
+<article class="symptom-card" aria-labelledby="s-pavers"><figure class="symptom-fig"><img src="../public/images/renewal/symptom-pavers.webp" alt="꺼지고 들뜬 보도블럭 AI 예시 이미지" loading="lazy"><figcaption class="badge">AI 예시</figcaption></figure><div class="symptom-body"><h3 id="s-pavers">보도블럭이 꺼지고 들뜬다</h3><p class="desc">단차와 포장 하부·지반을 살펴봅니다.</p></div></article>
+<article class="symptom-card" aria-labelledby="s-drain"><figure class="symptom-fig"><img src="../public/images/renewal/symptom-drain.webp" alt="낙엽과 토사가 쌓인 배수구 AI 예시 이미지" loading="lazy"><figcaption class="badge">AI 예시</figcaption></figure><div class="symptom-body"><h3 id="s-drain">배수구가 막히고 냄새가 난다</h3><p class="desc">배수구 입구와 연결관 상태를 확인합니다.</p></div></article>
+<article class="symptom-card" aria-labelledby="s-leak"><figure class="symptom-fig"><img src="../public/images/renewal/symptom-leak.webp" alt="지하주차장 천장 누수 AI 예시 이미지" loading="lazy"><figcaption class="badge">AI 예시</figcaption></figure><div class="symptom-body"><h3 id="s-leak">지하주차장 천장에서 물이 샌다</h3><p class="desc">누수 위치와 주변 방수·배수 상태를 살펴봅니다.</p></div></article>
+</div>
+</div></section>
+<!-- scroll reveal -->
+<section class="reveal" id="scene-water" aria-labelledby="scene-title">
+<div class="reveal-scroll" id="reveal-scroll" data-phase="0"><div class="reveal-sticky"><div class="reveal-box">
+<div class="reveal-head"><h2 id="scene-title">물 고임, 왜 반복될까요?</h2><p>설명용 모식 · 높이 과장 · AI 재질 · 실제 현장 아님</p></div>
+<div class="reveal-main">
+<div class="stage" id="reveal-stage">
+<div class="tilt" id="reveal-tilt" role="img" aria-label="옆에서 본 물 고임 단면의 한 가지 원리 예시. 포장면의 낮은 곳과 그곳에 고인 물이 오른쪽 배수구 입구보다 낮아 물이 남을 수 있습니다. 같은 모식이 기울어지며 포장면과 포장층, 기층과 지반, 배수구와 연결관을 보여줍니다. 실제 현장이나 설계도는 아닙니다.">
+<div class="lot">
+<div class="lot-surface"></div>
+<div class="parkline p1"></div><div class="parkline p2"></div><div class="parkline p3"></div><div class="joint"></div>
+<div class="lowzone"></div><div class="puddle-edge"></div><div class="puddle"></div><div class="grate"></div>
+<div class="tag3d tag-water" aria-hidden="true"><span>낮은 곳</span><i></i></div>
+<div class="tag3d tag-drain" aria-hidden="true"><span>배수구</span><i></i></div>
+<div class="face" aria-hidden="true"><svg viewBox="0 0 600 160" preserveAspectRatio="none">
+<defs>
+<pattern id="story-asphalt" patternUnits="userSpaceOnUse" width="600" height="160"><image href="images/realistic-story-asphalt-cut.webp" width="300" height="160" preserveAspectRatio="none"/><g transform="translate(600 0) scale(-1 1)"><image href="images/realistic-story-asphalt-cut.webp" width="300" height="160" preserveAspectRatio="none"/></g></pattern>
+<pattern id="story-gravel" patternUnits="userSpaceOnUse" width="600" height="160"><image href="images/realistic-story-gravel.webp" width="600" height="160" preserveAspectRatio="none"/></pattern>
+<pattern id="story-soil" patternUnits="userSpaceOnUse" width="600" height="160"><image href="images/realistic-story-soil.webp" width="300" height="160" preserveAspectRatio="none"/><g transform="translate(600 0) scale(-1 1)"><image href="images/realistic-story-soil.webp" width="300" height="160" preserveAspectRatio="none"/></g></pattern>
+<linearGradient id="story-water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c5e0e4"/><stop offset="1" stop-color="#568291"/></linearGradient>
+<linearGradient id="story-concrete"><stop stop-color="#77898f"/><stop offset=".45" stop-color="#c8d3d4"/><stop offset="1" stop-color="#84959b"/></linearGradient>
+<linearGradient id="story-pipe" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e5eeed"/><stop offset=".5" stop-color="#a7b8bb"/><stop offset="1" stop-color="#637780"/></linearGradient>
+<marker id="water-arrow-3d" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10Z" fill="#b2e1ed"/></marker>
+</defs>
+<rect x="0" y="126" width="600" height="34" fill="url(#story-soil)"/><rect x="0" y="90" width="600" height="36" fill="url(#story-gravel)"/>
+<path d="M0 12H100L150 62H220L270 12H600V90H0Z" fill="url(#story-asphalt)"/><path d="M130 42H240L220 62H150Z" fill="url(#story-water)"/><path d="M0 12H100L150 62H220L270 12H600" fill="none" stroke="#d9e2df" stroke-width="2"/>
+<path d="M72 2L115 31" fill="none" stroke="#b2e1ed" stroke-width="3" marker-end="url(#water-arrow-3d)"/><path d="M300 2L253 31" fill="none" stroke="#b2e1ed" stroke-width="3" marker-end="url(#water-arrow-3d)"/>
+<circle id="flow-left-dot" cx="72" cy="2" r="3" fill="#f1fbff" stroke="#5c899a" opacity="0"/><circle id="flow-right-dot" cx="300" cy="2" r="3" fill="#f1fbff" stroke="#5c899a" opacity="0"/>
+<path d="M288 12V42M279 12H297M279 42H297" fill="none" stroke="#ffcf5b" stroke-width="3"/>
+<path d="M450 96L600 113" fill="none" stroke="#42545a" stroke-width="24"/><path d="M450 96L600 113" fill="none" stroke="url(#story-pipe)" stroke-width="15"/><rect x="410" y="12" width="46" height="91" fill="url(#story-concrete)" stroke="#566a70" stroke-width="3"/><rect x="418" y="20" width="30" height="72" fill="#25383f"/><path d="M404 10H462" stroke="#1c2f42" stroke-width="8"/>
+<g fill="#081b26" fill-opacity=".84"><rect x="8" y="60" width="70" height="24" rx="3"/><rect x="8" y="95" width="54" height="24" rx="3"/><rect x="8" y="131" width="54" height="24" rx="3"/><rect x="474" y="69" width="70" height="24" rx="3"/></g>
+<g class="layer-labels" fill="#fff" font-size="13" font-weight="700"><text x="13" y="78">포장층</text><text x="13" y="113">기층</text><text x="13" y="149">지반</text><text x="479" y="87">연결관</text></g>
+</svg></div>
+</div>
+</div>
+<div class="reveal-fallback" role="img" aria-label="물 고임의 단면 예시. 포장면의 낮은 곳이 배수구 입구보다 낮으면 물이 남을 수 있습니다. 실제 현장 구조는 조사 후 확인해야 합니다.">
+<svg viewBox="0 0 560 220" role="presentation"><rect x="10" y="132" width="540" height="48" fill="#918677"/><path d="M10 60H110L150 105H220L260 60H550V132H10Z" fill="#39454d"/><path d="M131 84H239L220 105H150Z" fill="#85bee8"/><rect x="380" y="60" width="44" height="85" fill="#d0dce0" stroke="#667b85" stroke-width="3"/><path d="M424 125L550 140" stroke="#b8cad2" stroke-width="15"/><path d="M375 58H429" stroke="#1c2f42" stroke-width="7"/><text x="22" y="120" fill="#fff" font-size="13">포장층</text><text x="22" y="162" fill="#fff" font-size="13">기층·지반</text><text x="22" y="205" fill="#ffcf5b" font-size="13">낮은 곳에 물이 남을 수 있습니다 · 예시</text></svg>
+위 그림은 기울기 표현을 지원하지 않는 환경용 단면 요약입니다. 내용은 아래 설명과 같습니다.
+</div>
+</div>
+<div class="story-copy" id="story-copy"><div class="story-note"><h3 id="step-h">물은 낮은 곳으로 흐릅니다</h3><p id="step-p">포장면의 기울기에 따라 물길이 달라집니다.</p></div>
+<p class="reveal-hint">스크롤하며 물길을 살펴보세요.</p></div>
+</div>
+</div></div></div>
+<div class="reveal-detail"><div class="wrap">
+<div class="section-head"><h2>원인부터 확인하고, 맞는 범위로</h2><p>그림은 한 가지 예시입니다. 실제 원인은 현장 조사가 필요합니다.</p></div>
+<div class="detail-grid">
+<article class="detail-card"><b><span class="k">확인 1 · 높이</span>포장 높이를 잰다</b><p>물 고인 곳이 배수구 입구보다 낮은지 높이를 측정합니다. 예시 그림의 낮은 곳·수위선은 이해를 위한 모식입니다.</p></article>
+<article class="detail-card"><b><span class="k">확인 2 · 배수 길</span>배수구·연결관을 본다</b><p>막힘·파손과 연결관 상태를 점검합니다. 필요하면 포장 하부·지반도 확인합니다.</p></article>
+<article class="detail-card"><b><span class="k">보수 방향 · 조건부</span>원인에 맞는 범위로</b><p>높이 차가 원인이면 기울기 조정을, 막힘·파손이면 배수구·관로 정비를, 하부 꺼짐이면 하부부터 검토합니다. 표면 덧씌우기만으로 꺼짐이 해결되지는 않습니다.</p></article>
+</div>
+<p class="detail-fine">이 장면은 설명용 예시입니다. 비율·형상·수치와 실제 보수 방법은 현장 조사와 기술 검토 후 결정합니다. 특정 현장의 상태를 단정하지 않습니다.</p>
+</div></div>
+</section>
+<section class="comparison" id="comparison" aria-labelledby="comparison-title"><div class="wrap">
+<div class="comparison-intro"><div><h2 id="comparison-title">물 고임과 개선 모습 예시</h2><p>겉모습만으로 포장 하부의 상태는 알 수 없습니다.</p></div><span class="compare-note">AI로 만든 예시 · 오주건설의 실제 시공 실적이 아닙니다.</span></div>
+<div class="split" id="split"><img src="../public/images/renewal/same-after.webp" alt="개선 모습 예시: 마른 주차장 바닥을 그린 AI 예시 이미지"><img class="split-before" src="../public/images/renewal/same-before.webp" alt="문제 상황 예시: 같은 구도에 물 고임과 균열이 있는 모습을 그린 AI 예시 이미지"><div class="split-divider" aria-hidden="true"></div><div class="split-handle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg></div><input class="split-range" id="split-range" type="range" min="0" max="100" value="50" step="1" aria-label="문제 상황 예시와 개선 모습 예시 비교 막대" aria-valuetext="문제 예시와 개선 예시를 절반씩 표시"><span class="split-label before">문제 상황 예시</span><span class="split-label after">개선 모습 예시</span><span class="split-badge">AI 이미지 · 실제 시공 사진 아님</span></div>
+<p class="compare-bottom">좌우로 움직여 비교할 수 있습니다. 키보드 방향키도 사용할 수 있습니다.</p>
+</div></section>
+<section class="block trust" id="company" aria-labelledby="company-title" style="padding-top:76px"><div class="wrap trust-inner"><div><h2 id="company-title">오주건설을 소개합니다.</h2><p class="lead">회사 정보와 시공 범위를 확인하세요.</p></div><div class="trust-row"><div class="trust-item"><b>오주건설(주)</b><span>2004년 설립 · 충북 청주</span></div><div class="trust-item"><b>실적·등록 자료</b><span>확인된 자료 확보 후 안내 예정</span></div></div></div></section>
+<section class="contact" id="contact" aria-labelledby="contact-title"><div class="wrap contact-layout"><div><h2 id="contact-title">현장 상황을<br>들려주세요.</h2><p class="contact-intro">위치와 증상을 알려주시면<br>상담에 도움이 됩니다.</p><div class="phone-box"><span>전화 상담</span><a class="tel" href="tel:043-265-6010">043-265-6010</a><p>온라인 문의는 전송되지 않습니다. 전화로 문의해 주세요.</p></div></div>
+<div class="form-panel" role="group" aria-labelledby="form-title"><h3 id="form-title">온라인 문의 양식 예시</h3><p class="mock">디자인 예시로, 이 양식은 <b>전송되지 않습니다.</b></p><form onsubmit="return false" aria-describedby="form-note"><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><label class="field">담당자 성함 * <input autocomplete="off" placeholder="성함" disabled aria-disabled="true"></label><label class="field">연락처 * <input type="tel" autocomplete="off" placeholder="연락받으실 번호" disabled aria-disabled="true"></label></div><label class="field">현장 위치 <input autocomplete="off" placeholder="예: 청주시 아파트 주차장" disabled aria-disabled="true"></label><label class="field">주된 증상 <select disabled aria-disabled="true"><option value="">증상을 선택해 주세요</option><option>물 고임</option><option>보도블럭 꺼짐</option><option>배수구 막힘·냄새</option><option>지하주차장 누수</option></select></label><label class="field">현장 상황 <textarea placeholder="증상이 나타난 위치나 시기를 알려주세요." disabled aria-disabled="true"></textarea></label><label class="consent"><input type="checkbox" disabled aria-disabled="true"> 개인정보 수집·이용에 동의합니다. *</label><button class="form-disabled" type="button" disabled>온라인 문의 전송 · 시안 (전송 안 됨)</button></form><p class="form-warning" id="form-note">실제 문의는 <a href="tel:043-265-6010">043-265-6010</a>으로 전화해 주세요.</p></div>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap"><b>오주건설(주)</b><p>대표 이자영 · 사업자등록번호 217-81-16716<br>충청북도 청주시 상당구 용암북로160번길 20, 2층 201호<br>전화 <a href="tel:043-265-6010" style="color:inherit">043-265-6010</a></p><p class="legal">디자인 제안 시안입니다. 증상·전후 이미지는 AI 예시이며 실제 시공 실적이 아닙니다. 입체 모식도는 설명용 예시이며 실제 치수·공법이 아닙니다. 이 페이지의 문의 양식은 전송되지 않습니다.</p></div></footer>
+<nav class="mobile-bar" aria-label="빠른 문의"><a class="call" href="tel:043-265-6010">전화 상담</a><a class="request" href="#contact">현장 상담 안내</a></nav>
+<script>
+(function(){
+var split=document.getElementById('split'),range=document.getElementById('split-range');
+function setSplit(v){v=Math.max(0,Math.min(100,Number(v)||0));var offset=24-v*.48;split.style.setProperty('--split',v+'%');split.style.setProperty('--handle','calc('+v+'% '+(offset<0?'-':'+')+' '+Math.abs(offset)+'px)');range.value=v;range.setAttribute('aria-valuetext','문제 예시 '+v+'%, 개선 예시 '+(100-v)+'%');split.querySelector('.split-label.before').hidden=v<10;split.querySelector('.split-label.after').hidden=v>90;}
+if(range&&split){range.addEventListener('input',function(){setSplit(range.value);});setSplit(50);}
+/* Scroll-driven tilt: the same frontal section opens into a volumetric cutaway. */
+var scrollEl=document.getElementById('reveal-scroll'),tilt=document.getElementById('reveal-tilt');
+var h=document.getElementById('step-h'),p=document.getElementById('step-p'),storyCopy=document.getElementById('story-copy');
+var waterLabel=document.querySelector('.tag-water span'),drainLabel=document.querySelector('.tag-drain span');
+var flowLeft=document.getElementById('flow-left-dot'),flowRight=document.getElementById('flow-right-dot');
+var steps=[
+{h:'물은 낮은 곳으로 흐릅니다',p:'포장면의 기울기에 따라 물길이 달라집니다.',water:'낮은 곳',drain:'배수구'},
+{h:'배수구보다 낮으면 물이 남을 수 있습니다',p:'물 고인 곳이 배수구 입구보다 낮은 경우의 예시입니다.',water:'물 고임',drain:'배수구 입구'},
+{h:'높이와 배수 상태를 확인합니다',p:'필요하면 하부도 살피고 원인에 맞게 보수 범위를 정합니다.',water:'포장 높이',drain:'배수·관로'}];
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)');
+var currentStep=-1;
+function render(pr,staticScene){
+var rx=90-38*pr,rz=-10*pr;
+tilt.style.setProperty('--rx',rx.toFixed(2)+'deg');tilt.style.setProperty('--rz',rz.toFixed(2)+'deg');
+tilt.style.setProperty('--label-z',(20+32*pr).toFixed(1)+'px');tilt.style.setProperty('--plan-opacity',Math.min(1,pr*3).toFixed(2));
+var flow=Math.min(1,pr/.33),showFlow=!staticScene&&flow<.98?'1':'0';
+flowLeft.setAttribute('cx',(72+43*flow).toFixed(1));flowLeft.setAttribute('cy',(2+29*flow).toFixed(1));flowLeft.setAttribute('opacity',showFlow);
+flowRight.setAttribute('cx',(300-47*flow).toFixed(1));flowRight.setAttribute('cy',(2+29*flow).toFixed(1));flowRight.setAttribute('opacity',showFlow);
+storyCopy.style.setProperty('--note-shift',staticScene?'0px':(-Math.min(90,window.innerWidth*.06)*Math.max(0,1-pr/.7)).toFixed(1)+'px');
+var s=pr<.33?0:(pr<.72?1:2);
+if(s!==currentStep){h.textContent=steps[s].h;p.textContent=steps[s].p;waterLabel.textContent=steps[s].water;drainLabel.textContent=steps[s].drain;scrollEl.dataset.phase=String(s);currentStep=s;}
+}
+if(!scrollEl||!tilt)return;
+var ticking=false;
+function update(){ticking=false;var sticky=scrollEl.querySelector('.reveal-sticky');var style=getComputedStyle(sticky);if((reduce&&reduce.matches)||style.position!=='sticky'){render(0,true);return;}var top=parseFloat(style.top)||0;var total=scrollEl.offsetHeight-sticky.offsetHeight;var pr=total>0?(top-scrollEl.getBoundingClientRect().top)/total:0;pr=Math.max(0,Math.min(1,pr));render(pr,false);}
+function request(){if(!ticking){ticking=true;window.requestAnimationFrame(update);}}
+window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);if(reduce){if(reduce.addEventListener)reduce.addEventListener('change',request);else if(reduce.addListener)reduce.addListener(request);}update();
+})();
+</script>
+</body>
+</html>

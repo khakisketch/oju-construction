@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut } from "firebase/auth";
-import { auth } from "@/shared/lib/firebase/auth";
+import { getFirebaseAuth } from "@/shared/lib/firebase/auth";
+import { isFirebaseConfigured } from "@/shared/config/env";
 import { LayoutDashboard, MessageSquare, Newspaper, Briefcase, Settings, LogOut, X, FileText, FileCheck } from "lucide-react";
 import { useNewContacts } from "@/shared/hooks/useNewContacts";
 
@@ -30,7 +31,9 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      if (isFirebaseConfigured) {
+        await signOut(getFirebaseAuth());
+      }
       router.push("/login");
     } catch (error) {
       console.error("Logout error:", error);

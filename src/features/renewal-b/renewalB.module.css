@@ -1,0 +1,762 @@
+/* Existing-brand renewal: navy, blue, rounded cards, photo-led.
+   The module owns only the interactive cross-section and diagram sizing,
+   plus the scroll-driven same-place before/after comparison. */
+
+.compareTrack {
+  position: relative;
+}
+
+/* Scroll travel for the pinned comparison: divider moves 85 -> 15
+   while the panel sticks. */
+.compareTrack::after {
+  content: "";
+  display: block;
+  height: clamp(10rem, 30svh, 22rem);
+}
+
+/* Pinned stage: fills the viewport under the fixed header so the photo can
+   sit centered instead of hanging from the top edge with dead space below. */
+.compareSticky {
+  position: sticky;
+  top: 73px;
+  height: calc(100svh - 73px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* The photo keeps the wide card and stays viewport-height driven, so the
+   whole pinned composition (photo + readout + note) always fits one screen. */
+.compareStage {
+  width: 100%;
+}
+
+.comparePhoto {
+  width: 100% !important;
+  height: min(68svh, 700px);
+}
+
+.compareReadout {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.compareReadoutNum {
+  font-family: var(--font-archivo), "Archivo", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.compareFootnote {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #8b939c;
+}
+
+.compareFootnote a {
+  color: #cbd5e1;
+  font-weight: 700;
+  text-underline-offset: 4px;
+}
+
+.compareFootnote a:hover {
+  color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compareTrack::after {
+    content: none;
+    display: none;
+  }
+
+  .compareSticky {
+    position: static;
+    top: auto;
+    height: auto;
+  }
+}
+
+/* ---------- 법인 식별 스트립 ---------- */
+/* 히어로 직후, 방문자가 3분 안에 회사를 특정할 수 있는 근거 줄. */
+
+.proofStrip {
+  background: #ffffff;
+  border-top: 2px solid #0e2f64;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.proofInner {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 auto;
+  max-width: 1440px;
+  background: #e2e8f0;
+}
+
+.proofCell {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  padding: 18px 20px 20px;
+  background: #ffffff;
+}
+
+.proofLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #94a3b8;
+}
+
+.proofValue {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #0e2f64;
+  overflow-wrap: anywhere;
+}
+
+.proofValueMono {
+  font-family: var(--font-archivo), "Archivo", sans-serif;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+a.proofCell:hover .proofValue {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- 단면 도면 ---------- */
+
+/* 활성 고장 지점의 맥동. reduced-motion에서는 정지. */
+.sectionPulse {
+  opacity: 0.2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sectionPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes sectionPulse {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: scale(0.82);
+  }
+  50% {
+    opacity: 0.05;
+    transform: scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sectionPulse {
+    animation: none;
+    opacity: 0.16;
+  }
+}
+
+/* ---------- section eyebrows ---------- */
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #1f4a8a;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background: #ea580c;
+  flex-shrink: 0;
+}
+
+.eyebrowLight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f2b394;
+}
+
+.eyebrowLight::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background: #ea580c;
+  flex-shrink: 0;
+}
+
+/* ---------- hero entrance ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .heroReveal > * {
+    opacity: 0;
+    animation: heroRise 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .heroReveal > *:nth-child(2) {
+    animation-delay: 90ms;
+  }
+
+  .heroReveal > *:nth-child(3) {
+    animation-delay: 170ms;
+  }
+
+  .heroReveal > *:nth-child(4) {
+    animation-delay: 250ms;
+  }
+
+  .heroReveal > *:nth-child(5) {
+    animation-delay: 330ms;
+  }
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.explorer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* 그리드 아이템이 내용 폭(가로로 넘치는 단면) 때문에 늘어나지 않도록 한다. */
+.explorer > * {
+  min-width: 0;
+}
+
+.canvas {
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(8, 28, 61, 0.05);
+}
+
+.diagramScroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.diagramInner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 960 / 560;
+  min-width: 0;
+}
+
+.diagramInner svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 좁은 화면에서만 보이는 단면 가로 스크롤 안내 */
+.diagramHint {
+  display: none;
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.marker {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  border: 2px solid #0e2f64;
+  background: #ffffff;
+  color: #0e2f64;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 4px 14px rgba(8, 28, 61, 0.18);
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease,
+    border-color 160ms ease;
+}
+
+/* 단면 위에서 읽히는 고장 지점 한 줄 설명 */
+.diagnosisNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #b9471f;
+}
+
+.diagnosisNoteDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  background: #ea580c;
+}
+
+.modeSwitch {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 10px;
+  padding: 3px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  background: #f8fafc;
+}
+
+.modeButton {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.modeButton:hover {
+  color: #0e2f64;
+}
+
+.modeButton:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.modeButtonActive {
+  background: #0e2f64;
+  color: #ffffff;
+}
+
+.modeButtonActive:hover {
+  color: #ffffff;
+}
+
+.photoCanvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #e2e8f0;
+}
+
+.photoImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Passive location indicator: tabs drive selection, this only shows where. */
+.spot {
+  position: absolute;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  border: 3px solid #ffffff;
+  background: #ea580c;
+  box-shadow: 0 2px 10px rgba(8, 28, 61, 0.45);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spot::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 9999px;
+    border: 2px solid rgba(234, 88, 12, 0.7);
+    animation: spotPing 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+}
+
+@keyframes spotPing {
+  0% {
+    transform: scale(0.7);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.marker:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  border-color: #1f4a8a;
+}
+
+.marker:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.markerActive {
+  background: #9a3412;
+  border-color: #9a3412;
+  color: #ffffff;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.panel {
+  position: sticky;
+  top: 96px;
+  align-self: start;
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(8, 28, 61, 0.06);
+}
+
+.panelNumber {
+  color: #9a3412;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.panelTitle {
+  margin: 4px 0 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: #0e2f64;
+}
+
+.panelShort {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.panelSymptom {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #334155;
+}
+
+.evidenceFigure {
+  margin: 14px 0 0;
+}
+
+.evidenceFrame {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #e2e8f0;
+}
+
+.evidenceImage {
+  object-fit: cover;
+}
+
+.evidenceBadge {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.panelBlock {
+  margin-top: 18px;
+}
+
+.panelLabel {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.panelList {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #475569;
+}
+
+.panelList li + li {
+  margin-top: 4px;
+}
+
+.panelResult {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  background: #fff7ed;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #9a3412;
+}
+
+.panelSolution {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  background: #f0fdf4;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #166534;
+}
+
+.panelCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  margin-top: 18px;
+  padding: 0 16px;
+  border-radius: 9999px;
+  background: #0e2f64;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 160ms ease;
+}
+
+.panelCta:hover {
+  background: #1f4a8a;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.tab:hover {
+  border-color: #94a3b8;
+  color: #0e2f64;
+}
+
+.tab:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.tabActive {
+  background: #0e2f64;
+  border-color: #0e2f64;
+  color: #ffffff;
+}
+
+.tabNumber {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+
+.diagramNote {
+  margin: 10px 4px 0;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.correctWrap {
+  overflow-x: auto;
+}
+
+.correctInner {
+  min-width: 720px;
+}
+
+.correctInner svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.checklist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 20px;
+}
+
+.checkItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #334155;
+  cursor: pointer;
+}
+
+.checkItem input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #0e2f64;
+}
+
+.checkResult {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #475569;
+}
+
+.checkResultStrong {
+  color: #0e2f64;
+  font-weight: 800;
+}
+
+@media (max-width: 1180px) {
+  .explorer {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    position: static;
+  }
+
+  .diagramInner {
+    min-width: 720px;
+  }
+}
+@media (max-width: 720px) {
+  .canvas {
+    padding: 8px;
+  }
+
+  .marker {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .panelTitle {
+    font-size: 22px;
+  }
+
+  .checklist {
+    grid-template-columns: 1fr;
+  }
+
+  .diagramInner {
+    min-width: 860px;
+  }
+
+  .diagramHint {
+    display: block;
+  }
+
+  .correctInner {
+    min-width: 680px;
+  }
+
+  /* Mobile stage: shorter header, and the fixed inquiry bar eats the bottom. */
+  .compareSticky {
+    top: 64px;
+    height: calc(100svh - 64px - 56px);
+  }
+
+  /* Portrait crop on phones so the parking lot still reads, not a thin strip. */
+  .comparePhoto {
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  .proofInner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

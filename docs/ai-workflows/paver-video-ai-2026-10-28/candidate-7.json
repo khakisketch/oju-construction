@@ -1,0 +1,151 @@
+{
+  "client_id": "oju-batch2",
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "wan2.1_vace_14B_fp16.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "type": "wan",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "wan_2.1_vae.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "Fixed tripod view of an ordinary outdoor paved sidewalk at a construction site, like the reference photograph. A shallow local depression exists among the weathered solid rectangular concrete paving blocks, with a small still puddle. A very subtle change in water reflection. Keep every paver rigid and in the same location; keep the trench, soil, scene composition and camera unchanged. Natural soft daylight, realistic documentary view."
+      }
+    },
+    "5": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "miniature, toy, cartoon, illustration, CGI, text, logos, people, camera movement, zoom, pan, paver melting, morphing, geometry changes, flicker, vortex, hole, dramatic collapse, water splash, new objects"
+      }
+    },
+    "10": {
+      "class_type": "WanVaceToVideo",
+      "inputs": {
+        "positive": [
+          "4",
+          0
+        ],
+        "negative": [
+          "5",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "width": 640,
+        "height": 384,
+        "length": 33,
+        "batch_size": 1,
+        "strength": 1.0,
+        "reference_image": [
+          "6",
+          0
+        ]
+      }
+    },
+    "11": {
+      "class_type": "ModelSamplingSD3",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "shift": 8.0
+      }
+    },
+    "12": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": [
+          "11",
+          0
+        ],
+        "positive": [
+          "10",
+          0
+        ],
+        "negative": [
+          "10",
+          1
+        ],
+        "latent_image": [
+          "10",
+          2
+        ],
+        "seed": 2026102807,
+        "steps": 20,
+        "cfg": 6.0,
+        "sampler_name": "uni_pc",
+        "scheduler": "simple",
+        "denoise": 1.0
+      }
+    },
+    "13": {
+      "class_type": "TrimVideoLatent",
+      "inputs": {
+        "samples": [
+          "12",
+          0
+        ],
+        "trim_amount": [
+          "10",
+          3
+        ]
+      }
+    },
+    "14": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "13",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "15": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "14",
+          0
+        ],
+        "filename_prefix": "candidate-7"
+      }
+    },
+    "6": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "reference-3.png"
+      }
+    }
+  }
+}

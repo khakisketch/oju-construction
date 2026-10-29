@@ -1,0 +1,30 @@
+{
+  "surface": {
+    "center": [
+      300,
+      180
+    ],
+    "radius": [
+      128,
+      76
+    ],
+    "max_shift_px": 20,
+    "changed_pixels": 28273,
+    "outside_ellipse_changed": 0,
+    "start_end_mean_abs_rgb": 1.4513712565104167
+  },
+  "section": {
+    "center": [
+      225,
+      108
+    ],
+    "radius": [
+      110,
+      48
+    ],
+    "max_shift_px": 14,
+    "changed_pixels": 15541,
+    "outside_ellipse_changed": 0,
+    "start_end_mean_abs_rgb": 2.9853474934895834
+  }
+}

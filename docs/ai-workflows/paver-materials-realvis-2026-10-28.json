@@ -1,0 +1,25 @@
+{
+  "client_id": "oju-paver-materials-20261028",
+  "prompt": {
+    "1": {"class_type": "CheckpointLoaderSimple", "inputs": {"ckpt_name": "RealVisXL_V5.0_fp16.safetensors"}},
+    "2": {"class_type": "VAELoader", "inputs": {"vae_name": "sdxl_vae.safetensors"}},
+    "3": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": "people, hands, objects, lines, bricks, repeating pavement, gaps, cracks, leaves, lighting gradient, sharp shadow, writing, text, logo, watermark, perspective, illustration, oversaturation"}},
+    "4": {"class_type": "EmptyLatentImage", "inputs": {"width": 1024, "height": 1024, "batch_size": 1}},
+    "10": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": "Close overhead macro photograph of the surface of a single charcoal gray precast concrete paver, no outline or joints. The entire square image is a uniform flat surface with fine stone grains, tiny pores and very subtle weathering, softly lit, natural neutral color, material texture."}},
+    "11": {"class_type": "KSampler", "inputs": {"seed": 2026102801, "steps": 30, "cfg": 5.5, "sampler_name": "dpmpp_2m", "scheduler": "karras", "denoise": 1.0, "model": ["1", 0], "positive": ["10", 0], "negative": ["3", 0], "latent_image": ["4", 0]}},
+    "12": {"class_type": "VAEDecode", "inputs": {"samples": ["11", 0], "vae": ["2", 0]}},
+    "13": {"class_type": "SaveImage", "inputs": {"images": ["12", 0], "filename_prefix": "paver-material-concrete"}},
+    "20": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": "Close overhead photograph of compacted crushed stone and graded grey aggregate used beneath a pavement, small uneven angular fragments tightly packed with fine stone dust, all edge-to-edge, natural gray and muted earth tones, soft even light, sharp granular texture, no objects."}},
+    "21": {"class_type": "KSampler", "inputs": {"seed": 2026102802, "steps": 30, "cfg": 5.5, "sampler_name": "dpmpp_2m", "scheduler": "karras", "denoise": 1.0, "model": ["1", 0], "positive": ["20", 0], "negative": ["3", 0], "latent_image": ["4", 0]}},
+    "22": {"class_type": "VAEDecode", "inputs": {"samples": ["21", 0], "vae": ["2", 0]}},
+    "23": {"class_type": "SaveImage", "inputs": {"images": ["22", 0], "filename_prefix": "paver-material-aggregate"}},
+    "30": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": "Close overhead macro photograph of compacted dark brown sandy soil, natural fine granular earth with a few tiny stones, uniform flat cut surface filling the frame, softly and evenly lit, realistic soil texture, no roots or objects."}},
+    "31": {"class_type": "KSampler", "inputs": {"seed": 2026102803, "steps": 30, "cfg": 5.5, "sampler_name": "dpmpp_2m", "scheduler": "karras", "denoise": 1.0, "model": ["1", 0], "positive": ["30", 0], "negative": ["3", 0], "latent_image": ["4", 0]}},
+    "32": {"class_type": "VAEDecode", "inputs": {"samples": ["31", 0], "vae": ["2", 0]}},
+    "33": {"class_type": "SaveImage", "inputs": {"images": ["32", 0], "filename_prefix": "paver-material-soil"}},
+    "40": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": "Overhead macro photograph of clean coarse beige bedding sand, fine varied grains packed flat, edge-to-edge neutral sand surface with no footprints, softly and evenly lit, realistic construction material texture."}},
+    "41": {"class_type": "KSampler", "inputs": {"seed": 2026102804, "steps": 30, "cfg": 5.5, "sampler_name": "dpmpp_2m", "scheduler": "karras", "denoise": 1.0, "model": ["1", 0], "positive": ["40", 0], "negative": ["3", 0], "latent_image": ["4", 0]}},
+    "42": {"class_type": "VAEDecode", "inputs": {"samples": ["41", 0], "vae": ["2", 0]}},
+    "43": {"class_type": "SaveImage", "inputs": {"images": ["42", 0], "filename_prefix": "paver-material-sand"}}
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "client_id": "oju-batch4",
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "wan2.1_vace_14B_fp16.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "type": "wan",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "wan_2.1_vae.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "Fixed camera documentary view of a full-scale paved sidewalk in exposed side section. Weathered rectangular concrete pavers sit over fine bedding sand, compact gray granular gravel and brown soil, with one hollow gray pipe in the soil. Follow the provided guide as a small patch of pavers slowly lowers and a small gap appears underneath; keep the pipe and surrounding layers unchanged. Realistic natural textures and lighting, no plinth, no labels."
+      }
+    },
+    "5": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "toy, miniature, plastic, plinth, illustration, cartoon, CGI, text, watermark, labels, camera movement, flicker, melted pavers, warped pipe, extra structures"
+      }
+    },
+    "10": {
+      "class_type": "WanVaceToVideo",
+      "inputs": {
+        "positive": [
+          "4",
+          0
+        ],
+        "negative": [
+          "5",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "width": 640,
+        "height": 384,
+        "length": 33,
+        "batch_size": 1,
+        "strength": 0.6,
+        "control_video": [
+          "9",
+          0
+        ],
+        "reference_image": [
+          "6",
+          0
+        ]
+      }
+    },
+    "11": {
+      "class_type": "ModelSamplingSD3",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "shift": 8.0
+      }
+    },
+    "12": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": [
+          "11",
+          0
+        ],
+        "positive": [
+          "10",
+          0
+        ],
+        "negative": [
+          "10",
+          1
+        ],
+        "latent_image": [
+          "10",
+          2
+        ],
+        "seed": 2026102922,
+        "steps": 20,
+        "cfg": 6.0,
+        "sampler_name": "uni_pc",
+        "scheduler": "simple",
+        "denoise": 1.0
+      }
+    },
+    "13": {
+      "class_type": "TrimVideoLatent",
+      "inputs": {
+        "samples": [
+          "12",
+          0
+        ],
+        "trim_amount": [
+          "10",
+          3
+        ]
+      }
+    },
+    "14": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "13",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "15": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "14",
+          0
+        ],
+        "filename_prefix": "candidate-22"
+      }
+    },
+    "6": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "reference-9.png"
+      }
+    },
+    "7": {
+      "class_type": "LoadVideo",
+      "inputs": {
+        "file": "moving-cutaway.mp4"
+      }
+    },
+    "8": {
+      "class_type": "GetVideoComponents",
+      "inputs": {
+        "video": [
+          "7",
+          0
+        ]
+      }
+    },
+    "9": {
+      "class_type": "Canny",
+      "inputs": {
+        "image": [
+          "8",
+          0
+        ],
+        "low_threshold": 0.25,
+        "high_threshold": 0.65
+      }
+    }
+  }
+}

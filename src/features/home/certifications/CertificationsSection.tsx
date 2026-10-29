@@ -1,121 +1,56 @@
-"use client";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { BUSINESS_AREA_SUMMARY } from "@/shared/config/businessAreas";
 
-import { motion } from "framer-motion";
-
-const certifications = [
+const reviewItems = [
   {
-    number: "01",
     title: "전문건설업 면허 6종",
-    subtitle: "국토교통부 등록",
-    description: "토목 · 지반조성포장 · 조경 · 방수 · 도장 · 시설유지관리",
+    detail: `국토교통부 등록 · ${BUSINESS_AREA_SUMMARY}`,
   },
   {
-    number: "02",
-    title: "안전관리 체계",
-    subtitle: "산업안전보건 준수",
-    description: "현장 안전관리 계획 수립 및 이행",
+    title: "안전관리 체계 · 품질관리 인증",
+    detail: "산업안전보건 준수 · 현장 안전관리 계획 수립 및 이행 · 건설기술진흥법 기반 시공 품질 관리 및 하자 관리 체계 운영",
   },
   {
-    number: "03",
-    title: "품질관리 인증",
-    subtitle: "건설기술진흥법 기반",
-    description: "시공 품질 관리 및 하자 관리 체계 운영",
-  },
-  {
-    number: "04",
     title: "건설공제조합 가입",
-    subtitle: "이행보증 및 하자보증",
-    description: "공사 이행 · 하자 · 선급금 보증 체계 구축",
+    detail: "이행보증 및 하자보증 · 공사 이행 · 하자 · 선급금 보증 체계 구축",
   },
   {
-    number: "05",
-    title: "전문 기술인력 보유",
-    subtitle: "건설기술인 등록",
-    description: "토목기사 · 산업기사 등 자격 보유 인력 운영",
-  },
-  {
-    number: "06",
-    title: "기업 신용평가",
-    subtitle: "경영 안정성 확보",
-    description: "건전한 재무구조 기반 신뢰성 있는 사업 수행",
+    title: "전문 기술인력 보유 · 기업 신용평가",
+    detail: "건설기술인 등록 · 토목기사 · 산업기사 등 자격 보유 인력 운영 · 경영 안정성 확보 · 건전한 재무구조 기반 신뢰성 있는 사업 수행",
   },
 ];
 
 export default function CertificationsSection() {
   return (
-    <section id="certifications" className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+    <section id="certifications" className="bg-gradient-to-b from-gray-50 to-white py-8 md:py-10">
       <div className="container mx-auto px-4 md:px-6">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-brand-500 font-semibold text-sm uppercase tracking-widest"
-          >
-            Certifications
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl font-extrabold mt-2 mb-4 text-brand-900 tracking-tight"
-          >
-            인증 및 자격
-          </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="w-12 h-[3px] bg-brand-700 mx-auto mb-6"
-          />
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-600 max-w-lg mx-auto"
-          >
+        <div className="mb-6 text-center md:mb-7">
+          <span className="text-sm font-semibold uppercase tracking-widest text-brand-700">Certifications</span>
+          <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-brand-900 md:text-3xl">인증 및 자격</h2>
+          <div className="mx-auto mb-4 mt-3 h-[3px] w-12 bg-brand-700" aria-hidden="true" />
+          <p className="mx-auto max-w-lg text-base leading-relaxed text-gray-600">
             면허 · 안전 · 품질 · 인력 등 다방면의 역량을 갖춘 종합건설 전문기업입니다.
-          </motion.p>
+          </p>
         </div>
 
-        {/* Blueprint Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-2xl border border-brand-200 overflow-hidden bg-brand-200 gap-px"
-        >
-          {certifications.map((cert, idx) => (
-            <div
-              key={idx}
-              className="bg-white p-8 md:p-9 relative group hover:bg-brand-50 transition-colors duration-300"
-            >
-              {/* Green dot */}
-              <div className="absolute top-6 right-6 w-2 h-2 bg-green-500 rounded-full" />
-
-              {/* Number */}
-              <div className="text-5xl font-black text-brand-100 leading-none mb-3 select-none group-hover:text-brand-200 transition-colors">
-                {cert.number}
-              </div>
-
-              {/* Content */}
-              <h3 className="text-[17px] font-bold text-brand-900 mb-1">
-                {cert.title}
-              </h3>
-              <p className="text-xs font-semibold text-brand-500 mb-2.5">
-                {cert.subtitle}
-              </p>
-              <p className="text-[13px] text-gray-500 leading-relaxed">
-                {cert.description}
-              </p>
-            </div>
+        <ul className="mx-auto grid max-w-5xl grid-cols-2 gap-x-4 gap-y-3 border-y border-gray-200 sm:gap-x-8 md:gap-x-10 md:gap-y-4">
+          {reviewItems.map((item) => (
+            <li key={item.title} className="min-w-0 border-t border-gray-200 py-3">
+              <h3 className="text-sm font-bold leading-5 text-brand-900">{item.title}</h3>
+              <p className="mt-1 text-[15px] leading-6 text-gray-600">{item.detail}</p>
+            </li>
           ))}
-        </motion.div>
+        </ul>
+
+        <div className="mt-5 text-center">
+          <Link
+            href="/#review"
+            className="inline-flex min-h-11 items-center gap-2 font-semibold text-brand-700 underline decoration-brand-300 underline-offset-4 transition-colors hover:text-brand-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-4"
+          >
+            검토자료 안내 <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </section>
   );

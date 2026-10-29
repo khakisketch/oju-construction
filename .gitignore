@@ -8,6 +8,7 @@
 
 # next.js
 /.next/
+/.next-dev/
 /out/
 
 # production
@@ -37,3 +38,8 @@ next-env.d.ts
 .firebase/
 firebase-debug.log
 firestore-debug.log
+
+# Local browser snapshots and AI-run diagnostic logs stay on the machine.
+/.playwright-cli/
+/docs/ai-workflows/**/*.log
+/docs/ai-workflows/**/runtime.txt

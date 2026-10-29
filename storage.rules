@@ -1,0 +1,72 @@
+rules_version = '2';
+
+// Firebase Storage 보안 규칙
+// - 읽기: 공개 (홈페이지/소개서/실적 이미지, 회사소개서 PDF 다운로드)
+// - 쓰기: 로그인한 관리자만, 20MB 이하, 허용된 형식만, 업로드 폴더 제한
+//   (Storage 규칙에서는 Firestore 문서를 확인할 수 없어 관리자 판정은
+//    로그인 여부로만 합니다. 공개 배포 전 커스텀 클레임(admin=true) 적용을 권장합니다.)
+service firebase.storage {
+  match /b/{bucket}/o {
+    // 업로드 허용 최대 크기 (이미지·문서 20MB)
+    function isUnderSizeLimit() {
+      return request.resource.size < 20 * 1024 * 1024;
+    }
+
+    // 작업 영상은 50MB까지 허용
+    function isUnderVideoSizeLimit() {
+      return request.resource.size < 50 * 1024 * 1024;
+    }
+
+    // 허용 MIME 타입 (이미지 + PDF)
+    function isAllowedContentType() {
+      return request.resource.contentType is string
+        && (request.resource.contentType.matches('image/.*')
+          || request.resource.contentType == 'application/pdf');
+    }
+
+    // 작업 영상 MIME (mp4/webm)
+    function isAllowedVideoContentType() {
+      return request.resource.contentType is string
+        && (request.resource.contentType == 'video/mp4'
+          || request.resource.contentType == 'video/webm');
+    }
+
+    function isAdminUpload() {
+      return request.auth != null
+        && isUnderSizeLimit()
+        && isAllowedContentType();
+    }
+
+    function isAdminVideoUpload() {
+      return request.auth != null
+        && isUnderVideoSizeLimit()
+        && isAllowedVideoContentType();
+    }
+
+    // 회사소개서 디자인 파일(Canva export PDF) 등 회사 문서
+    match /brochure/{fileName} {
+      allow read: if true;
+      allow write: if isAdminUpload();
+    }
+
+    // 시공실적 이미지·작업 영상
+    match /portfolio/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && (isAllowedContentType() && isUnderSizeLimit()
+          || isAllowedVideoContentType() && isUnderVideoSizeLimit());
+    }
+
+    // 소식 이미지
+    match /news/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdminUpload();
+    }
+
+    // 그 외 경로는 읽기만 허용하고 업로드는 차단
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

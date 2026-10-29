@@ -451,8 +451,8 @@ const PhotoCover = ({ companyName, tagline }: { companyName: string; tagline: st
 // ============================================
 // Section Header Component
 // ============================================
-const SectionHeader = ({ title, subtitle }: { title: string; subtitle?: string }) => (
-  <View style={{ marginBottom: 35 }}>
+const SectionHeader = ({ title, subtitle, marginBottom = 35 }: { title: string; subtitle?: string; marginBottom?: number }) => (
+  <View style={{ marginBottom }}>
     <View style={{ flexDirection: "row", alignItems: "center" }}>
       <View style={{
         width: 5,
@@ -521,19 +521,19 @@ const PageFooter = ({ pageNumber, companyName }: { pageNumber: number; companyNa
 // ============================================
 const VisionMissionPage = ({ data, companyName }: { data: BrochureData; companyName: string }) => (
   <Page size="A4" orientation="landscape" style={{ fontFamily: "NotoSansKR", padding: 50, paddingBottom: 70 }}>
-    <SectionHeader title="비전 & 미션" subtitle="VISION & MISSION" />
+    <SectionHeader title="비전 & 미션" subtitle="VISION & MISSION" marginBottom={24} />
 
-    <View style={{ flexDirection: "row", gap: 24, marginBottom: 35 }}>
+    <View style={{ flexDirection: "row", gap: 24, marginBottom: 28 }}>
       {/* Vision Card */}
       <View style={{
         flex: 1,
         backgroundColor: colors.primary[50],
         borderRadius: 12,
-        padding: 28,
+        padding: 25,
         borderLeftWidth: 5,
         borderLeftColor: colors.primary[500],
       }}>
-        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 14 }}>
           <View style={{
             width: 44,
             height: 44,
@@ -564,11 +564,11 @@ const VisionMissionPage = ({ data, companyName }: { data: BrochureData; companyN
         flex: 1,
         backgroundColor: colors.navy[50],
         borderRadius: 12,
-        padding: 28,
+        padding: 25,
         borderLeftWidth: 5,
         borderLeftColor: colors.navy[700],
       }}>
-        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 14 }}>
           <View style={{
             width: 44,
             height: 44,
@@ -602,7 +602,7 @@ const VisionMissionPage = ({ data, companyName }: { data: BrochureData; companyN
           fontSize: 14,
           fontWeight: 700,
           color: colors.navy[800],
-          marginBottom: 18,
+          marginBottom: 14,
           letterSpacing: 1,
         }}>
           핵심 가치 CORE VALUES
@@ -613,7 +613,7 @@ const VisionMissionPage = ({ data, companyName }: { data: BrochureData; companyN
               flex: 1,
               backgroundColor: colors.navy[800],
               borderRadius: 12,
-              padding: 22,
+              padding: 20,
               alignItems: "center",
             }}>
               <View style={{

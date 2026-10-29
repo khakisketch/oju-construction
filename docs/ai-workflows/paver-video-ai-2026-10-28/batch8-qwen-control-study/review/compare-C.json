@@ -1,0 +1,19 @@
+{
+  "case": "C",
+  "input": "/tmp/opencode/oju-paver-qwen-retry-0cuDUY/output/scaled-input-C_00001_.png",
+  "edited": "/tmp/opencode/oju-paver-qwen-retry-0cuDUY/output/edit-C_00001_.png",
+  "size": [
+    1328,
+    800
+  ],
+  "mean_abs_rgb_0_to_255": 21.24,
+  "center_mean_abs_rgb_0_to_255": 29.98,
+  "outside_mean_abs_rgb_0_to_255": 18.9,
+  "roi": [
+    398,
+    216,
+    996,
+    592
+  ],
+  "warning": "Pixel differences include re-rendering and lighting, not proof of block movement or physical correctness."
+}

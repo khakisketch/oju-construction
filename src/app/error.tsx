@@ -110,6 +110,11 @@ export default function Error({ error, reset }: ErrorProps) {
             <Phone className="w-4 h-4" />
             {env.company.phone}
           </a>
+          <div className="mt-3">
+            <Link href="/#contact" className="text-sm text-brand-700 underline underline-offset-4 hover:text-brand-800">
+              온라인 문의 작성
+            </Link>
+          </div>
         </motion.div>
       </div>
     </div>

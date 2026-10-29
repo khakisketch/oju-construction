@@ -1,0 +1,141 @@
+.frame {
+  --comparison-position: 50%;
+  isolation: isolate;
+}
+
+.scrollPinTrack {
+  position: relative;
+}
+
+/* Sticky travel is governed by this spacer: natural content height + 85svh. */
+.scrollPinTrack::after {
+  content: "";
+  display: block;
+  height: clamp(24rem, 85svh, 54rem);
+}
+
+.scrollPinPanel {
+  --pin-header-height: 4.5rem;
+  position: sticky;
+  top: var(--pin-header-height);
+  min-height: calc(100svh - var(--pin-header-height));
+  display: flex;
+  align-items: center;
+  padding-block: 1rem;
+}
+
+/* Keep the full container width; let viewport height, not an aspect ratio,
+   determine the crop. Reserve room for the readable heading/caption and the
+   mobile inquiry bar, even in short windows. */
+.homeExampleFrame {
+  height: min(38svh, 20rem, max(0px, calc(100svh - 26rem)));
+}
+
+.homeExampleContent > [data-portfolio-header] {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .scrollPinPanel {
+    --pin-header-height: 5rem;
+  }
+
+  /* 52svh keeps the comparison restrained on tall displays; the remaining
+     viewport budget protects the title and caption on short displays. */
+  .homeExampleFrame {
+    height: min(52svh, max(0px, calc(100svh - 18rem)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollPinTrack[data-scroll-pinned="true"] {
+    height: auto;
+  }
+
+  .scrollPinTrack[data-scroll-pinned="true"]::after {
+    content: none;
+    display: none;
+  }
+
+  .scrollPinPanel[data-scroll-pinned="true"] {
+    position: static;
+    top: auto;
+  }
+
+  .frame[data-scroll-linked="true"] {
+    --comparison-position: 50% !important;
+  }
+}
+
+.frame:focus-within {
+  outline: 3px solid #0e2f64;
+  outline-offset: 4px;
+}
+
+.beforeImage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(0 calc(100% - var(--comparison-position)) 0 0);
+}
+
+.range {
+  position: absolute;
+  z-index: 30;
+  top: 0;
+  left: -22px;
+  width: calc(100% + 44px);
+  height: 100%;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+
+.range:disabled {
+  cursor: default;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 100%;
+  background: transparent;
+}
+
+.range::-webkit-slider-thumb {
+  width: 44px;
+  height: 44px;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: ew-resize;
+}
+
+.range::-moz-range-track {
+  height: 100%;
+  background: transparent;
+}
+
+.range::-moz-range-thumb {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  cursor: ew-resize;
+}
+
+.divider {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: var(--comparison-position);
+  display: flex;
+  width: 2px;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 18%);
+  pointer-events: none;
+  transform: translateX(-50%);
+}

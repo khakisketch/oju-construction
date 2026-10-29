@@ -1,0 +1,280 @@
+{
+  "prompt": [
+    3,
+    "7a41c817-c988-4edd-854b-010e730235e5",
+    {
+      "1": {
+        "class_type": "UNETLoader",
+        "inputs": {
+          "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+          "weight_dtype": "default"
+        }
+      },
+      "2": {
+        "class_type": "ModelSamplingAuraFlow",
+        "inputs": {
+          "model": [
+            "1",
+            0
+          ],
+          "shift": 3.1
+        }
+      },
+      "3": {
+        "class_type": "CFGNorm",
+        "inputs": {
+          "model": [
+            "2",
+            0
+          ],
+          "strength": 1.0,
+          "pre_cfg": false
+        }
+      },
+      "4": {
+        "class_type": "CLIPLoader",
+        "inputs": {
+          "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+          "type": "qwen_image",
+          "device": "default"
+        }
+      },
+      "5": {
+        "class_type": "VAELoader",
+        "inputs": {
+          "vae_name": "qwen_image_vae.safetensors"
+        }
+      },
+      "6": {
+        "class_type": "LoadImage",
+        "inputs": {
+          "image": "reference-9.png"
+        }
+      },
+      "7": {
+        "class_type": "FluxKontextImageScale",
+        "inputs": {
+          "image": [
+            "6",
+            0
+          ]
+        }
+      },
+      "8": {
+        "class_type": "TextEncodeQwenImageEditPlus",
+        "inputs": {
+          "clip": [
+            "4",
+            0
+          ],
+          "vae": [
+            "5",
+            0
+          ],
+          "image1": [
+            "7",
+            0
+          ],
+          "prompt": "Make the cut edge of this paving look like a real full-scale excavation, keeping exactly the same camera angle, paver layout and single visible hollow pipe. Replace the oversized white and black stones directly beneath the paving with a believable tightly compacted mixture of small crushed aggregate and sand. Keep the surrounding soil natural and continuous, not a model or plinth; do not add another pipe, a large hole, labels or new objects."
+        }
+      },
+      "9": {
+        "class_type": "TextEncodeQwenImageEditPlus",
+        "inputs": {
+          "clip": [
+            "4",
+            0
+          ],
+          "vae": [
+            "5",
+            0
+          ],
+          "image1": [
+            "7",
+            0
+          ],
+          "prompt": ""
+        }
+      },
+      "10": {
+        "class_type": "FluxKontextMultiReferenceLatentMethod",
+        "inputs": {
+          "conditioning": [
+            "8",
+            0
+          ],
+          "reference_latents_method": "index_timestep_zero"
+        }
+      },
+      "11": {
+        "class_type": "FluxKontextMultiReferenceLatentMethod",
+        "inputs": {
+          "conditioning": [
+            "9",
+            0
+          ],
+          "reference_latents_method": "index_timestep_zero"
+        }
+      },
+      "12": {
+        "class_type": "VAEEncode",
+        "inputs": {
+          "pixels": [
+            "7",
+            0
+          ],
+          "vae": [
+            "5",
+            0
+          ]
+        }
+      },
+      "13": {
+        "class_type": "KSampler",
+        "inputs": {
+          "model": [
+            "3",
+            0
+          ],
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "11",
+            0
+          ],
+          "latent_image": [
+            "12",
+            0
+          ],
+          "seed": 2026102944,
+          "steps": 40,
+          "cfg": 4.0,
+          "sampler_name": "euler",
+          "scheduler": "simple",
+          "denoise": 1.0
+        }
+      },
+      "14": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "13",
+            0
+          ],
+          "vae": [
+            "5",
+            0
+          ]
+        }
+      },
+      "15": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "14",
+            0
+          ],
+          "filename_prefix": "edit-D"
+        }
+      },
+      "16": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "7",
+            0
+          ],
+          "filename_prefix": "scaled-input-D"
+        }
+      }
+    },
+    {
+      "client_id": "oju-qwen-edit-local",
+      "create_time": 1793210019355
+    },
+    [
+      "16",
+      "15"
+    ]
+  ],
+  "outputs": {
+    "16": {
+      "images": [
+        {
+          "filename": "scaled-input-D_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 1328,
+            "height": 800
+          }
+        }
+      ]
+    },
+    "15": {
+      "images": [
+        {
+          "filename": "edit-D_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 1328,
+            "height": 800
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "7a41c817-c988-4edd-854b-010e730235e5",
+          "timestamp": 1793210019356
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "prompt_id": "7a41c817-c988-4edd-854b-010e730235e5",
+          "timestamp": 1793210019357
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "7a41c817-c988-4edd-854b-010e730235e5",
+          "timestamp": 1793210277047
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "16": {
+      "node_id": "16",
+      "display_node": "16",
+      "parent_node": null,
+      "real_node_id": "16"
+    },
+    "15": {
+      "node_id": "15",
+      "display_node": "15",
+      "parent_node": null,
+      "real_node_id": "15"
+    }
+  }
+}

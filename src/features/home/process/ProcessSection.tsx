@@ -3,52 +3,52 @@
 import { motion } from "framer-motion";
 
 const steps = [
-  { number: "1", title: "문의 · 상담", desc: "요구사항 파악\n초기 상담" },
-  { number: "2", title: "현장 답사", desc: "현장 실측\n조건 분석" },
-  { number: "3", title: "견적 · 설계", desc: "상세 견적서\n공법 제안" },
-  { number: "4", title: "계약 · 착공", desc: "계약 체결\n공사 착수" },
-  { number: "5", title: "시공 · 관리", desc: "품질 · 안전\n공정 관리" },
-  { number: "6", title: "준공 · A/S", desc: "준공 검수\n2년 하자보수" },
+  { number: "1", title: "상담 문의", desc: "전화·문의로 공사 내용과\n요청 범위를 확인합니다." },
+  { number: "2", title: "현장 방문·실사", desc: "현장 상태와 요청 범위를\n살펴봅니다." },
+  {
+    number: "3",
+    title: "전후 비교 자료·제안서 제공",
+    desc: "AI 시뮬레이션으로 시공 후 모습을 비교하고,\n시공 범위와 자재·공법 선택 이유를 설명합니다.",
+  },
+  {
+    number: "4",
+    title: "대표회의 설명·의결 대응",
+    desc: "제안 내용을 대표회의에 설명하고,\n질의와 의결 절차에 대응합니다.",
+  },
+  { number: "5", title: "계약·시공", desc: "협의된 범위와 조건에 따라\n계약 후 공사를 진행합니다." },
+  { number: "6", title: "준공 확인", desc: "완료된 공사 범위를\n함께 확인합니다." },
 ];
 
 export default function ProcessSection() {
   return (
-    <section id="process" className="py-16 md:py-24 bg-white">
+    <section id="process" className="py-8 md:py-12 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-brand-500 font-semibold text-sm uppercase tracking-widest"
-          >
-            Work Process
-          </motion.span>
+        <div className="text-center mb-8 md:mb-10">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl font-extrabold mt-2 mb-4 text-brand-900 tracking-tight"
+            className="text-3xl md:text-4xl font-extrabold mb-3 text-brand-900 tracking-tight"
           >
-            시공 프로세스
+            상담부터 준공까지
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.15 }}
-            className="w-12 h-[3px] bg-brand-700 mx-auto mb-6"
+            className="w-12 h-[3px] bg-brand-700 mx-auto mb-4"
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-600 max-w-lg mx-auto"
+            className="text-gray-600 max-w-2xl mx-auto leading-6"
           >
-            체계적인 공정 관리로 처음부터 끝까지 신뢰할 수 있는 시공을 약속합니다.
+            상담과 현장 실사 후, 전후 비교 제안과 대표회의 설명·의결 대응을 거쳐 계약·시공 및 준공 확인까지 진행합니다.
           </motion.p>
         </div>
 
@@ -65,11 +65,11 @@ export default function ProcessSection() {
               <div key={idx} className="flex-1 max-w-[160px] text-center relative">
                 {/* Connector line */}
                 {idx < steps.length - 1 && (
-                  <div className="absolute top-6 left-[calc(50%+24px)] right-[calc(-50%+24px)] h-0.5 bg-brand-200 z-0" />
+                  <div className="absolute top-5 left-[calc(50%+20px)] right-[calc(-50%+20px)] h-0.5 bg-brand-200 z-0" />
                 )}
                 {/* Dot */}
                 <div
-                  className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3.5 text-lg font-extrabold transition-colors ${
+                  className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2.5 text-base font-extrabold transition-colors ${
                     idx === 0 || idx === steps.length - 1
                       ? "bg-brand-700 text-white ring-4 ring-brand-100"
                       : "bg-white text-brand-700 border-[3px] border-brand-700"
@@ -78,26 +78,26 @@ export default function ProcessSection() {
                   {step.number}
                 </div>
                 <div className="text-sm font-bold text-brand-900 mb-1">{step.title}</div>
-                <div className="text-xs text-gray-400 leading-relaxed whitespace-pre-line">{step.desc}</div>
+                <div className="text-xs text-gray-600 leading-relaxed whitespace-pre-line">{step.desc}</div>
               </div>
             ))}
           </div>
 
           {/* Mobile: Card Stack */}
-          <div className="md:hidden flex flex-col gap-2.5">
+          <div className="md:hidden grid grid-cols-2 gap-2">
             {steps.map((step, idx) => {
               const isHighlight = idx === 0 || idx === steps.length - 1;
               return (
                 <div
                   key={idx}
-                  className={`flex items-center gap-3.5 px-4 py-4 rounded-xl border transition-colors ${
+                  className={`flex min-h-[5.25rem] items-start gap-2 px-2.5 py-2.5 rounded-lg border transition-colors ${
                     isHighlight
                       ? "bg-brand-700 border-brand-700"
                       : "bg-brand-50 border-brand-100"
                   }`}
                 >
                   <div
-                    className={`w-9 h-9 rounded-[10px] flex items-center justify-center flex-shrink-0 text-sm font-extrabold ${
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm font-extrabold ${
                       isHighlight
                         ? "bg-white/20 text-white"
                         : "bg-brand-700 text-white"
@@ -105,16 +105,13 @@ export default function ProcessSection() {
                   >
                     {step.number}
                   </div>
-                  <div className="flex-1">
-                    <div className={`text-[14px] font-bold ${isHighlight ? "text-white" : "text-brand-900"}`}>
+                  <div className="min-w-0 flex-1">
+                    <div className={`text-[13px] font-bold leading-snug ${isHighlight ? "text-white" : "text-brand-900"}`}>
                       {step.title}
                     </div>
-                    <div className={`text-[11px] ${isHighlight ? "text-brand-200" : "text-gray-400"}`}>
+                    <div className={`mt-0.5 text-xs leading-snug ${isHighlight ? "text-brand-200" : "text-gray-600"}`}>
                       {step.desc.replace("\n", " · ")}
                     </div>
-                  </div>
-                  <div className={`text-sm flex-shrink-0 ${isHighlight ? "text-white/40" : "text-brand-300"}`}>
-                    {idx === steps.length - 1 ? "✓" : "›"}
                   </div>
                 </div>
               );

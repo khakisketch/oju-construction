@@ -14,16 +14,17 @@ import {
   MapPin,
   Building2,
   Shield,
-  Star,
+  Cog,
+  HardHat,
   ChevronDown,
   Sparkles,
   TrendingUp,
   Users,
-  CheckCircle2,
 } from "lucide-react";
 import Link from "next/link";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/shared/lib/firebase/firestore";
+import { env, isFirebaseConfigured } from "@/shared/config/env";
 import { BrochureData, defaultBrochureData } from "@/features/brochure/types";
 import dynamic from "next/dynamic";
 
@@ -124,9 +125,9 @@ const HeroSection = ({ companyName }: { companyName: string }) => (
         className="grid grid-cols-3 gap-6 md:gap-12 max-w-3xl mx-auto"
       >
         {[
-          { value: "20+", label: "년 경력", icon: Calendar },
-          { value: "200+", label: "프로젝트", icon: Building2 },
-          { value: "100%", label: "고객 만족", icon: Star },
+          { value: "6개", label: "전문건설 면허", icon: Award },
+          { value: "200+", label: "프로젝트 완료", icon: Building2 },
+          { value: "무재해", label: "운영", icon: Shield },
         ].map((stat, index) => (
           <div key={index} className="text-center">
             <div className="inline-flex items-center justify-center w-12 h-12 mb-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
@@ -248,20 +249,23 @@ const VisionMissionSection = ({ data }: { data: BrochureData }) => (
           <motion.h3 variants={fadeInUp} className="text-2xl font-bold text-slate-900 text-center mb-10">
             핵심 가치
           </motion.h3>
-          <motion.div variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {data.coreValues.slice(0, 4).map((value, index) => (
+          <motion.div variants={staggerContainer} className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+            {data.coreValues.slice(0, 4).map((value, index) => {
+              const ValueIcon = [Shield, Cog, HardHat][index % 3];
+              return (
               <motion.div
                 key={index}
                 variants={fadeInUp}
                 className="group relative bg-slate-50 hover:bg-slate-100 rounded-2xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-slate-100"
               >
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl mb-4 text-white group-hover:scale-110 transition-transform">
-                  <CheckCircle2 className="w-6 h-6" />
+                  <ValueIcon className="w-6 h-6" />
                 </div>
                 <h4 className="font-bold text-lg text-slate-900 mb-2">{value.title}</h4>
                 <p className="text-sm text-slate-600">{value.description}</p>
               </motion.div>
-            ))}
+              );
+            })}
           </motion.div>
         </motion.div>
       )}
@@ -310,44 +314,40 @@ const HistorySection = ({ data }: { data: BrochureData }) => {
           </motion.p>
         </motion.div>
 
-        {/* Timeline */}
+        {/* Timeline — 단일 컬럼 */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={staggerContainer}
-          className="relative max-w-4xl mx-auto"
+          className="relative max-w-3xl mx-auto"
         >
           {/* Timeline line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-orange-500 via-blue-500 to-orange-500" />
+          <div className="absolute left-2 top-2 bottom-2 w-px bg-white/15" />
 
           {sortedHistory.map((item, index) => (
             <motion.div
               key={index}
               variants={fadeInUp}
-              className={`relative flex items-start gap-8 mb-12 ${
-                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              }`}
+              className="relative pb-10 pl-10 last:pb-0"
             >
-              {/* Year bubble */}
-              <div className="absolute left-8 md:left-1/2 -translate-x-1/2 w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-orange-500/30 z-10">
-                {item.year.slice(-2)}
+              {/* Timeline dot */}
+              <span className="absolute left-0 top-2 h-4 w-4 rounded-full border-2 border-orange-500 bg-slate-900" />
+
+              {/* Year */}
+              <div className="mb-3 inline-block rounded-lg bg-orange-500/15 px-3 py-1 text-lg font-bold tabular-nums text-orange-400">
+                {item.year}
               </div>
 
-              {/* Content */}
-              <div className={`flex-1 ml-28 md:ml-0 ${index % 2 === 0 ? "md:pr-24 md:text-right" : "md:pl-24"}`}>
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                  <div className="text-2xl font-bold text-orange-400 mb-3">{item.year}</div>
-                  <ul className="space-y-2">
-                    {item.events.map((event, eventIndex) => (
-                      <li key={eventIndex} className="text-slate-300 flex items-start gap-2">
-                        <span className="text-orange-400 mt-1.5">•</span>
-                        <span>{event}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              {/* Events */}
+              <ul className="space-y-2">
+                {item.events.map((event, eventIndex) => (
+                  <li key={eventIndex} className="flex items-start gap-2 text-slate-200">
+                    <span className="mt-1.5 text-orange-400">•</span>
+                    <span>{event}</span>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </motion.div>
@@ -356,8 +356,13 @@ const HistorySection = ({ data }: { data: BrochureData }) => {
   );
 };
 
-// Certifications Section
-const CertificationsSection = ({ data }: { data: BrochureData }) => (
+// Certifications Section — 등록된 인증서가 없으면 섹션을 표시하지 않습니다.
+const CertificationsSection = ({ data }: { data: BrochureData }) => {
+  if (data.certifications.length === 0) {
+    return null;
+  }
+
+  return (
   <section className="py-24 md:py-32 bg-white relative overflow-hidden">
     {/* Decorative elements */}
     <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-blue-50 to-transparent" />
@@ -390,54 +395,42 @@ const CertificationsSection = ({ data }: { data: BrochureData }) => (
       </motion.div>
 
       {/* Certifications Grid */}
-      {data.certifications.length > 0 ? (
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={staggerContainer}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {data.certifications.map((cert, index) => (
-            <motion.div
-              key={index}
-              variants={fadeInUp}
-              className="group relative bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 border border-slate-200 hover:border-blue-300 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-            >
-              {/* Icon */}
-              <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl mb-4 text-white group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20">
-                <Award className="w-7 h-7" />
-              </div>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={staggerContainer}
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        {data.certifications.map((cert, index) => (
+          <motion.div
+            key={index}
+            variants={fadeInUp}
+            className="group relative bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 border border-slate-200 hover:border-blue-300 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+          >
+            {/* Icon */}
+            <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl mb-4 text-white group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20">
+              <Award className="w-7 h-7" />
+            </div>
 
-              {/* Content */}
-              <h3 className="font-bold text-lg text-slate-900 mb-2 group-hover:text-blue-700 transition-colors">
-                {cert.name}
-              </h3>
-              <p className="text-slate-600 text-sm mb-3">{cert.issuer}</p>
+            {/* Content */}
+            <h3 className="font-bold text-lg text-slate-900 mb-2 group-hover:text-blue-700 transition-colors">
+              {cert.name}
+            </h3>
+            <p className="text-slate-600 text-sm mb-3">{cert.issuer}</p>
 
-              {/* Date badge */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
-                <Calendar className="w-3.5 h-3.5" />
-                {cert.date}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      ) : (
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-          className="text-center py-16"
-        >
-          <Shield className="w-16 h-16 mx-auto text-slate-300 mb-4" />
-          <p className="text-slate-400 text-lg">등록된 인증서가 없습니다</p>
-        </motion.div>
-      )}
+            {/* Date badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
+              <Calendar className="w-3.5 h-3.5" />
+              {cert.date}
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   </section>
-);
+  );
+};
 
 // Contact Section
 const ContactSection = ({
@@ -497,7 +490,7 @@ const ContactSection = ({
                 <item.icon className="w-6 h-6 text-orange-400" />
               </div>
               <div className="text-sm text-blue-200/70 mb-1">{item.label}</div>
-              <div className="text-white font-medium">{item.value}</div>
+              <div className="text-white font-medium text-[15px] leading-relaxed break-all">{item.value}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -519,15 +512,16 @@ const ContactSection = ({
 export default function BrochurePage() {
   const [data, setData] = useState<BrochureData>(defaultBrochureData);
   const [companyInfo, setCompanyInfo] = useState({
-    name: "오주건설(주)",
-    address: "",
-    phone: "",
-    email: "",
+    name: env.company.name,
+    address: env.company.address,
+    phone: env.company.phone,
+    email: env.company.email,
     fax: "",
   });
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
+    if (!isFirebaseConfigured) return;
+
+    let isMounted = true;
     const fetchData = async () => {
       const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T | null> => {
         return Promise.race([
@@ -537,21 +531,21 @@ export default function BrochurePage() {
       };
 
       try {
-        const brochureDoc = await withTimeout(
-          getDoc(doc(db, "company-documents", "brochure")),
-          5000
-        );
+        const [brochureDoc, settingsDoc] = await Promise.all([
+          withTimeout(getDoc(doc(db, "company-documents", "brochure")), 5000),
+          withTimeout(getDoc(doc(db, "settings", "general")), 5000),
+        ]);
+
         if (brochureDoc?.exists()) {
-          setData({ ...defaultBrochureData, ...brochureDoc.data() } as BrochureData);
+          const brochureData = brochureDoc.data() as Partial<BrochureData>;
+          // Canva 편집 링크는 비공개 문서 전용입니다. 공개 데이터에는 포함하지 않습니다.
+          delete brochureData.canvaEditUrl;
+          if (isMounted) setData({ ...defaultBrochureData, ...brochureData });
         }
 
-        const settingsDoc = await withTimeout(
-          getDoc(doc(db, "settings", "general")),
-          5000
-        );
         if (settingsDoc?.exists()) {
           const settings = settingsDoc.data();
-          if (settings.companyInfo) {
+          if (settings.companyInfo && isMounted) {
             setCompanyInfo({
               name: settings.companyInfo.name || "오주건설(주)",
               address: settings.companyInfo.address || "",
@@ -563,24 +557,14 @@ export default function BrochurePage() {
         }
       } catch {
         // Use default data when Firebase is offline
-      } finally {
-        setLoading(false);
       }
     };
 
-    fetchData();
+    void fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
-
-  if (loading) {
-    return (
-      <div className="fixed inset-0 bg-slate-900 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin" />
-          <p className="text-slate-400">로딩 중...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-white">

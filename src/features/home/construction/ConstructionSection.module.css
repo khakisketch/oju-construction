@@ -1,0 +1,39 @@
+/* Desktop-only hover reveal for construction cards.
+   Mobile and coarse-pointer devices always show the description
+   (default state is fully visible; only fine-pointer hover devices hide it). */
+
+.zoom {
+  transform: scale(1);
+  transition: transform 500ms ease;
+}
+
+.card {
+  --description-opacity: 1;
+  --description-transform: none;
+}
+
+.reveal {
+  opacity: var(--description-opacity, 1);
+  transform: var(--description-transform, none);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* Hide only an idle card. Focus (including descendants) always keeps
+     the description visible, without a descendant-selector override. */
+  .card:not(:hover):not(:focus-within) {
+    --description-opacity: 0;
+    --description-transform: translateY(6px);
+  }
+
+  .card:hover .zoom {
+    transform: scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .zoom {
+    transition: none;
+  }
+}

@@ -1,0 +1,661 @@
+{
+  "prompt": [
+    0,
+    "822a09b2-9484-4444-afb1-0cd72e8b0e51",
+    {
+      "1": {
+        "class_type": "UNETLoader",
+        "inputs": {
+          "unet_name": "wan2.2_ti2v_5B_fp16.safetensors",
+          "weight_dtype": "default"
+        }
+      },
+      "2": {
+        "class_type": "CLIPLoader",
+        "inputs": {
+          "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "type": "wan",
+          "device": "default"
+        }
+      },
+      "3": {
+        "class_type": "VAELoader",
+        "inputs": {
+          "vae_name": "wan2.2_vae.safetensors"
+        }
+      },
+      "4": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "2",
+            0
+          ],
+          "text": "Photorealistic documentary footage of an ordinary outdoor concrete-paver sidewalk beside an existing shallow inspection trench. Locked tripod, natural overcast daylight, realistic full scale and granular textures. A continuous field of many individual weathered gray rectangular pavers, thin sand bedding, compacted crushed aggregate and brown soil form one connected construction. The camera and surroundings stay fixed. First hold still; then a small area of the paved surface slowly settles down together while each concrete paver remains rigid and recognizable; finally the movement stops. No cause is shown or claimed. Camera at a three-quarter oblique angle, looking across the top of the sidewalk and down the exposed side of the trench at the same time. Top joints, thin sand and aggregate below the pavers are visible together. Earth continues beyond the frame; this is not a freestanding block."
+        }
+      },
+      "5": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "2",
+            0
+          ],
+          "text": "toy, miniature, scale model, tabletop, plinth, floating slabs, overhang, giant hole, black rectangular hole, hatch, raised blocks, new objects, melting or bending concrete, changing brick pattern, morphing, camera movement, pan, zoom, flicker, text, labels, logo, people, water, pipe, cartoon, CGI, plastic"
+        }
+      },
+      "10": {
+        "class_type": "Wan22ImageToVideoLatent",
+        "inputs": {
+          "vae": [
+            "3",
+            0
+          ],
+          "width": 640,
+          "height": 384,
+          "length": 49,
+          "batch_size": 1
+        }
+      },
+      "11": {
+        "class_type": "ModelSamplingSD3",
+        "inputs": {
+          "model": [
+            "1",
+            0
+          ],
+          "shift": 8.0
+        }
+      },
+      "12": {
+        "class_type": "KSampler",
+        "inputs": {
+          "model": [
+            "11",
+            0
+          ],
+          "positive": [
+            "4",
+            0
+          ],
+          "negative": [
+            "5",
+            0
+          ],
+          "latent_image": [
+            "10",
+            0
+          ],
+          "seed": 2026102912,
+          "steps": 20,
+          "cfg": 5.0,
+          "sampler_name": "uni_pc",
+          "scheduler": "simple",
+          "denoise": 1.0
+        }
+      },
+      "14": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "12",
+            0
+          ],
+          "vae": [
+            "3",
+            0
+          ]
+        }
+      },
+      "15": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "14",
+            0
+          ],
+          "filename_prefix": "batch12-A-oblique"
+        }
+      }
+    },
+    {
+      "client_id": "batch12-structured",
+      "create_time": 1793240918362
+    },
+    [
+      "15"
+    ]
+  ],
+  "outputs": {
+    "15": {
+      "images": [
+        {
+          "filename": "batch12-A-oblique_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00002_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00003_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00004_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00005_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00006_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00007_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00008_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00009_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00010_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00011_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00012_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00013_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00014_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00015_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00016_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00017_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00018_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00019_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00020_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00021_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00022_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00023_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00024_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00025_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00026_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00027_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00028_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00029_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00030_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00031_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00032_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00033_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00034_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00035_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00036_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00037_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00038_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00039_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00040_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00041_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00042_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00043_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00044_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00045_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00046_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00047_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00048_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "batch12-A-oblique_00049_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "822a09b2-9484-4444-afb1-0cd72e8b0e51",
+          "timestamp": 1793240918362
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [],
+          "prompt_id": "822a09b2-9484-4444-afb1-0cd72e8b0e51",
+          "timestamp": 1793240918364
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "822a09b2-9484-4444-afb1-0cd72e8b0e51",
+          "timestamp": 1793240950248
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "15": {
+      "node_id": "15",
+      "display_node": "15",
+      "parent_node": null,
+      "real_node_id": "15"
+    }
+  }
+}

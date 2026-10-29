@@ -14,7 +14,7 @@ export default function BrochureLayout({
     <>
       {/* 전체 화면 모드를 위해 헤더/푸터 숨김 */}
       <style>{`
-        header, footer, #skip-to-content {
+        body > header, body > footer, body > #skip-to-content {
           display: none !important;
         }
         main#main-content {

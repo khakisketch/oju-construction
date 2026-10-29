@@ -1,0 +1,20 @@
+{
+  "prompt": {
+    "1": {"class_type": "UNETLoader", "inputs": {"unet_name": "wan2.1_vace_14B_fp16.safetensors", "weight_dtype": "default"}},
+    "2": {"class_type": "CLIPLoader", "inputs": {"clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors", "type": "wan", "device": "default"}},
+    "3": {"class_type": "VAELoader", "inputs": {"vae_name": "wan_2.1_vae.safetensors"}},
+    "4": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["2", 0], "text": "A fixed camera, near-frontal cutaway of an outdoor paved sidewalk, like a carefully crafted construction exhibit. Many small grey rectangular concrete paving blocks in straight rows on a thin compacted sand bedding, grey gravel base and brown compacted soil beneath. One small grey concrete pipe is visible in cross section below the pavement. The paving blocks settle gently over a small area of weakened support. Naturally textured concrete, fine sand, fine gravel and earthy soil. Documentary lighting, realistic materials, sharp readable layers, no labels or text. Maintain the exact layout and fixed camera of the reference."}},
+    "5": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["2", 0], "text": "camera movement, zoom, pan, morphing, floating blocks, giant bricks, holes unrelated to the ground, cables, tubes of water, deforming pipe, buildings, people, captions, letters, diagrams, oversaturation, flicker, warped geometry, low detail"}},
+    "6": {"class_type": "LoadImage", "inputs": {"image": "reference.png"}},
+    "7": {"class_type": "LoadVideo", "inputs": {"file": "still-guide.mp4"}},
+    "8": {"class_type": "GetVideoComponents", "inputs": {"video": ["7", 0]}},
+    "9": {"class_type": "Canny", "inputs": {"image": ["8", 0], "low_threshold": 0.25, "high_threshold": 0.65}},
+    "10": {"class_type": "WanVaceToVideo", "inputs": {"positive": ["4", 0], "negative": ["5", 0], "vae": ["3", 0], "width": 832, "height": 480, "length": 17, "batch_size": 1, "strength": 1.0, "control_video": ["9", 0], "reference_image": ["6", 0]}},
+    "11": {"class_type": "ModelSamplingSD3", "inputs": {"model": ["1", 0], "shift": 8.0}},
+    "12": {"class_type": "KSampler", "inputs": {"model": ["11", 0], "positive": ["10", 0], "negative": ["10", 1], "latent_image": ["10", 2], "seed": 20261028, "steps": 20, "cfg": 6.0, "sampler_name": "uni_pc", "scheduler": "simple", "denoise": 1.0}},
+    "13": {"class_type": "TrimVideoLatent", "inputs": {"samples": ["12", 0], "trim_amount": ["10", 3]}},
+    "14": {"class_type": "VAEDecode", "inputs": {"samples": ["13", 0], "vae": ["3", 0]}},
+    "15": {"class_type": "SaveImage", "inputs": {"images": ["14", 0], "filename_prefix": "wan-vace-14b-paver-still-test"}}
+  },
+  "client_id": "oju-paver-wan-vace-14b-still-test"
+}

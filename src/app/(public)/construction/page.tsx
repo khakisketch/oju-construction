@@ -1,11 +1,36 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import { Shield, Sparkles, Handshake } from "lucide-react";
+import { env } from "@/shared/config/env";
+import {
+  BUSINESS_AREAS,
+  BUSINESS_AREA_SUMMARY,
+  type BusinessAreaId,
+} from "@/shared/config/businessAreas";
 
 export default function ConstructionPage() {
-  const [activeTab, setActiveTab] = useState<"civil" | "paving" | "landscape" | "maintenance">("civil");
+  const [activeTab, setActiveTab] = useState<BusinessAreaId>("civil");
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const selectTab = (tabId: BusinessAreaId) => {
+    setActiveTab(tabId);
+  };
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let nextIndex = index;
+
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % BUSINESS_AREAS.length;
+    else if (event.key === "ArrowLeft") nextIndex = (index - 1 + BUSINESS_AREAS.length) % BUSINESS_AREAS.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = BUSINESS_AREAS.length - 1;
+    else return;
+
+    event.preventDefault();
+    selectTab(BUSINESS_AREAS[nextIndex].id);
+    tabRefs.current[nextIndex]?.focus();
+  };
 
   return (
     <div>
@@ -49,26 +74,6 @@ export default function ConstructionPage() {
               20년 이상의 현장 노하우와 스마트 건설 기술의 융합.<br />
               보이지 않는 기초부터 마감까지 완벽함을 추구합니다.
             </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-wrap justify-center gap-8 md:gap-12 text-center border-t border-white/10 pt-8"
-            >
-              <div>
-                <div className="text-3xl md:text-4xl font-bold text-brand-400 mb-1">20<span className="text-xl text-brand-400/80">년</span></div>
-                <div className="text-sm text-gray-400 font-medium">현장 경력</div>
-              </div>
-              <div>
-                <div className="text-3xl md:text-4xl font-bold text-brand-400 mb-1">0<span className="text-xl text-brand-400/80">건</span></div>
-                <div className="text-sm text-gray-400 font-medium">중대재해 발생</div>
-              </div>
-              <div>
-                <div className="text-3xl md:text-4xl font-bold text-brand-400 mb-1">100<span className="text-xl text-brand-400/80">%</span></div>
-                <div className="text-sm text-gray-400 font-medium">공기 준수율</div>
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>
@@ -129,22 +134,25 @@ export default function ConstructionPage() {
           <div className="text-center mb-12">
             <span className="text-brand-700 font-bold text-sm uppercase tracking-wider">Business Areas</span>
             <h2 className="text-2xl md:text-3xl font-bold mt-2 mb-4">전문 시공 분야</h2>
-            <p className="text-gray-600">토목부터 시설물 유지보수까지 폭넓은 시공 능력</p>
+            <p className="text-gray-600">{BUSINESS_AREA_SUMMARY} 분야의 시공 범위를 확인하세요.</p>
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {[
-              { id: "civil", label: "토목공사" },
-              { id: "paving", label: "포장/토공" },
-              { id: "landscape", label: "조경공사" },
-              { id: "maintenance", label: "시설물 유지보수" }
-            ].map((tab) => (
+          <div className="mb-12 flex flex-wrap justify-center gap-2" role="tablist" aria-label="사업분야 선택">
+            {BUSINESS_AREAS.map((tab, index) => (
               <button
+                id={`construction-tab-${tab.id}`}
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                aria-controls="construction-tab-panel"
+                tabIndex={activeTab === tab.id ? 0 : -1}
+                ref={(element) => { tabRefs.current[index] = element; }}
+                onClick={() => selectTab(tab.id)}
+                onKeyDown={(event) => handleTabKeyDown(event, index)}
                 className={`
-                  px-6 py-3 rounded-full font-bold text-sm md:text-base transition-all duration-300
+                  rounded-full px-3.5 py-2.5 text-sm font-bold transition-all duration-300 md:px-6 md:py-3 md:text-base
                   ${activeTab === tab.id
                     ? "bg-brand-700 text-white shadow-lg scale-105"
                     : "bg-white text-gray-600 hover:bg-gray-100 hover:text-brand-700"
@@ -157,10 +165,18 @@ export default function ConstructionPage() {
           </div>
 
           {/* Tab Content */}
-          <div className="max-w-6xl mx-auto">
+          <div
+            id="construction-tab-panel"
+            role="tabpanel"
+            aria-labelledby={`construction-tab-${activeTab}`}
+            tabIndex={0}
+            className="mx-auto max-w-6xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-4"
+          >
             {activeTab === "civil" && <CivilContent />}
             {activeTab === "paving" && <PavingContent />}
             {activeTab === "landscape" && <LandscapeContent />}
+            {activeTab === "waterproofing" && <WaterproofingContent />}
+            {activeTab === "painting" && <PaintingContent />}
             {activeTab === "maintenance" && <MaintenanceContent />}
           </div>
         </div>
@@ -197,7 +213,7 @@ export default function ConstructionPage() {
                     {item.step}
                   </div>
                   <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                  <p className="text-sm text-gray-600">{item.desc}</p>
+                  <p className="text-base leading-relaxed text-gray-600">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -225,10 +241,10 @@ export default function ConstructionPage() {
                 건설 문의하기
               </a>
               <a
-                href="tel:070-4260-7307"
-                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-lg hover:bg-white/20 transition-all border-2 border-white/30"
+                href={`tel:${env.company.phone}`}
+                className="inline-flex min-h-14 items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-lg font-bold text-center text-white rounded-lg hover:bg-white/20 transition-all border-2 border-white/50"
               >
-                전문가 상담하기
+                전화 상담 · {env.company.phone}
               </a>
             </div>
           </div>
@@ -249,7 +265,7 @@ function CivilContent() {
     >
       <div className="space-y-6 order-2 md:order-1">
         <div className="bg-white p-8 rounded-2xl shadow-md border-l-4 border-brand-700">
-          <h3 className="text-2xl font-bold mb-4 text-gray-900">토목공사 (Civil Engineering)</h3>
+          <h3 className="text-2xl font-bold mb-4 text-gray-900">토목</h3>
           <p className="text-gray-600 mb-6 leading-relaxed">
             국토 개발의 근간이 되는 도로, 교량, 상하수도 등 사회 기반 시설을 시공합니다.
             정밀한 측량과 엄격한 품질 관리를 통해 안전하고 지속 가능한 인프라를 구축합니다.
@@ -302,10 +318,10 @@ function PavingContent() {
       </div>
       <div className="space-y-6">
         <div className="bg-white p-8 rounded-2xl shadow-md border-l-4 border-brand-700">
-          <h3 className="text-2xl font-bold mb-4 text-gray-900">포장 및 토공 (Paving & Earthwork)</h3>
+          <h3 className="text-2xl font-bold mb-4 text-gray-900">지반조성포장</h3>
           <p className="text-gray-600 mb-6 leading-relaxed">
-            아스팔트, 콘크리트 포장부터 기초 토공사까지. 최신 장비와 숙련된 기술인력을 투입하여
-            최적의 주행성과 내구성을 갖춘 도로 환경을 제공합니다.
+            부지 조성과 포장 범위를 확인합니다. 아스팔트·콘크리트 포장과 기초 토공 등
+            현장에 필요한 지반조성포장 작업을 안내합니다.
           </p>
           <ul className="space-y-3">
             {[
@@ -337,10 +353,10 @@ function LandscapeContent() {
     >
       <div className="space-y-6 order-2 md:order-1">
         <div className="bg-white p-8 rounded-2xl shadow-md border-l-4 border-brand-700">
-          <h3 className="text-2xl font-bold mb-4 text-gray-900">조경공사 (Landscape Architecture)</h3>
+          <h3 className="text-2xl font-bold mb-4 text-gray-900">조경</h3>
           <p className="text-gray-600 mb-6 leading-relaxed">
-            자연과 사람이 공존하는 아름다운 공간을 창조합니다.
-            식재부터 시설물 설치까지, 환경을 생각하는 친환경 시공으로 공간의 가치를 높입니다.
+            식재와 조경시설 범위를 살펴봅니다. 공원·정원 조성과 조경 시설물 설치 등
+            현장에 필요한 조경 작업을 안내합니다.
           </p>
           <ul className="space-y-3">
             {[
@@ -372,6 +388,67 @@ function LandscapeContent() {
   );
 }
 
+function WaterproofingContent() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="grid items-center gap-8 md:grid-cols-2"
+    >
+      <div className="relative h-[400px] overflow-hidden rounded-2xl shadow-xl">
+        <div
+          role="img"
+          aria-label="콘크리트 바닥 방수 작업"
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(/images/construction/waterproofing.webp)" }}
+        />
+        <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-8">
+          <span className="text-xl font-bold text-white">누수 부위와 방수 범위 검토</span>
+        </div>
+      </div>
+      <div className="bg-white p-8 shadow-md md:rounded-2xl md:border-l-4 md:border-brand-700">
+        <h3 className="mb-4 text-2xl font-bold text-gray-900">습식(방수)</h3>
+        <p className="mb-6 leading-relaxed text-gray-600">
+          누수 부위와 방수 범위를 검토합니다. 옥상과 외벽 등 현장 상태에 맞는 방수 작업 범위를 살펴봅니다.
+        </p>
+        <ul className="space-y-3">
+          {["옥상 방수", "외벽 방수", "누수 부위별 보수 범위 확인"].map((item) => (
+            <li key={item} className="flex items-center gap-3 font-medium text-gray-700">
+              <svg className="h-5 w-5 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  );
+}
+
+function PaintingContent() {
+  return (
+    <div className="mx-auto grid max-w-4xl gap-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-md md:min-h-[400px] md:grid-cols-[1.1fr_0.9fr] md:items-center md:gap-12 md:p-12">
+      <div>
+        <h3 className="text-2xl font-bold text-gray-900">도장</h3>
+        <p className="mt-4 leading-relaxed text-gray-600">
+          현장 상태에 맞는 도장 범위를 살펴봅니다. 외벽과 시설물 표면의 상태에 따라 필요한 도장 작업을 안내합니다.
+        </p>
+      </div>
+      <ul className="space-y-3 border-t border-gray-200 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+        {["외벽 도장", "시설물 표면 정비", "현장별 도장 범위 확인"].map((item) => (
+          <li key={item} className="flex items-center gap-3 font-medium text-gray-700">
+            <svg className="h-5 w-5 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function MaintenanceContent() {
   return (
     <motion.div
@@ -390,14 +467,12 @@ function MaintenanceContent() {
       </div>
       <div className="space-y-6">
         <div className="bg-white p-8 rounded-2xl shadow-md border-l-4 border-brand-700">
-          <h3 className="text-2xl font-bold mb-4 text-gray-900">시설물 유지보수 (Maintenance)</h3>
+          <h3 className="text-2xl font-bold mb-4 text-gray-900">유지보수</h3>
           <p className="text-gray-600 mb-6 leading-relaxed">
-            시설물의 수명을 연장하고 안전을 확보하기 위한 전문적인 유지보수 서비스를 제공합니다.
-            방수, 도장, 구조물 보강 등 종합적인 관리 솔루션을 제안합니다.
+            시설 상태와 필요한 보수 범위를 확인합니다. 노후 시설물과 도로 등 현장에 필요한 유지보수 작업을 안내합니다.
           </p>
           <ul className="space-y-3">
             {[
-              "구조물 방수 및 도장 공사",
               "노후 시설물 개보수",
               "안전 진단 및 보강 공사",
               "도로 및 시설물 긴급 복구"

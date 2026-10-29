@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from "firebase/auth";
-import { auth } from "@/shared/lib/firebase/auth";
+import { getFirebaseAuth } from "@/shared/lib/firebase/auth";
+import { isFirebaseConfigured } from "@/shared/config/env";
 import { useRouter } from "next/navigation";
 import { Building2 } from "lucide-react";
 
@@ -19,6 +20,7 @@ export default function LoginPage() {
     setError("");
 
     try {
+      const auth = getFirebaseAuth();
       // 브라우저 닫을 시 로그아웃 처리 (보안 강화)
       await setPersistence(auth, browserSessionPersistence);
       await signInWithEmailAndPassword(auth, email, password);
@@ -36,6 +38,28 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  if (!isFirebaseConfigured) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 bg-amber-50 rounded-full flex items-center justify-center">
+            <Building2 className="w-8 h-8 text-amber-500" />
+          </div>
+          <h1 className="text-xl font-bold text-gray-900 mb-3">
+            로그인 기능이 아직 연결되지 않았습니다
+          </h1>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Firebase 연동 정보가 없어 로그인할 수 없습니다.
+            <br />
+            <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded">.env.local</code>에{" "}
+            <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded">NEXT_PUBLIC_FIREBASE_*</code>{" "}
+            값을 설정하면 활성화됩니다.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">

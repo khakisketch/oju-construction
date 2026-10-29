@@ -1,0 +1,199 @@
+{
+  "client_id": "oju-batch5",
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "wan2.1_vace_14B_fp16.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "type": "wan",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "wan_2.1_vae.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "Fixed tripod view of the same outdoor concrete pavement. One rectangular block just right of center gently sinks a small amount, while staying straight, rigid, flat and distinct. All the other blocks and their joints remain still. Natural daylight, no people, no new objects."
+      }
+    },
+    "5": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "curved seams, bent pavers, changing shape, floating blocks, raised upright slabs, hatch, holes, extra objects, camera movement, flicker, text, logo, toy, cartoon"
+      }
+    },
+    "10": {
+      "class_type": "WanVaceToVideo",
+      "inputs": {
+        "positive": [
+          "4",
+          0
+        ],
+        "negative": [
+          "5",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "width": 640,
+        "height": 384,
+        "length": 33,
+        "batch_size": 1,
+        "strength": 1.0,
+        "reference_image": [
+          "6",
+          0
+        ],
+        "control_video": [
+          "8",
+          0
+        ],
+        "control_masks": [
+          "22",
+          0
+        ]
+      }
+    },
+    "11": {
+      "class_type": "ModelSamplingSD3",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "shift": 8.0
+      }
+    },
+    "12": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": [
+          "11",
+          0
+        ],
+        "positive": [
+          "10",
+          0
+        ],
+        "negative": [
+          "10",
+          1
+        ],
+        "latent_image": [
+          "10",
+          2
+        ],
+        "seed": 2026102928,
+        "steps": 20,
+        "cfg": 6.0,
+        "sampler_name": "uni_pc",
+        "scheduler": "simple",
+        "denoise": 1.0
+      }
+    },
+    "13": {
+      "class_type": "TrimVideoLatent",
+      "inputs": {
+        "samples": [
+          "12",
+          0
+        ],
+        "trim_amount": [
+          "10",
+          3
+        ]
+      }
+    },
+    "14": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "13",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "15": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "14",
+          0
+        ],
+        "filename_prefix": "candidate-30"
+      }
+    },
+    "6": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "surface-start.png"
+      }
+    },
+    "7": {
+      "class_type": "LoadVideo",
+      "inputs": {
+        "file": "rigid-sparse.mp4"
+      }
+    },
+    "8": {
+      "class_type": "GetVideoComponents",
+      "inputs": {
+        "video": [
+          "7",
+          0
+        ]
+      }
+    },
+    "20": {
+      "class_type": "LoadVideo",
+      "inputs": {
+        "file": "rigid-sparse-mask.mp4"
+      }
+    },
+    "21": {
+      "class_type": "GetVideoComponents",
+      "inputs": {
+        "video": [
+          "20",
+          0
+        ]
+      }
+    },
+    "22": {
+      "class_type": "ImageToMask",
+      "inputs": {
+        "image": [
+          "21",
+          0
+        ],
+        "channel": "red"
+      }
+    }
+  }
+}

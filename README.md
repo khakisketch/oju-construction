@@ -12,10 +12,10 @@ ojuenc/
 ├── src/
 │   ├── app/              # Next.js App Router
 │   │   ├── (public)/     # Home 페이지
-│   │   └── admin/        # Admin 패널 (구현 예정)
+│   │   └── (admin)/      # Admin 페이지
 │   ├── features/         # 비즈니스 기능
 │   │   ├── home/         # Home 페이지 섹션
-│   │   └── admin/        # Admin 기능 (구현 예정)
+│   │   └── admin/        # Admin 기능
 │   ├── shared/           # 공통 코드
 │   │   ├── components/   # 공통 컴포넌트
 │   │   ├── lib/          # 라이브러리
@@ -29,7 +29,7 @@ ojuenc/
 
 ### 1. 의존성 설치
 ```bash
-npm install
+npm ci
 ```
 
 ### 2. 환경변수 설정
@@ -57,6 +57,11 @@ npm run dev
 
 브라우저에서 `http://localhost:5566` 접속
 
+위 `npm run dev`는 macOS/Linux용 셸 문법을 사용합니다. Windows PowerShell에서는
+환경 변수를 설정한 뒤 `npx --no-install next dev -p 5566`을 실행하세요. 구체적인
+명령과 Firebase 미연결 시의 동작은 [개발 인계 문서](docs/DEVELOPMENT-HANDOFF.md)를
+참고하세요.
+
 ### 4. 프로덕션 빌드
 ```bash
 npm run build
@@ -65,42 +70,16 @@ npm start
 
 ## 🏗️ 현재 구현 상태
 
-### ✅ 완료
-- [x] Next.js 15 프로젝트 설정
-- [x] Tailwind CSS 설정
-- [x] Firebase 초기화
-- [x] Header & Footer
-- [x] Hero 섹션 (2개 슬라이더, 자동 전환)
-- [x] About 섹션 (회사 소개, 통계)
-- [x] CEO Message 섹션 (대표 인사말)
-- [x] Services 섹션 (5개 사업분야)
-- [x] Timeline 섹션 (회사 연혁)
-- [x] Portfolio 섹션 (4개 시공실적)
-- [x] Contact 섹션 (Firestore 연동 문의 폼)
+- `/`: 현재 홈페이지 개발 버전. `/renewal`, `/renewal-b`는 별도 리뉴얼 시안입니다.
+- `/admin`: Firebase 인증·권한 설정이 필요합니다. 설정이 없으면 연결 안내가 나옵니다.
+- Firebase 설정이 없는 개발 환경에서는 온라인 문의가 접수되지 않습니다. 실제 문의는
+  **043-265-6010**으로 안내합니다.
+- AI·스톡 자료는 실제 오주건설 현장이나 실적으로 간주하지 않습니다. 영상 실험
+  51편은 미채택이며 실제 영상 기반 스크롤은 아직 완성되지 않았습니다.
+- 현재 작업은 정적 export를 사용합니다. GitHub 반영은 운영 사이트 배포를 뜻하지 않습니다.
 
-### 🔨 진행 예정
-- [ ] Admin 패널 (문의 관리, 설정)
-- [ ] Firebase Hosting 배포
-- [ ] 반응형 최적화
-- [ ] 성능 최적화
-
-## 🎯 구현된 기능
-
-### Home 페이지 섹션 (7개)
-1. **Hero** - 자동 슬라이더 (2개 슬라이드, 5초 간격)
-2. **About** - 회사 소개, 이미지, 통계 (15+ 면허, 200+ 프로젝트)
-3. **Services** - 5개 사업분야 그리드
-4. **CEO Message** - 대표 인사말
-5. **Timeline** - 회사 연혁 (2004~2022)
-6. **Portfolio** - 4개 주요 시공실적
-7. **Contact** - Firestore 연동 문의 폼
-
-### 공통 기능
-- ✅ 반응형 디자인 (모바일, 태블릿, 데스크톱)
-- ✅ Framer Motion 애니메이션
-- ✅ Firebase Firestore 연동
-- ✅ 스크롤 애니메이션
-- ✅ 이미지 최적화 (Next.js Image)
+실행 방법, 검증 결과, 보안·배포 전 확인사항과 남은 작업은
+[개발 인계 문서](docs/DEVELOPMENT-HANDOFF.md)에 정리했습니다.
 
 ## 🔥 Firebase 설정
 
@@ -109,17 +88,12 @@ npm start
 2. 프로젝트 설정에서 웹 앱 추가
 3. 설정값을 복사하여 `.env.local`에 입력
 
-### 2. Firestore Database 생성
-1. Firestore Database 활성화
-2. 테스트 모드로 시작
+### 2. Firestore 및 Hosting
 
-### 3. Firebase Hosting 설정 (선택)
-```bash
-npm install -g firebase-tools
-firebase login
-firebase init hosting
-firebase deploy
-```
+운영 Firebase 프로젝트의 데이터와 권한을 변경하기 전 소유자 승인과 규칙·기존
+클라이언트 호환성 검토가 필요합니다. 테스트 모드나 기존 규칙을 임의로 게시하지
+마세요. 개발·에뮬레이터 및 배포 주의사항은
+[개발 인계 문서](docs/DEVELOPMENT-HANDOFF.md)를 참고하세요.
 
 ## 🛠️ 기술 스택
 
@@ -134,6 +108,8 @@ firebase deploy
 
 자세한 개발 가이드는 `build-project/` 디렉토리를 참고하세요:
 
+- [개발 인계 및 현재 상태](docs/DEVELOPMENT-HANDOFF.md)
+- [미디어 출처·사용 조건](docs/ASSET-PROVENANCE.md)
 - `00-PROJECT-OVERVIEW.md` - 프로젝트 개요
 - `01-TECH-STACK.md` - 기술 스택 설명
 - `architecture/` - 아키텍처 문서

@@ -1,0 +1,28 @@
+{
+  "polygon_xy": [
+    [
+      326,
+      119
+    ],
+    [
+      460,
+      119
+    ],
+    [
+      478,
+      204
+    ],
+    [
+      326,
+      204
+    ]
+  ],
+  "translation_xy": [
+    0,
+    5
+  ],
+  "changed_pixels": 13246,
+  "outside_reactive_changed": 0,
+  "start_equals_input": true,
+  "note": "handmade rough raster patch translating vertically, not physical motion"
+}

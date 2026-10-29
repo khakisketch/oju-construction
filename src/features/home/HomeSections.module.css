@@ -1,0 +1,56 @@
+/* Shared home-section rhythm. Imported only by home section components.
+   H2: left aligned, 30px mobile / 36px >=768, weight 700, lh 1.2, tracking -0.025em. */
+
+.title {
+  margin: 0;
+  text-align: left;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: #081c3d;
+}
+
+.titleOnDark {
+  margin: 0;
+  text-align: left;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .title,
+  .titleOnDark {
+    font-size: 36px;
+  }
+}
+
+.header {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .header {
+    margin-bottom: 32px;
+  }
+}
+
+.description {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #4b5563;
+  text-align: left;
+}
+
+.descriptionOnDark {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #e5e7eb;
+  text-align: left;
+}

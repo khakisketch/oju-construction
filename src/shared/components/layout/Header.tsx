@@ -13,7 +13,11 @@ export default function Header() {
   const pathname = usePathname();
 
   const isHomePage = pathname === "/";
+  const isRenewalB = pathname === "/renewal-b";
   const isSubPage = !isHomePage;
+  const isLightHeader = isScrolled || isRenewalB;
+  const contactHref = isRenewalB ? "/renewal-b#diagnosis-request" : "/#contact";
+  const contactLabel = isRenewalB ? "현장 진단 요청" : "문의하기";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,7 +28,7 @@ export default function Header() {
   }, []);
 
   const getHeaderBackground = () => {
-    if (isScrolled) {
+    if (isLightHeader) {
       return "bg-white/95 backdrop-blur-md shadow-lg";
     }
     if (isSubPage) {
@@ -52,14 +56,14 @@ export default function Header() {
           />
           <div className="flex flex-col">
             <span className={`text-lg md:text-xl font-bold transition-colors ${
-              isScrolled
+              isLightHeader
                 ? "text-gray-900 group-hover:text-brand-700"
                 : "text-white group-hover:text-brand-300"
             }`}>
               {env.company.name}
             </span>
             <span className={`text-xs -mt-1 transition-colors ${
-              isScrolled ? "text-gray-500" : "text-white/80"
+              isLightHeader ? "text-gray-500" : "text-white/80"
             }`}>{env.site.nameEn}</span>
           </div>
         </Link>
@@ -71,14 +75,14 @@ export default function Header() {
               <Link
                 href="/about"
                 className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
-                  isScrolled
+                  isLightHeader
                     ? "text-gray-700 hover:text-brand-700"
                     : "text-white hover:text-brand-300"
                 }`}
               >
                 회사소개
                 <span className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
-                  isScrolled ? "bg-brand-700" : "bg-white"
+                  isLightHeader ? "bg-brand-700" : "bg-white"
                 }`}></span>
               </Link>
             </li>
@@ -86,14 +90,14 @@ export default function Header() {
               <Link
                 href="/construction"
                 className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
-                  isScrolled
+                  isLightHeader
                     ? "text-gray-700 hover:text-brand-700"
                     : "text-white hover:text-brand-300"
                 }`}
               >
                 사업분야
                 <span className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
-                  isScrolled ? "bg-brand-700" : "bg-white"
+                  isLightHeader ? "bg-brand-700" : "bg-white"
                 }`}></span>
               </Link>
             </li>
@@ -101,14 +105,14 @@ export default function Header() {
               <Link
                 href="/portfolio"
                 className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
-                  isScrolled
+                  isLightHeader
                     ? "text-gray-700 hover:text-brand-700"
                     : "text-white hover:text-brand-300"
                 }`}
               >
                 시공실적
                 <span className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
-                  isScrolled ? "bg-brand-700" : "bg-white"
+                  isLightHeader ? "bg-brand-700" : "bg-white"
                 }`}></span>
               </Link>
             </li>
@@ -116,27 +120,27 @@ export default function Header() {
               <Link
                 href="/news"
                 className={`px-4 py-2 text-[15px] font-medium transition-colors duration-200 relative group ${
-                  isScrolled
+                  isLightHeader
                     ? "text-gray-700 hover:text-brand-700"
                     : "text-white hover:text-brand-300"
                 }`}
               >
                 소식
                 <span className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
-                  isScrolled ? "bg-brand-700" : "bg-white"
+                  isLightHeader ? "bg-brand-700" : "bg-white"
                 }`}></span>
               </Link>
             </li>
             <li className="ml-2">
               <Link
-                href="/#contact"
+                href={contactHref}
                 className={`inline-block px-5 py-2 text-[15px] font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200 ${
-                  isScrolled
+                  isLightHeader
                     ? "text-white bg-brand-700 hover:bg-brand-800"
                     : "text-brand-700 bg-white hover:bg-gray-50"
                 }`}
               >
-                문의하기
+                {contactLabel}
               </Link>
             </li>
           </ul>
@@ -145,28 +149,30 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           className={`lg:hidden relative z-10 w-10 h-10 flex items-center justify-center rounded-lg transition-colors ${
-            isScrolled ? "hover:bg-gray-100" : "hover:bg-white/10"
+            isLightHeader ? "hover:bg-gray-100" : "hover:bg-white/10"
           }`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="메뉴 열기"
+          aria-label={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
+          aria-expanded={isMenuOpen}
+          aria-controls={isMenuOpen ? "mobile-navigation" : undefined}
         >
           <div className="flex flex-col space-y-1.5">
             <motion.span
               animate={isMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
               className={`block w-5 h-0.5 transition-all ${
-                isScrolled ? "bg-gray-800" : "bg-white"
+                isLightHeader ? "bg-gray-800" : "bg-white"
               }`}
             />
             <motion.span
               animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
               className={`block w-5 h-0.5 transition-all ${
-                isScrolled ? "bg-gray-800" : "bg-white"
+                isLightHeader ? "bg-gray-800" : "bg-white"
               }`}
             />
             <motion.span
               animate={isMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
               className={`block w-5 h-0.5 transition-all ${
-                isScrolled ? "bg-gray-800" : "bg-white"
+                isLightHeader ? "bg-gray-800" : "bg-white"
               }`}
             />
           </div>
@@ -176,6 +182,7 @@ export default function Header() {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.nav
+              id="mobile-navigation"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -221,11 +228,11 @@ export default function Header() {
                 </li>
                 <li className="pt-2">
                   <Link
-                    href="/#contact"
+                    href={contactHref}
                     className="block text-center px-4 py-2.5 text-[15px] font-semibold text-white bg-brand-700 rounded-lg hover:bg-brand-800 transition-all"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    문의하기
+                    {contactLabel}
                   </Link>
                 </li>
               </ul>

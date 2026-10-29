@@ -1,0 +1,525 @@
+{
+  "prompt": [
+    6,
+    "4080aabe-1b84-4dea-8b07-5354152f8f8a",
+    {
+      "1": {
+        "class_type": "UNETLoader",
+        "inputs": {
+          "unet_name": "wan2.1_vace_14B_fp16.safetensors",
+          "weight_dtype": "default"
+        }
+      },
+      "2": {
+        "class_type": "CLIPLoader",
+        "inputs": {
+          "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "type": "wan",
+          "device": "default"
+        }
+      },
+      "3": {
+        "class_type": "VAELoader",
+        "inputs": {
+          "vae_name": "wan_2.1_vae.safetensors"
+        }
+      },
+      "4": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "2",
+            0
+          ],
+          "text": "Locked-off side view of an excavated full-size pedestrian pavement at a construction site. The camera sees the upper sidewalk of rectangular concrete pavers and the real earth trench wall underneath, granular sand and gray crushed gravel and brown earth; one buried gray drainage pipe is exposed with a round hollow opening and a small dark gap nearby. Subtle dry grains fall into the void while the rest of the sidewalk, pipe and soil stay in place. Photographic natural light. No model base, no text."
+        }
+      },
+      "5": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "2",
+            0
+          ],
+          "text": "miniature, toy, dollhouse, plinth, illustration, cartoon, computer render, text, logo, watermark, camera pan, zoom, camera shake, melting, morphing, flicker, floating objects, people"
+        }
+      },
+      "10": {
+        "class_type": "WanVaceToVideo",
+        "inputs": {
+          "positive": [
+            "4",
+            0
+          ],
+          "negative": [
+            "5",
+            0
+          ],
+          "vae": [
+            "3",
+            0
+          ],
+          "width": 640,
+          "height": 384,
+          "length": 33,
+          "batch_size": 1,
+          "strength": 1.0
+        }
+      },
+      "11": {
+        "class_type": "ModelSamplingSD3",
+        "inputs": {
+          "model": [
+            "1",
+            0
+          ],
+          "shift": 8.0
+        }
+      },
+      "12": {
+        "class_type": "KSampler",
+        "inputs": {
+          "model": [
+            "11",
+            0
+          ],
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "10",
+            1
+          ],
+          "latent_image": [
+            "10",
+            2
+          ],
+          "seed": 2026102806,
+          "steps": 20,
+          "cfg": 6.0,
+          "sampler_name": "uni_pc",
+          "scheduler": "simple",
+          "denoise": 1.0
+        }
+      },
+      "13": {
+        "class_type": "TrimVideoLatent",
+        "inputs": {
+          "samples": [
+            "12",
+            0
+          ],
+          "trim_amount": [
+            "10",
+            3
+          ]
+        }
+      },
+      "14": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "13",
+            0
+          ],
+          "vae": [
+            "3",
+            0
+          ]
+        }
+      },
+      "15": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "14",
+            0
+          ],
+          "filename_prefix": "candidate-6"
+        }
+      }
+    },
+    {
+      "client_id": "oju-batch2",
+      "create_time": 1793198681574
+    },
+    [
+      "15"
+    ]
+  ],
+  "outputs": {
+    "15": {
+      "images": [
+        {
+          "filename": "candidate-6_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00002_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00003_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00004_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00005_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00006_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00007_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00008_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00009_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00010_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00011_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00012_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00013_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00014_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00015_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00016_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00017_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00018_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00019_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00020_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00021_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00022_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00023_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00024_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00025_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00026_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00027_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00028_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00029_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00030_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00031_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00032_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        },
+        {
+          "filename": "candidate-6_00033_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 640,
+            "height": 384
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "4080aabe-1b84-4dea-8b07-5354152f8f8a",
+          "timestamp": 1793198932255
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "2"
+          ],
+          "prompt_id": "4080aabe-1b84-4dea-8b07-5354152f8f8a",
+          "timestamp": 1793198932256
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "4080aabe-1b84-4dea-8b07-5354152f8f8a",
+          "timestamp": 1793199136818
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "15": {
+      "node_id": "15",
+      "display_node": "15",
+      "parent_node": null,
+      "real_node_id": "15"
+    }
+  }
+}

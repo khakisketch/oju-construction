@@ -1,0 +1,11 @@
+import json,urllib.request,time,copy,os,sys
+D=os.path.dirname(__file__);base='http://127.0.0.1:18393'; p=json.load(open('/home/ksi/Desktop/SI-Projects/OJU-EC/docs/ai-workflows/paver-video-ai-2026-10-28/candidate-1.json'))['prompt'];p['6']={'class_type':'LoadImage','inputs':{'image':'surface-start.png'}};p['10']['inputs'].update(length=33,width=640,height=384,reference_image=['6',0]);p['4']['inputs']['text']='Fixed tripod view of the same outdoor concrete pavement. One rectangular block just right of center gently sinks a small amount, while staying straight, rigid, flat and distinct. All the other blocks and their joints remain still. Natural daylight, no people, no new objects.';p['5']['inputs']['text']='curved seams, bent pavers, changing shape, floating blocks, raised upright slabs, hatch, holes, extra objects, camera movement, flicker, text, logo, toy, cartoon';p['12']['inputs']['seed']=2026102928
+cases={28:('none',1.0),29:('moving',0.7),30:('sparse',1.0),31:('moving',1.0)}
+for n in map(int,sys.argv[1:]):
+ mode,strength=cases[n];q=copy.deepcopy(p);q['10']['inputs']['strength']=strength;q['15']['inputs']['filename_prefix']=f'candidate-{n}'
+ if mode!='none':
+  q['7']={'class_type':'LoadVideo','inputs':{'file':'rigid-'+mode+'.mp4'}};q['8']={'class_type':'GetVideoComponents','inputs':{'video':['7',0]}};q['20']={'class_type':'LoadVideo','inputs':{'file':'rigid-'+mode+'-mask.mp4'}};q['21']={'class_type':'GetVideoComponents','inputs':{'video':['20',0]}};q['22']={'class_type':'ImageToMask','inputs':{'image':['21',0],'channel':'red'}};q['10']['inputs'].update(control_video=['8',0],control_masks=['22',0])
+ payload={'client_id':'oju-batch5','prompt':q};json.dump(payload,open(D+f'/candidate-{n}.json','w'),indent=2);req=urllib.request.Request(base+'/prompt',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'});pid=json.load(urllib.request.urlopen(req))['prompt_id'];print(n,'start',pid,time.ctime(),flush=True)
+ while True:
+  time.sleep(8);h=json.load(urllib.request.urlopen(base+'/history/'+pid))
+  if pid in h:json.dump(h[pid],open(D+f'/candidate-{n}-history.json','w'),indent=2);print(n,'done',h[pid]['status']['status_str'],time.ctime(),flush=True);break

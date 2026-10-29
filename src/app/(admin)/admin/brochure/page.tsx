@@ -12,8 +12,10 @@ import {
   Palette,
   Type,
   Globe,
+  FileText,
 } from "lucide-react";
 import { useBrochureData } from "@/features/brochure/hooks/useBrochureData";
+import DesignBrochureTab from "@/features/brochure/components/DesignBrochureTab";
 import {
   HistoryEvent,
   CoreValue,
@@ -28,7 +30,7 @@ const BrochurePDFDownload = dynamic(
   { ssr: false }
 );
 
-type TabType = "cover" | "history" | "vision" | "certifications" | "preview";
+type TabType = "cover" | "history" | "vision" | "certifications" | "download" | "preview";
 
 // 표지 스타일 미리보기 컴포넌트들
 const CoverStylePreview = ({
@@ -162,15 +164,13 @@ const CoverStylePreview = ({
 };
 
 export default function BrochureAdminPage() {
-  const { data, loading, saving, updateData, saveData } = useBrochureData();
+  const { data, loading, saving, error, updateData, saveData } = useBrochureData();
   const [activeTab, setActiveTab] = useState<TabType>("cover");
 
   const handleSave = async () => {
     const success = await saveData();
     if (success) {
       alert("저장되었습니다.");
-    } else {
-      alert("저장 중 오류가 발생했습니다.");
     }
   };
 
@@ -271,20 +271,21 @@ export default function BrochureAdminPage() {
     { id: "history", label: "연혁", icon: null },
     { id: "vision", label: "비전/미션", icon: null },
     { id: "certifications", label: "인증서/자격증", icon: null },
+    { id: "download", label: "다운로드 파일", icon: <FileText className="w-4 h-4" /> },
     { id: "preview", label: "미리보기", icon: null },
   ];
 
   return (
     <div className="max-w-5xl mx-auto">
-      <div className="mb-8 flex justify-between items-start">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">회사소개서 관리</h1>
           <p className="text-gray-500 text-sm mt-1">
             회사소개서에 들어갈 내용을 편집합니다. 웹 뷰어 및 PDF 다운로드에 반영됩니다.
           </p>
         </div>
-        <div className="flex gap-3">
-          <BrochurePDFDownload data={data} />
+        <div className="flex flex-wrap gap-2 sm:gap-3">
+          <BrochurePDFDownload data={data} mode="generated" />
           <button
             onClick={handleSave}
             disabled={saving}
@@ -308,14 +309,20 @@ export default function BrochureAdminPage() {
         </div>
       </div>
 
+      {error && (
+        <p role="alert" className="mb-5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900">
+          {error}
+        </p>
+      )}
+
       {/* Tabs */}
-      <div className="border-b border-gray-200 mb-6">
-        <nav className="flex gap-1">
+      <div className="mb-6 overflow-x-auto border-b border-gray-200">
+        <nav className="flex min-w-max gap-1" aria-label="회사소개서 관리 탭">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-all ${
+              className={`flex shrink-0 items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-all sm:px-6 ${
                 activeTab === tab.id
                   ? "border-brand-700 text-brand-700"
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
@@ -751,6 +758,10 @@ export default function BrochureAdminPage() {
                 위는 미리보기입니다. 실제 PDF는 더 정교한 레이아웃으로 생성됩니다.
               </div>
             </section>
+          )}
+
+          {activeTab === "download" && (
+            <DesignBrochureTab data={data} updateData={updateData} />
           )}
         </motion.div>
       </AnimatePresence>

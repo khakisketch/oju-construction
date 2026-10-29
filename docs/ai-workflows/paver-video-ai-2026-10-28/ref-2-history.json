@@ -1,0 +1,162 @@
+{
+  "prompt": [
+    1,
+    "5ee00b8c-1a0a-4f18-b9f0-dc86e3cd1716",
+    {
+      "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+          "ckpt_name": "RealVisXL_V5.0_fp16.safetensors"
+        }
+      },
+      "2": {
+        "class_type": "VAELoader",
+        "inputs": {
+          "vae_name": "sdxl_vae.safetensors"
+        }
+      },
+      "3": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "1",
+            1
+          ],
+          "text": "toy, miniature, model, plinth, illustration, cartoon, 3d render, plastic, text, logo, watermark, workers, people, oversaturated, blurred, distorted, impossible geometry"
+        }
+      },
+      "4": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+          "width": 1024,
+          "height": 640,
+          "batch_size": 1
+        }
+      },
+      "10": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "1",
+            1
+          ],
+          "text": "Photograph of a real outdoor sidewalk at a construction trench, no people. Camera looks at the exposed earthen wall of a deep trench next to the paved path, with concrete pavers along the top edge. In the exposed soil a gray concrete stormwater pipe is cut through, its hollow circular interior clearly visible. Coarse compacted gravel and sand directly under the pavers, brown soil below, small irregular cavity beside the pipe. Natural material scale and diffuse daylight. No labels."
+        }
+      },
+      "11": {
+        "class_type": "KSampler",
+        "inputs": {
+          "seed": 2026102812,
+          "steps": 30,
+          "cfg": 5.5,
+          "sampler_name": "dpmpp_2m",
+          "scheduler": "karras",
+          "denoise": 1.0,
+          "model": [
+            "1",
+            0
+          ],
+          "positive": [
+            "10",
+            0
+          ],
+          "negative": [
+            "3",
+            0
+          ],
+          "latent_image": [
+            "4",
+            0
+          ]
+        }
+      },
+      "12": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "11",
+            0
+          ],
+          "vae": [
+            "2",
+            0
+          ]
+        }
+      },
+      "13": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "12",
+            0
+          ],
+          "filename_prefix": "ref-2"
+        }
+      }
+    },
+    {
+      "client_id": "oju-batch2",
+      "create_time": 1793198451486
+    },
+    [
+      "13"
+    ]
+  ],
+  "outputs": {
+    "13": {
+      "images": [
+        {
+          "filename": "ref-2_00001_.png",
+          "subfolder": "",
+          "type": "output",
+          "metadata": {
+            "kind": "image",
+            "width": 1024,
+            "height": 640
+          }
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "5ee00b8c-1a0a-4f18-b9f0-dc86e3cd1716",
+          "timestamp": 1793198451486
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "prompt_id": "5ee00b8c-1a0a-4f18-b9f0-dc86e3cd1716",
+          "timestamp": 1793198451487
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "5ee00b8c-1a0a-4f18-b9f0-dc86e3cd1716",
+          "timestamp": 1793198459095
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "13": {
+      "node_id": "13",
+      "display_node": "13",
+      "parent_node": null,
+      "real_node_id": "13"
+    }
+  }
+}

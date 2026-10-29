@@ -10,6 +10,42 @@ import Pagination from "@/shared/components/ui/Pagination";
 
 const ITEMS_PER_PAGE = 10;
 
+interface ContactScreening {
+  clientChecked: boolean;
+  budgetChecked: boolean;
+  contractPartyChecked: boolean;
+  paymentTermsChecked: boolean;
+}
+
+const SCREENING_ITEMS: { key: keyof ContactScreening; label: string }[] = [
+  { key: "clientChecked", label: "발주 주체 확인" },
+  { key: "budgetChecked", label: "예산·승인 확인" },
+  { key: "contractPartyChecked", label: "계약·지급 주체 확인" },
+  { key: "paymentTermsChecked", label: "지급 조건 확인" },
+];
+
+const EMPTY_SCREENING: ContactScreening = {
+  clientChecked: false,
+  budgetChecked: false,
+  contractPartyChecked: false,
+  paymentTermsChecked: false,
+};
+
+function toScreening(value: unknown): ContactScreening {
+  if (typeof value !== "object" || value === null) return { ...EMPTY_SCREENING };
+  const record = value as Partial<Record<keyof ContactScreening, unknown>>;
+  return {
+    clientChecked: record.clientChecked === true,
+    budgetChecked: record.budgetChecked === true,
+    contractPartyChecked: record.contractPartyChecked === true,
+    paymentTermsChecked: record.paymentTermsChecked === true,
+  };
+}
+
+function screeningCount(screening: ContactScreening): number {
+  return SCREENING_ITEMS.filter((item) => screening[item.key]).length;
+}
+
 interface Contact {
   id: string;
   name: string;
@@ -20,9 +56,11 @@ interface Contact {
   status: string;
   adminMemo?: string;
   createdAt: any;
+  screening?: Partial<Record<keyof ContactScreening, boolean>>;
   // legacy fields
   company?: string;
   email?: string;
+  inquiryType?: string;
   subject?: string;
 }
 
@@ -31,6 +69,8 @@ export default function ContactsPage() {
   const [loading, setLoading] = useState(true);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [memoText, setMemoText] = useState("");
+  const [screening, setScreening] = useState<ContactScreening>({ ...EMPTY_SCREENING });
+  const [isSaving, setIsSaving] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "new" | "processing" | "completed">("all");
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,7 +90,9 @@ export default function ContactsPage() {
       searchQuery === "" ||
       contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       contact.phone.includes(searchQuery) ||
-      (contact.place || "").toLowerCase().includes(searchQuery.toLowerCase());
+      (contact.place || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (contact.inquiryType || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (contact.subject || "").toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesStatus = statusFilter === "all" || contact.status === statusFilter;
 
@@ -68,6 +110,7 @@ export default function ContactsPage() {
   useEffect(() => {
     if (selectedContact) {
       setMemoText(selectedContact.adminMemo || "");
+      setScreening(toScreening(selectedContact.screening));
     }
   }, [selectedContact]);
 
@@ -123,18 +166,21 @@ export default function ContactsPage() {
   // 메모 저장 핸들러
   const handleMemoSave = async () => {
     if (!selectedContact) return;
+    setIsSaving(true);
     try {
-      await updateDoc(doc(db, "contacts", selectedContact.id), { adminMemo: memoText });
+      await updateDoc(doc(db, "contacts", selectedContact.id), { adminMemo: memoText, screening: { ...screening } });
       
       // 로컬 상태 업데이트
-      const updatedContact = { ...selectedContact, adminMemo: memoText };
+      const updatedContact = { ...selectedContact, adminMemo: memoText, screening: { ...screening } };
       setSelectedContact(updatedContact);
       setContacts(contacts.map(c => c.id === selectedContact.id ? updatedContact : c));
       
-      alert("메모가 저장되었습니다.");
+      alert("메모와 선별 확인이 저장되었습니다.");
     } catch (error) {
       console.error("Error saving memo:", error);
       alert("메모 저장 중 오류가 발생했습니다.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -236,7 +282,16 @@ export default function ContactsPage() {
                         {getStatusLabel(contact.status)}
                       </span>
                     </div>
+                    <p className="text-xs text-gray-600 mb-1 truncate">{contact.inquiryType || contact.subject || "문의 종류 미기록"}</p>
                     <p className="text-xs text-gray-600 mb-1 truncate">{contact.place || "-"}</p>
+                    {(() => {
+                      const count = screeningCount(toScreening(contact.screening));
+                      return (
+                        <p className={`mt-1 text-[11px] font-semibold ${contact.screening ? "text-brand-700" : "text-gray-400"}`}>
+                          {contact.screening ? `선별 ${count}/4` : "선별 미기록"}
+                        </p>
+                      );
+                    })()}
                     <div className="flex items-center justify-between text-xs text-gray-400 mt-2">
                       <span className="bg-gray-100 px-2 py-0.5 rounded text-gray-600">{Array.isArray(contact.category) ? contact.category.join(", ") : contact.category}</span>
                       <span>{formatDate(contact.createdAt).split('. ')[1] + '.' + formatDate(contact.createdAt).split('. ')[2]}</span>
@@ -329,7 +384,11 @@ export default function ContactsPage() {
                   <div className="space-y-4">
                     <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2">문의 정보</h3>
                     <div>
-                      <label className="text-xs text-gray-500 block mb-1">공사 장소</label>
+                      <label className="text-xs text-gray-500 block mb-1">문의 종류</label>
+                      <div className="text-gray-900">{selectedContact.inquiryType || selectedContact.subject || "미기록"}</div>
+                    </div>
+                    <div>
+                      <label className="text-xs text-gray-500 block mb-1">발주 위치</label>
                       <div className="text-gray-900">{selectedContact.place || "-"}</div>
                     </div>
                     <div>
@@ -347,6 +406,37 @@ export default function ContactsPage() {
                   </div>
                 </div>
 
+                {/* Screening checklist */}
+                <div className="rounded-xl border border-brand-200 bg-brand-50/50 p-4 mb-8">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-bold text-brand-900">
+                      선별 확인 ({screeningCount(screening)}/4)
+                    </span>
+                    <span className="text-xs text-brand-700">담당자 내부 확인용</span>
+                  </div>
+                  <fieldset>
+                    <legend className="sr-only">선별 확인 항목</legend>
+                    <div className="grid gap-1 sm:grid-cols-2">
+                      {SCREENING_ITEMS.map((item) => (
+                        <label
+                          key={item.key}
+                          className="flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-800 border border-brand-100 hover:border-brand-300 focus-within:ring-2 focus-within:ring-brand-500"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={screening[item.key]}
+                            onChange={(e) =>
+                              setScreening((prev) => ({ ...prev, [item.key]: e.target.checked }))
+                            }
+                            className="h-5 w-5 shrink-0 rounded border-gray-300 text-brand-700 focus:ring-brand-500"
+                          />
+                          {item.label}
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+                </div>
+
                 {/* Admin Memo UI (New Feature) */}
                 <div className="bg-yellow-50/50 p-4 rounded-xl border border-yellow-200 mb-8">
                   <div className="flex justify-between items-center mb-2">
@@ -355,9 +445,10 @@ export default function ContactsPage() {
                     </label>
                     <button 
                       onClick={handleMemoSave}
-                      className="text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-3 py-1.5 rounded-lg transition-colors font-semibold border border-yellow-200"
+                      disabled={isSaving}
+                      className="min-h-[44px] text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-3 py-1.5 rounded-lg transition-colors font-semibold border border-yellow-200 disabled:opacity-50"
                     >
-                      메모 저장
+                      {isSaving ? "저장 중..." : "메모·선별 저장"}
                     </button>
                   </div>
                   <textarea

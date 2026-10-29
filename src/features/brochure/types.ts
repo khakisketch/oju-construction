@@ -40,6 +40,14 @@ export interface BusinessArea {
   icon: string; // lucide icon name
 }
 
+export interface DesignBrochureFile {
+  url: string;
+  fileName: string;
+  sizeBytes: number;
+  version?: string;
+  uploadedAt: string;
+}
+
 export type CoverStyle = "geometric" | "gradient" | "lines" | "photo";
 
 export interface BrochureData {
@@ -62,6 +70,13 @@ export interface BrochureData {
   // QR코드 설정
   websiteUrl: string;
 
+  // 선택 디자인 PDF (공개 가능)
+  designPdf?: DesignBrochureFile | null;
+  useDesignPdf?: boolean;
+
+  // Canva 편집 URL은 company-documents-private/brochure에만 저장합니다.
+  canvaEditUrl?: string;
+
   updatedAt?: Date;
 }
 
@@ -70,7 +85,16 @@ export const defaultBrochureData: BrochureData = {
   tagline: "기술의 정교함, 신뢰의 견고함",
 
   history: [
-    { year: "2020", events: ["회사 설립"] },
+    { year: "2022", events: ["01월 오주건설(주) 토목공사업 등록"] },
+    {
+      year: "2020",
+      events: [
+        "12월 오주건설(주) 도장공사업 등록",
+        "03월 오주건설(주) 건물위생관리업 등록",
+      ],
+    },
+    { year: "2018", events: ["02월 오주건설(주) 시설물유지보수업 추가 설립"] },
+    { year: "2004", events: ["04월 오주건설(주) 포장공사업 법인설립"] },
   ],
   vision: "최고의 기술력으로 고객의 가치를 높이는 기업",
   mission: "안전하고 신뢰할 수 있는 건설 서비스 제공",
@@ -91,4 +115,7 @@ export const defaultBrochureData: BrochureData = {
   ],
 
   websiteUrl: "",
+  designPdf: null,
+  useDesignPdf: false,
+  canvaEditUrl: "",
 };

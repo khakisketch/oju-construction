@@ -1,0 +1,119 @@
+{
+  "client_id": "batch12-structured",
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "wan2.2_ti2v_5B_fp16.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "type": "wan",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "wan2.2_vae.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "Photorealistic documentary footage of an ordinary outdoor concrete-paver sidewalk beside an existing shallow inspection trench. Locked tripod, natural overcast daylight, realistic full scale and granular textures. A continuous field of many individual weathered gray rectangular pavers, thin sand bedding, compacted crushed aggregate and brown soil form one connected construction. The camera and surroundings stay fixed. First hold still; then a small area of the paved surface slowly settles down together while each concrete paver remains rigid and recognizable; finally the movement stops. No cause is shown or claimed. Camera looks almost horizontally at the vertical wall of the existing trench. At the upper edge see the sidewalk top receding into the background and beneath it a narrow continuous bedding and aggregate, merging into natural earth. The excavated soil wall extends beyond all image edges; no freestanding display."
+      }
+    },
+    "5": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "toy, miniature, scale model, tabletop, plinth, floating slabs, overhang, giant hole, black rectangular hole, hatch, raised blocks, new objects, melting or bending concrete, changing brick pattern, morphing, camera movement, pan, zoom, flicker, text, labels, logo, people, water, pipe, cartoon, CGI, plastic"
+      }
+    },
+    "10": {
+      "class_type": "Wan22ImageToVideoLatent",
+      "inputs": {
+        "vae": [
+          "3",
+          0
+        ],
+        "width": 640,
+        "height": 384,
+        "length": 49,
+        "batch_size": 1
+      }
+    },
+    "11": {
+      "class_type": "ModelSamplingSD3",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "shift": 8.0
+      }
+    },
+    "12": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": [
+          "11",
+          0
+        ],
+        "positive": [
+          "4",
+          0
+        ],
+        "negative": [
+          "5",
+          0
+        ],
+        "latent_image": [
+          "10",
+          0
+        ],
+        "seed": 2026102912,
+        "steps": 20,
+        "cfg": 5,
+        "sampler_name": "uni_pc",
+        "scheduler": "simple",
+        "denoise": 1.0
+      }
+    },
+    "14": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "12",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "15": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "14",
+          0
+        ],
+        "filename_prefix": "batch12-B-section"
+      }
+    }
+  }
+}

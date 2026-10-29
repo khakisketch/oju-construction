@@ -27,3 +27,12 @@ export const env = {
     businessNumber: "217-81-16716",
   },
 } as const;
+
+// Firebase 실 연동이 가능한 상태인지 여부.
+// .env.local 미설정 시 공개 페이지는 기본값으로 동작하고,
+// 관리자 영역은 안내 화면을 보여줍니다(빌드/프리렌더 실패 방지).
+export const isFirebaseConfigured = Boolean(
+  env.firebase.apiKey &&
+    env.firebase.projectId &&
+    !env.firebase.apiKey.startsWith("your-")
+);

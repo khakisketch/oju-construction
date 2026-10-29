@@ -1,0 +1,40 @@
+{
+  "method": "min grayscale average over x +/- 2, y 155:235, not engineering measurement",
+  "x": [
+    270,
+    300,
+    330
+  ],
+  "y_pixels": {
+    "guide_start": [
+      203,
+      203,
+      203
+    ],
+    "guide_end": [
+      214,
+      215,
+      214
+    ],
+    "candidate24_start": [
+      203,
+      203,
+      203
+    ],
+    "candidate24_end": [
+      214,
+      215,
+      214
+    ],
+    "candidate25_start": [
+      203,
+      203,
+      203
+    ],
+    "candidate25_end": [
+      213,
+      215,
+      214
+    ]
+  }
+}

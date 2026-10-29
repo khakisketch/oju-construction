@@ -22,6 +22,15 @@ export async function uploadPortfolioImage(file: File, portfolioId: string): Pro
   return uploadImage(file, path);
 }
 
+// 포트폴리오 작업 영상 업로드 (MP4/WebM, 최대 30MB는 호출 측에서 검증)
+export async function uploadPortfolioVideo(file: File, portfolioId: string): Promise<string> {
+  const timestamp = Date.now();
+  const rawExtension = file.name.split(".").pop()?.toLowerCase() || "mp4";
+  const extension = rawExtension === "webm" ? "webm" : "mp4";
+  const path = `portfolio/${portfolioId}/work-${timestamp}.${extension}`;
+  return uploadImage(file, path);
+}
+
 // 뉴스 이미지 업로드
 export async function uploadNewsImage(file: File, newsId: string): Promise<string> {
   const timestamp = Date.now();

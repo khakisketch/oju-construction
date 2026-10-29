@@ -6,15 +6,9 @@ import { Calendar, ArrowRight, Megaphone, FileText, Trophy } from "lucide-react"
 import Link from "next/link";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { db } from "@/shared/lib/firebase/firestore";
-
-interface NewsItem {
-  id: string;
-  category: "announcement" | "news" | "award";
-  title: string;
-  summary: string;
-  isNew: boolean;
-  createdAt: any;
-}
+import { isFirebaseConfigured } from "@/shared/config/env";
+import { newsFallbackItems, type NewsItem } from "./newsFallback";
+import homeStyles from "../HomeSections.module.css";
 
 const newsCategories = {
   announcement: { label: "공지", icon: Megaphone, color: "bg-brand-100 text-brand-700" },
@@ -22,71 +16,42 @@ const newsCategories = {
   award: { label: "수상", icon: Trophy, color: "bg-yellow-100 text-yellow-700" },
 };
 
-// 기본 더미 데이터 (Firestore 데이터가 없을 때 사용)
-const defaultNewsItems: NewsItem[] = [
-  {
-    id: "1",
-    category: "news",
-    title: "2024년 상반기 신규 프로젝트 수주",
-    summary: "청주시 도로 정비사업 및 세종시 산업단지 조성공사를 신규 수주하였습니다.",
-    createdAt: new Date("2024-01-15"),
-    isNew: true,
-  },
-  {
-    id: "2",
-    category: "announcement",
-    title: "설 연휴 휴무 안내",
-    summary: "2024년 설 연휴 기간(2/9~2/12) 동안 휴무입니다. 긴급 문의는 비상연락망을 이용해 주세요.",
-    createdAt: new Date("2024-01-10"),
-    isNew: true,
-  },
-  {
-    id: "3",
-    category: "award",
-    title: "2023년 우수 시공업체 선정",
-    summary: "충청남도 건설협회로부터 2023년 우수 시공업체로 선정되었습니다.",
-    createdAt: new Date("2023-12-20"),
-    isNew: false,
-  },
-  {
-    id: "4",
-    category: "news",
-    title: "스마트 건설 기술 도입",
-    summary: "BIM 기반 스마트 건설 시스템을 도입하여 시공 품질과 효율성을 높이고 있습니다.",
-    createdAt: new Date("2023-12-05"),
-    isNew: false,
-  },
-];
-
 export default function NewsSection() {
-  const [newsItems, setNewsItems] = useState<NewsItem[]>(defaultNewsItems);
-  const [loading, setLoading] = useState(true);
+  const [newsItems, setNewsItems] = useState<NewsItem[]>(newsFallbackItems);
+  const [loading, setLoading] = useState(isFirebaseConfigured);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
+    // Firebase 연동 전에는 조회하지 않고 빈 상태를 유지합니다.
+    if (!isFirebaseConfigured) {
+      setLoading(false);
+      return;
+    }
+
+    let isMounted = true;
     const fetchNews = async () => {
       try {
         const q = query(collection(db, "news"), orderBy("createdAt", "desc"), limit(4));
         const querySnapshot = await getDocs(q);
 
-        if (!querySnapshot.empty) {
-          const newsData: NewsItem[] = [];
-          querySnapshot.forEach((doc) => {
-            newsData.push({
-              id: doc.id,
-              ...doc.data(),
-            } as NewsItem);
-          });
-          setNewsItems(newsData);
-        }
+        if (!isMounted) return;
+        const fetchedItems = querySnapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as NewsItem)
+        );
+        if (fetchedItems.length > 0) setNewsItems(fetchedItems);
+        setLoadError(false);
       } catch (error) {
         console.error("Error fetching news:", error);
-        // Firestore 오류 시 기본 데이터 유지
+        if (isMounted) setLoadError(true);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
     fetchNews();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const formatDate = (timestamp: any) => {
@@ -100,29 +65,18 @@ export default function NewsSection() {
   };
 
   return (
-    <section id="news" className="py-16 md:py-24 bg-white">
+    <section id="news" className="py-8 md:py-12 bg-[#f9fafb]">
       <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
-          <div>
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-brand-700 font-semibold text-sm uppercase tracking-wide"
-            >
-              News & Notice
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-3xl md:text-4xl font-bold mt-2"
-            >
+        <div className={`flex flex-col md:flex-row md:items-end md:justify-between ${homeStyles.header}`}>
+          <header data-home-section-heading>
+            <h2 className={homeStyles.title}>
               소식 및 공지
-            </motion.h2>
-          </div>
+            </h2>
+            <p className={homeStyles.description}>
+              공지와 회사 소식을 확인하세요.
+            </p>
+          </header>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -139,53 +93,70 @@ export default function NewsSection() {
           </motion.div>
         </div>
 
-        {/* News Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {newsItems.map((item, idx) => {
-            const category = newsCategories[item.category as keyof typeof newsCategories];
-            const CategoryIcon = category.icon;
-
-            return (
-              <motion.article
-                key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="group bg-gray-50 hover:bg-white rounded-xl p-5 border border-transparent hover:border-gray-200 hover:shadow-lg transition-all duration-300 cursor-pointer"
-              >
-                {/* Category & New Badge */}
-                <div className="flex items-center justify-between mb-3">
-                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${category.color}`}>
-                    <CategoryIcon className="w-3.5 h-3.5" />
-                    {category.label}
-                  </span>
-                  {item.isNew && (
-                    <span className="px-2 py-0.5 bg-red-500 text-white text-xs font-bold rounded">
-                      NEW
-                    </span>
-                  )}
-                </div>
-
-                {/* Title */}
-                <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-brand-700 transition-colors">
-                  {item.title}
-                </h3>
-
-                {/* Summary */}
-                <p className="text-sm text-gray-600 line-clamp-2 mb-4">
-                  {item.summary}
+        {loading ? (
+          <div className="rounded-xl border border-gray-200 bg-gray-50 px-5 py-10 text-center">
+            <p role="status" className="text-base text-gray-600">
+              소식을 불러오고 있습니다.
+            </p>
+          </div>
+        ) : (
+          <>
+            {loadError && (
+              <p role="alert" className="mb-4 text-base text-amber-900">
+                소식을 불러오지 못해 기본 안내를 표시합니다.
+              </p>
+            )}
+            {newsItems.length === 0 ? (
+              <div className="flex items-center gap-3 border-y border-gray-200 py-3">
+                <FileText className="h-5 w-5 shrink-0 text-brand-700" aria-hidden="true" />
+                <p className="text-base leading-relaxed text-gray-700">
+                  <span className="font-bold text-gray-900">등록된 소식이 없습니다.</span>{" "}
+                  공지와 회사 소식이 등록되면 이곳에서 안내합니다.
                 </p>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {newsItems.map((item, idx) => {
+                  const category = newsCategories[item.category];
+                  const CategoryIcon = category.icon;
 
-                {/* Date */}
-                <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                  <Calendar className="w-3.5 h-3.5" />
-                  {formatDate(item.createdAt)}
-                </div>
-              </motion.article>
-            );
-          })}
-        </div>
+                  return (
+                    <motion.article
+                      key={item.id}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="group bg-white rounded-xl p-5 border border-gray-200 hover:shadow-lg transition-all duration-300"
+                    >
+                      <div className="mb-3 flex items-center justify-between">
+                        <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${category.color}`}>
+                          <CategoryIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                          {category.label}
+                        </span>
+                        {item.isNew && (
+                          <span className="rounded bg-red-500 px-2 py-0.5 text-xs font-bold text-white">
+                            NEW
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="mb-2 line-clamp-2 font-bold text-gray-900 transition-colors group-hover:text-brand-700">
+                        {item.title}
+                      </h3>
+                      <p className="mb-4 line-clamp-2 text-base leading-relaxed text-gray-600">
+                        {item.summary}
+                      </p>
+                      <div className="flex items-center gap-1.5 text-[15px] text-gray-500">
+                        <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
+                        {formatDate(item.createdAt)}
+                      </div>
+                    </motion.article>
+                  );
+                })}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </section>
   );

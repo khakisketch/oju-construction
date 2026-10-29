@@ -1,4 +1,5 @@
 import { env } from "@/shared/config/env";
+import { BUSINESS_AREA_NAMES } from "@/shared/config/businessAreas";
 
 const BASE_URL = env.site.url || "https://ojuec.co.kr";
 
@@ -13,11 +14,7 @@ function OrganizationJsonLd() {
     foundingDate: "2004",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "용암북로160번길 20, 2층 201호",
-      addressLocality: "청주시 상당구",
-      addressRegion: "충청북도",
-      postalCode: "28590",
-      addressCountry: "KR",
+      streetAddress: env.company.address,
     },
     contactPoint: {
       "@type": "ContactPoint",
@@ -48,11 +45,7 @@ function LocalBusinessJsonLd() {
     email: env.company.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "용암북로160번길 20, 2층 201호",
-      addressLocality: "청주시 상당구",
-      addressRegion: "충청북도",
-      postalCode: "28590",
-      addressCountry: "KR",
+      streetAddress: env.company.address,
     },
     geo: {
       "@type": "GeoCoordinates",
@@ -65,14 +58,7 @@ function LocalBusinessJsonLd() {
       { "@type": "State", name: "세종특별자치시" },
       { "@type": "State", name: "대전광역시" },
     ],
-    serviceType: [
-      "토목공사",
-      "지반조성포장공사",
-      "조경공사",
-      "방수공사",
-      "도장공사",
-      "시설물 유지보수",
-    ],
+    serviceType: BUSINESS_AREA_NAMES,
     priceRange: "$$",
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",

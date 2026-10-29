@@ -1,0 +1,11 @@
+import json,urllib.request,time,copy,os
+D=os.path.dirname(__file__);b='http://127.0.0.1:18391';base=json.load(open(D+'/candidate-13.json'))['prompt'];cases=[
+ (14,'reference-5.png','Fixed camera looking at the same paving blocks as the input image. A small patch of three solid rectangular pavers in the lower center gradually moves down together by a few centimeters while the rest of the pavers stay fixed. The moving blocks remain rigid, their shapes and joints intact. Realistic daylight, fixed camera.'),
+ (15,'reference-4.png','Locked tripod view of the same pavement. Only the two neighboring blocks at the center gently tilt down together as their support lowers. Their edges stay straight and every other block remains in place. One slow localized movement, no camera motion.'),
+ (16,'reference-9.png','Locked camera on the same exposed pavement section. The small patch of coarse support material above and to the left of the round pipe shifts downward very slightly as a unit. The concrete pavers, soil outside this patch and hollow pipe stay fixed and unchanged. Realistic muted light, one subtle local motion.'),
+ (17,'reference-10.png','Still camera view of the same cross-section. Just a few grains of gravel in one small zone directly under the middle paving block slowly fall into a little nearby gap. The surrounding soil layers, hollow pipe and rigid paving blocks remain in the same place. Natural scale, fixed camera.')]
+for n,img,text in cases:
+ q=copy.deepcopy(base);q['5']['inputs']['image']=img;q['6']['inputs']['text']=text;q['8']['inputs'].update(width=640,height=384,length=49);q['11']['inputs']['noise_seed']=2026102900+n;q['12']['inputs']['noise_seed']=2026102900+n;q['14']['inputs']['filename_prefix']=f'candidate-{n}';p={'client_id':'oju-batch3','prompt':q};json.dump(p,open(f'{D}/candidate-{n}.json','w'),indent=2);req=urllib.request.Request(b+'/prompt',data=json.dumps(p).encode(),headers={'Content-Type':'application/json'});pid=json.load(urllib.request.urlopen(req))['prompt_id'];print(n,'start',pid,time.ctime(),flush=True)
+ while True:
+  time.sleep(8);h=json.load(urllib.request.urlopen(b+'/history/'+pid))
+  if pid in h:json.dump(h[pid],open(f'{D}/candidate-{n}-history.json','w'),indent=2);print(n,'done',h[pid]['status']['status_str'],time.ctime(),flush=True);break

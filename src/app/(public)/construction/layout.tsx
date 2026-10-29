@@ -1,12 +1,13 @@
 import { Metadata } from "next";
+import { BUSINESS_AREA_LIST, BUSINESS_AREA_NAMES } from "@/shared/config/businessAreas";
 
 export const metadata: Metadata = {
   title: "건설사업",
-  description: "오주건설(주)의 핵심 건설 서비스: 토목공사, 도로포장, 조경공사, 시설물 유지보수. 20년 노하우로 품질과 안전을 보장합니다.",
-  keywords: ["토목공사", "도로포장", "조경공사", "유지보수", "전문건설", "아스팔트포장"],
+  description: `오주건설(주)의 사업분야: ${BUSINESS_AREA_LIST}. 각 분야의 시공 범위를 확인하세요.`,
+  keywords: [...BUSINESS_AREA_NAMES, "전문건설", "시공 분야"],
   openGraph: {
     title: "건설사업 | 오주건설(주)",
-    description: "토목·포장·조경·유지보수 전문. 기본에 충실한 건설, 미래를 짓는 기술.",
+    description: `사업분야: ${BUSINESS_AREA_LIST}. 기본에 충실한 건설, 미래를 짓는 기술.`,
     type: "website",
   },
 };

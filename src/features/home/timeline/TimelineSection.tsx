@@ -94,7 +94,7 @@ export default function TimelineSection() {
                               {item.events.map((event, eventIndex) => (
                                 <div key={eventIndex} className={eventIndex > 0 ? "mt-4 pt-4 border-t border-gray-200" : ""}>
                                   <h4 className="font-bold text-brand-700 mb-2">{event.month}</h4>
-                                  <p className="text-gray-700 text-sm md:text-base">{event.description}</p>
+                                  <p className="text-base leading-relaxed text-gray-700">{event.description}</p>
                                 </div>
                               ))}
                             </div>
@@ -128,7 +128,7 @@ export default function TimelineSection() {
                               {item.events.map((event, eventIndex) => (
                                 <div key={eventIndex} className={eventIndex > 0 ? "mt-4 pt-4 border-t border-gray-200" : ""}>
                                   <h4 className="font-bold text-brand-700 mb-2">{event.month}</h4>
-                                  <p className="text-gray-700 text-sm md:text-base">{event.description}</p>
+                                  <p className="text-base leading-relaxed text-gray-700">{event.description}</p>
                                 </div>
                               ))}
                             </div>

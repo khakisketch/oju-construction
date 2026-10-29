@@ -1,0 +1,119 @@
+{
+  "client_id": "oju-batch2",
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "wan2.2_ti2v_5B_fp16.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "type": "wan",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "wan2.2_vae.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "Locked-off camera at a real outdoor excavation beside a paved walkway. At the top of the exposed trench wall, slightly weathered small gray concrete blocks form a sidewalk. Below them are thin natural fine sand and compact gray crushed stone, and underneath brown soil with a single small circular hollow gray drainage pipe emerging from the wall. There is a small irregular shadowed void close to the pipe. A few loose grains trickle down the wall into the gap; the pipe and pavers do not deform. Real-scale construction materials, documentary natural light, no labels."
+      }
+    },
+    "5": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "text": "toy, miniature, model, tabletop, plinth, tiled floor, grid, second pavement, painted bands, plastic, surreal, computer rendering, text, logo, people, camera movement, zoom, pan, morphing, flicker, extra pipes, shiny plastic, cartoon giant gravel, oversized aggregate, sterile straight colored layers, plastic surface"
+      }
+    },
+    "10": {
+      "class_type": "Wan22ImageToVideoLatent",
+      "inputs": {
+        "vae": [
+          "3",
+          0
+        ],
+        "width": 832,
+        "height": 480,
+        "length": 81,
+        "batch_size": 1
+      }
+    },
+    "11": {
+      "class_type": "ModelSamplingSD3",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "shift": 8.0
+      }
+    },
+    "12": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": [
+          "11",
+          0
+        ],
+        "positive": [
+          "4",
+          0
+        ],
+        "negative": [
+          "5",
+          0
+        ],
+        "latent_image": [
+          "10",
+          0
+        ],
+        "seed": 2026102810,
+        "steps": 25,
+        "cfg": 5,
+        "sampler_name": "uni_pc",
+        "scheduler": "simple",
+        "denoise": 1.0
+      }
+    },
+    "14": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "12",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "15": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": [
+          "14",
+          0
+        ],
+        "filename_prefix": "candidate-10"
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "8": {
+    "moving_region": {
+      "best_mse": 169.12,
+      "zero_mse": 702.73,
+      "best_dx": 1,
+      "best_dy": 2,
+      "box": [
+        345,
+        208,
+        395,
+        238
+      ]
+    },
+    "stationary_background": {
+      "best_mse": 115.66,
+      "zero_mse": 161.21,
+      "best_dx": 0,
+      "best_dy": -1,
+      "box": [
+        40,
+        170,
+        90,
+        210
+      ]
+    }
+  },
+  "16": {
+    "moving_region": {
+      "best_mse": 1052.99,
+      "zero_mse": 3277.38,
+      "best_dx": -1,
+      "best_dy": 14,
+      "box": [
+        345,
+        208,
+        395,
+        238
+      ]
+    },
+    "stationary_background": {
+      "best_mse": 65.8,
+      "zero_mse": 65.8,
+      "best_dx": 0,
+      "best_dy": 0,
+      "box": [
+        40,
+        170,
+        90,
+        210
+      ]
+    }
+  }
+}

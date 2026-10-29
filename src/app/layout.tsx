@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
-import { env } from "@/shared/config/env";
+import { env, isFirebaseConfigured } from "@/shared/config/env";
+import { BUSINESS_AREA_LIST, BUSINESS_AREA_NAMES } from "@/shared/config/businessAreas";
 import AnalyticsScripts from "@/shared/components/analytics/AnalyticsScripts";
 import "./globals.css";
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     default: `${env.company.name} | 미래를 여는 건설`,
     template: `%s | ${env.company.name}`,
   },
-  description: `${env.company.name}은 6개 전문건설 면허를 보유한 종합건설회사입니다. 토목공사, 지반조성포장, 조경공사, 방수공사, 도장공사, 시설 유지보수 서비스를 제공합니다.`,
+  description: `${env.company.name}의 사업분야는 ${BUSINESS_AREA_LIST}입니다.`,
   keywords: [
     "오주건설",
     "오주건설(주)",
@@ -35,19 +36,10 @@ export const metadata: Metadata = {
     "청주 건설사",
     "청주 건설업체",
     "청주 토목",
-    "청주 토목공사",
-    "청주 조경공사",
+    "청주 건설 상담",
     "충북 건설회사",
     "충북 건설업체",
-    "충북 토목공사",
-    "토목공사",
-    "지반조성포장",
-    "조경공사",
-    "방수공사",
-    "도장공사",
-    "시설물 유지보수",
-    "청주 도로포장",
-    "충북 방수공사",
+    ...BUSINESS_AREA_NAMES,
     "세종 건설회사",
     "대전 건설업체",
   ],
@@ -61,7 +53,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: `${env.company.name} | 미래를 여는 건설`,
-    description: `${env.company.name}은 6개 전문건설 면허를 보유한 종합건설회사입니다. 토목공사, 지반조성포장, 조경공사, 방수공사, 도장공사, 시설 유지보수 서비스를 제공합니다.`,
+    description: `${env.company.name}의 사업분야는 ${BUSINESS_AREA_LIST}입니다.`,
     url: BASE_URL,
     siteName: env.company.name,
     images: [
@@ -78,7 +70,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `${env.company.name} | 미래를 여는 건설`,
-    description: `${env.company.name}은 전문건설 면허를 보유한 종합건설회사입니다.`,
+    description: `${env.company.name}의 사업분야는 ${BUSINESS_AREA_LIST}입니다.`,
     images: ["/images/og-image.png"],
   },
   robots: {
@@ -120,7 +112,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className={notoSansKR.className}>
       <body className="antialiased bg-white text-gray-900">
-        <AnalyticsScripts />
+        {isFirebaseConfigured && <AnalyticsScripts />}
         {children}
       </body>
     </html>
